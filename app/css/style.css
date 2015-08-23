@@ -1,0 +1,46 @@
+/** Esquema de colores material desing */
+
+.light-primary{
+	color: #D1C4E9;
+}
+
+.background-light-primary{
+	background-color: #D1C4E9;
+}
+
+.dark-primary{
+	color: #512DA8;
+}
+
+.background-dark-primary{
+	background-color: #512DA8;
+}
+
+.primary{
+	color: #673AB7;
+}
+
+.background-primary{
+	background-color: #673AB7;
+}
+.accent{
+	color: #009688;
+}
+
+.background-accent{
+	background-color: #009688;
+}
+
+.col-center-block {
+    float: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/** Boton Flotante */
+ #floating-action-button .btn {
+    position: fixed;
+    bottom: 30px;
+  	right: 30px;
+  }
