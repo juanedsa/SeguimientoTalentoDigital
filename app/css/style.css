@@ -39,7 +39,9 @@
 }
 
 /** Boton Flotante */
- #floating-action-button .btn {
+ .floating-action-button .btn {
+ 	cursor: pointer; 
+ 	cursor: hand;
     position: fixed;
     bottom: 30px;
   	right: 30px;

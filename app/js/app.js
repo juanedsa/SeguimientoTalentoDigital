@@ -9,7 +9,12 @@ app.config(function($routeProvider, $locationProvider){
 			controller: 'LoginCtrl'
 		})
 		.when('/usuarios',{
-			templateUrl:'templates/usuarios.html'
+			templateUrl:'templates/usuarios.html',
+			controller: 'UsuarioCtrl'
+		})
+		.when('/nuevoUsuario',{
+			templateUrl:'templates/nuevoUsuario.html',
+			controller: 'UsuarioCtrl'
 		})
 		.otherwise({
 			redirectTo: '/'
@@ -22,6 +27,59 @@ app.factory("AuthFactory", function($firebaseAuth){
 	var ref = new Firebase("https://seguimientotalentodigital.firebaseio.com/");
 	return ref;
 
+});
+
+/** Fabrica referencias FireBase */
+app.factory("RefFBFactory", function(){
+	var ref = new Firebase("https://seguimientotalentodigital.firebaseio.com/");
+	return ref;
+});
+
+/** Fabrica de usuarios */
+app.factory("UsuariosFactory", ["$firebaseArray", 
+
+	function($firebaseArray) {
+		var ref = new Firebase("https://seguimientotalentodigital.firebaseio.com/usuarios");
+		return $firebaseArray(ref);
+	}
+]);
+
+/**
+ * Controlador para los usuarios.
+ */
+app.controller("UsuarioCtrl", function ($scope, $location, $rootScope, RefFBFactory, UsuariosFactory) {
+
+	$scope.usuariosArray = UsuariosFactory;
+
+	/** Funcion encargada de enviar a la pagina para crear un nuevo usuarios */
+	$scope.irNuevoUsuario = function(){
+		console.log('irNuevoUsuario');
+		$location.path('/nuevoUsuario');
+	};
+
+	/** Funcion encargada de crear un nuevo usuario*/
+	$scope.crearUsuario = function(){
+
+		console.log("Creando Usuario");
+
+		$scope.usuariosArray.$add({
+        	nombre: $scope.usuario.nombre
+      	}).then(function(ref) {
+		  var id = ref.key();
+		  console.log("added record with id " + id);
+		  $scope.usuariosArray.$indexFor(id); // returns location in the array
+
+		  $location.path('/usuarios');
+		/*  $rootScope.$apply(function() {
+
+		  	$location.path('/usuarios');
+		    console.log($location.path());
+		   });*/
+		  	
+		});
+
+
+	};
 });
 
 app.controller("LoginCtrl", function ($scope, $location, $rootScope, AuthFactory) {
