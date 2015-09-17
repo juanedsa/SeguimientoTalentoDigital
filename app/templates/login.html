@@ -1,0 +1,30 @@
+<div  class="container">
+    <div class="jumbotron">
+        <h1>Login</h1>
+        <form class="form-horizontal">
+            <fieldset>
+                <legend>Digite su email y clave para iniciar la sesión.</legend>
+                <div class="form-group">
+                    <label for="inputEmail" class="col-lg-2 control-label">Correo</label>
+                    <div class="col-lg-10">
+                        <input type="email" class="form-control" placeholder="Email" ng-model="correo">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword" class="col-lg-2 control-label">Clave</label>
+                    <div class="col-lg-10">
+                        <input ng-model="clave" type="password" class="form-control" placeholder="Password">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+                        <button class="btn btn-default">Olvide mi clave</button>
+                        <button ng-click="login()" class="btn btn-primary">Aceptar</button>
+                        <button ng-click="redirectToDraftPage()" class="btn btn-primary">usuarios</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>

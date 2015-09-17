@@ -1,4 +1,21 @@
-var app = angular.module("SeguimientoTDApp", ["firebase"]);
+var app = angular.module("SeguimientoTDApp", ["firebase", "ngRoute"]);
+
+/** Configuracion de la app */
+app.config(function($routeProvider, $locationProvider){
+
+	$routeProvider
+		.when('/',{
+			templateUrl:'templates/login.html',
+			controller: 'LoginCtrl'
+		})
+		.when('/usuarios',{
+			templateUrl:'templates/usuarios.html'
+		})
+		.otherwise({
+			redirectTo: '/'
+		});
+
+});
 
 app.factory("AuthFactory", function($firebaseAuth){
 
@@ -7,7 +24,15 @@ app.factory("AuthFactory", function($firebaseAuth){
 
 });
 
-app.controller("LoginCtrl", function ($scope, AuthFactory) {
+app.controller("LoginCtrl", function ($scope, $location, $rootScope, AuthFactory) {
+
+	$scope.redirectToDraftPage= function () {
+
+   $location.path('/usuarios');
+
+};
+
+
 	$scope.login = function(){
 
 		console.log($scope.correo);
@@ -31,7 +56,18 @@ app.controller("LoginCtrl", function ($scope, AuthFactory) {
 		        console.log("Error logging user in:", error);
 		    }
 		  } else {
+
+
+		  	//$location.path('/usuarios');
 		    console.log("Authenticated successfully with payload:", authData);
+
+		    $rootScope.$apply(function() {
+
+		        $location.path('/usuarios');
+		        console.log($location.path());
+		      });
+		    
+
 		  }
 		});
 	}
