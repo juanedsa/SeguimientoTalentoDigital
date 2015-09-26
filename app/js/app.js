@@ -20,6 +20,10 @@ app.config(function($routeProvider, $locationProvider){
 			templateUrl:'templates/usuarios.html',
 			controller: 'UsuarioCtrl'
 		})
+		.when('/beneficiarios',{
+			templateUrl:'templates/beneficiarios.html',
+			controller: 'BeneficiarioCtrl'
+		})
 		.when('/nuevoUsuario',{
 			templateUrl:'templates/nuevoUsuario.html',
 			controller: 'UsuarioCtrl'
@@ -160,6 +164,16 @@ app.controller("UsuarioCtrl", function ($scope, $location, $rootScope, RefFBFact
 
 		});
 	};
+});
+
+/**
+ * Controlador para los Beneficiarios.
+ */
+app.controller("BeneficiarioCtrl", function ($scope, $location, $rootScope, RefFBFactory, BeneficiariosFactory) {
+
+	/** Se inicializan los objetos traidos de fabricas */
+	$scope.beneficiariosArray = BeneficiariosFactory;
+
 });
 
 /**
