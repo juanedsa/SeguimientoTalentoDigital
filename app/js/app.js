@@ -95,9 +95,10 @@ app.factory("BeneficiariosFactory", ["$firebaseArray",
 /**
  * Controlador para los usuarios.
  */
-app.controller("UsuarioCtrl", function ($scope, $location, $rootScope, RefFBFactory, UsuariosFactory) {
+app.controller("UsuarioCtrl", function ($scope, $location, $rootScope, RefFBFactory, UsuariosFactory,EstadosFactory) {
 
 	$scope.usuariosArray = UsuariosFactory;
+	$scope.estadosArray = EstadosFactory;
 
 	/** Funcion encargada de enviar a la pagina para crear un nuevo usuarios */
 	$scope.irNuevoUsuario = function(){

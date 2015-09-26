@@ -23,10 +23,8 @@
               </div>
               <div class="form-group">
                   <label class="control-label">Estado (*)</label>
-                  <select class="form-control" ng-model="usuario.estado">
-                      <option value="1">Activo</option>
-                      <option value="2">In Activo</option>
-                  </select>
+                  <select ng-model="usuario.estado" ng-options="estado.nombre for estado in estadosArray
+                  "></select>
                   <p class="text-danger">Error</p>
               </div>
               <div class="form-group">
