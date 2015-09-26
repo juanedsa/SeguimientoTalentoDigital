@@ -1,20 +1,41 @@
-<div class="jumbotron">
-    <h1>Nuevo Usuario</h1>
-    <form class="form-horizontal">
-        <fieldset>
-            <div class="form-group">
-                <label for="inputUsuarioNombre" class="col-lg-2 control-label">Nombre</label>
-                <div class="col-lg-10">
-                    <input type="text" ng-model="usuario.nombre" class="form-control" id="inputUsuarioNombre" placeholder="Nombre">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-lg-10 col-lg-offset-2">
-                    <button class="btn btn-default">Cancelar</button>
-                    <button type="submit" class="btn btn-primary" ng-click="crearUsuario()">Aceptar</button>
-                </div>
-            </div>
-        </fieldset>
-    </form>
-    
+<barra-navegacion></barra-navegacion>
+<div class="container">
+  <div class="jumbotron">
+      <h1>Nuevo Usuario</h1>
+      <form class="form-horizontal">
+          <fieldset>
+              <div class="form-group">
+                  <label class="control-label">Nombre Completo (*)</label>
+                  <input type="text" class="form-control" ng-model="usuario.nombre">
+                  <p class="text-danger">Error</p>
+              </div>
+              <div class="form-group">
+                  <label class="control-label">Correo (*)</label>
+                  <input type="email" class="form-control" ng-model="usuario.correo">
+                  <p class="text-danger">Error</p>
+              </div>
+              <div class="form-group">
+                  <label class="control-label">Rol (*)</label>
+                  <select class="form-control" ng-model="usuario.rol">
+                      <option value="1">Funcionario</option>
+                  </select>
+                  <p class="text-danger">Error</p>
+              </div>
+              <div class="form-group">
+                  <label class="control-label">Estado (*)</label>
+                  <select class="form-control" ng-model="usuario.estado">
+                      <option value="1">Activo</option>
+                      <option value="2">In Activo</option>
+                  </select>
+                  <p class="text-danger">Error</p>
+              </div>
+              <div class="form-group">
+                  <div class="col-lg-10 col-lg-offset-2">
+                      <button class="btn btn-default">Cancelar</button>
+                      <button type="submit" class="btn btn-primary" ng-click="crearUsuario()">Aceptar</button>
+                  </div>
+              </div>
+          </fieldset>
+      </form>
+  </div>
 </div>

@@ -1,5 +1,13 @@
 var app = angular.module("SeguimientoTDApp", ["firebase", "ngRoute"]);
 
+/** Directiva barra de navegacion superior */
+app.directive('barraNavegacion', function () {
+	return{
+		restrict: 'E',
+		templateUrl: 'templates/barra-navegacion.html'
+	}
+});
+
 /** Configuracion de la app */
 app.config(function($routeProvider, $locationProvider){
 
@@ -16,6 +24,15 @@ app.config(function($routeProvider, $locationProvider){
 			templateUrl:'templates/nuevoUsuario.html',
 			controller: 'UsuarioCtrl'
 		})
+		.when('/estados',{
+			templateUrl:'templates/estados.html',
+			controller: 'EstadoCtrl'
+		})
+		.when('/nuevoEstado',{
+			templateUrl:'templates/nuevoEstado.html',
+			controller: 'EstadoCtrl'
+		})
+
 		.when('/loginBeneficiario',{
 			templateUrl:'templates/loginBeneficiario.html',
 			controller: 'LoginBeneficiarioCtrl'
@@ -34,6 +51,7 @@ app.config(function($routeProvider, $locationProvider){
 
 });
 
+/** Fabrica para la autenticacion con firebase */
 app.factory("AuthFactory", ["$firebaseAuth",
   function($firebaseAuth) {
     var ref = new Firebase("https://seguimientotalentodigital.firebaseio.com/");
@@ -48,7 +66,7 @@ app.factory("RefFBFactory", function(){
 });
 
 /** Fabrica de usuarios */
-app.factory("UsuariosFactory", ["$firebaseArray", 
+app.factory("UsuariosFactory", ["$firebaseArray",
 
 	function($firebaseArray) {
 		var ref = new Firebase("https://seguimientotalentodigital.firebaseio.com/usuarios");
@@ -56,16 +74,23 @@ app.factory("UsuariosFactory", ["$firebaseArray",
 	}
 ]);
 
+/** Fabrica de estados */
+app.factory("EstadosFactory", ["$firebaseArray",
+
+	function($firebaseArray) {
+		var ref = new Firebase("https://seguimientotalentodigital.firebaseio.com/configuracion/estados");
+		return $firebaseArray(ref);
+	}
+]);
+
 /** Fabrica de Beneficiarios */
-app.factory("BeneficiariosFactory", ["$firebaseArray", 
+app.factory("BeneficiariosFactory", ["$firebaseArray",
 
 	function($firebaseArray) {
 		var ref = new Firebase("https://seguimientotalentodigital.firebaseio.com/beneficiarios");
 		return $firebaseArray(ref);
 	}
 ]);
-
-
 
 /**
  * Controlador para los usuarios.
@@ -86,7 +111,10 @@ app.controller("UsuarioCtrl", function ($scope, $location, $rootScope, RefFBFact
 		console.log("Creando Usuario");
 
 		$scope.usuariosArray.$add({
-        	nombre: $scope.usuario.nombre
+        	nombre: $scope.usuario.nombre,
+        	correo: $scope.usuario.correo,
+        	rol: 		$scope.usuario.rol,
+        	estado: $scope.usuario.estado
       	}).then(function(ref) {
 		  var id = ref.key();
 		  console.log("added record with id " + id);
@@ -98,17 +126,58 @@ app.controller("UsuarioCtrl", function ($scope, $location, $rootScope, RefFBFact
 		  	$location.path('/usuarios');
 		    console.log($location.path());
 		   });*/
-		  	
+
 		});
+	};
+});
 
+/**
+ * Controlador para los estados.
+ */
+app.controller("EstadoCtrl", function ($scope, $location, $rootScope, EstadosFactory) {
 
+	$scope.estadosArray = EstadosFactory;
+
+	/** Funcion encargada de enviar a la pagina para crear un nuevo estado */
+	$scope.irNuevoEstado = function(){
+		console.log('irNuevoEstado');
+		$location.path('/nuevoEstado');
+	};
+
+	/** Funcion encargada de crear un nuevo estado*/
+	$scope.crearEstado = function(){
+
+		console.log("Creando Estado");
+
+		$scope.estadosArray.$add({
+        	nombre: 			$scope.estado.nombre,
+        	descripcion: 	$scope.estado.descripcion
+      	}).then(function(ref) {
+		  var id = ref.key();
+		  console.log("added record with id " + id);
+		  $scope.estadosArray.$indexFor(id); // returns location in the array
+
+		  $location.path('/estados');
+		/*  $rootScope.$apply(function() {
+
+		  	$location.path('/usuarios');
+		    console.log($location.path());
+		   });*/
+
+		});
 	};
 });
 
 /**
  *  Controlador para login.
  */
-app.controller("LoginCtrl", function ($scope, $location, $rootScope, AuthFactory) {
+app.controller("LoginCtrl", function ($scope, $location, $rootScope) {
+
+	/**
+	 *  Para Pruebas
+	 */
+	$scope.correo = 'admin@admin.com';
+	$scope.clave = 'admin';
 
 	$scope.redirectToDraftPage= function () {
 
@@ -121,7 +190,9 @@ app.controller("LoginCtrl", function ($scope, $location, $rootScope, AuthFactory
 
 		console.log($scope.correo);
 
-		AuthFactory.authWithPassword({
+		var refAuth = new Firebase("https://seguimientotalentodigital.firebaseio.com/");
+
+		refAuth.authWithPassword({
 		  email    : $scope.correo,
 		  password : $scope.clave
 		}, function(error, authData) {
@@ -150,7 +221,7 @@ app.controller("LoginCtrl", function ($scope, $location, $rootScope, AuthFactory
 		        $location.path('/usuarios');
 		        console.log($location.path());
 		      });
-		    
+
 
 		  }
 		});
@@ -186,7 +257,7 @@ app.controller("RegistroBeneficiarioCtrl", function ($scope, $location, $rootSco
 
 	/** Funcion encargada de registrar un beneficiario */
 	$scope.registrarBeneficiario = function () {
-		
+
 		console.log("Inicia [LoginBeneficiarioCtrl registrarBeneficiario]");
 
 		$scope.beneficiariosArray.$add({
@@ -242,7 +313,7 @@ app.controller("RegistroBeneficiarioCtrl", function ($scope, $location, $rootSco
 
 			}).catch(function(error) {
 				console.log("ERROR: al crear usuario " + error);
-			});			  	
+			});
 		});
 	};
 });
