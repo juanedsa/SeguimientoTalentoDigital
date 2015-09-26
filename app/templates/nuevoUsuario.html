@@ -16,14 +16,13 @@
               </div>
               <div class="form-group">
                   <label class="control-label">Rol (*)</label>
-                  <select class="form-control" ng-model="usuario.rol">
-                      <option value="1">Funcionario</option>
-                  </select>
+                  <select class="form-control" ng-model="usuario.rol" ng-options="rol.nombre for rol in rolesArray
+                  "></select>
                   <p class="text-danger">Error</p>
               </div>
               <div class="form-group">
                   <label class="control-label">Estado (*)</label>
-                  <select ng-model="usuario.estado" ng-options="estado.nombre for estado in estadosArray
+                  <select class="form-control" ng-model="usuario.estado" ng-options="estado.nombre for estado in estadosArray
                   "></select>
                   <p class="text-danger">Error</p>
               </div>

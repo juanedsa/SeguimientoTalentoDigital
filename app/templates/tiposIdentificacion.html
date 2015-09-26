@@ -5,18 +5,13 @@
       <thead>
           <tr>
               <th>Nombre</th>
-              <th>Correo</th>
-              <th>Rol</th>
-              <th>Estado</th>
-              <th>Acciones</th>
+              <th>Descripcion</th>
           </tr>
       </thead>
       <tbody>
-          <tr ng-repeat="usuario in usuariosArray">
-              <td>{{usuario.nombre}}</td>
-              <td>{{usuario.correo}}</td>
-              <td>{{usuario.rol.nombre}}</td>
-              <td>{{usuario.estado.nombre}}</td>
+          <tr ng-repeat="tipoIdentificacion in tiposIdentificacionArray">
+              <td>{{tipoIdentificacion.nombre}}</td>
+              <td>{{tipoIdentificacion.descripcion}}</td>
                <td>
                   <a href="javascript:void(0)" class="btn btn-flat btn-info btn-xs">Detalle</a>
                   <a href="javascript:void(0)" class="btn btn-flat btn-danger btn-xs">Eliminar</a>
@@ -25,6 +20,6 @@
       </tbody>
   </table>
   <div class="floating-action-button">
-      <button ng-click="irNuevoUsuario()" class="btn btn-fab btn-raised btn-material-red"><i class="mdi-content-add"></i></button>
+      <button ng-click="irNuevoTipoIdentificacion()" class="btn btn-fab btn-raised btn-material-red"><i class="mdi-content-add"></i></button>
   </div>
 </div>

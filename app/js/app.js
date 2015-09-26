@@ -32,7 +32,22 @@ app.config(function($routeProvider, $locationProvider){
 			templateUrl:'templates/nuevoEstado.html',
 			controller: 'EstadoCtrl'
 		})
-
+		.when('/roles',{
+			templateUrl:'templates/roles.html',
+			controller: 'RolCtrl'
+		})
+		.when('/nuevoRol',{
+			templateUrl:'templates/nuevoRol.html',
+			controller: 'RolCtrl'
+		})
+		.when('/tiposIdentificacion',{
+			templateUrl:'templates/tiposIdentificacion.html',
+			controller: 'TipoIdentificacionCtrl'
+		})
+		.when('/nuevoTipoIdentificacion',{
+			templateUrl:'templates/nuevoTipoIdentificacion.html',
+			controller: 'TipoIdentificacionCtrl'
+		})
 		.when('/loginBeneficiario',{
 			templateUrl:'templates/loginBeneficiario.html',
 			controller: 'LoginBeneficiarioCtrl'
@@ -83,6 +98,24 @@ app.factory("EstadosFactory", ["$firebaseArray",
 	}
 ]);
 
+/** Fabrica de Roles */
+app.factory("RolesFactory", ["$firebaseArray",
+
+	function($firebaseArray) {
+		var ref = new Firebase("https://seguimientotalentodigital.firebaseio.com/configuracion/roles");
+		return $firebaseArray(ref);
+	}
+]);
+
+/** Fabrica de Tipos de Indentificación */
+app.factory("TiposIdentificacionFactory", ["$firebaseArray",
+
+	function($firebaseArray) {
+		var ref = new Firebase("https://seguimientotalentodigital.firebaseio.com/configuracion/tiposIdentificacion");
+		return $firebaseArray(ref);
+	}
+]);
+
 /** Fabrica de Beneficiarios */
 app.factory("BeneficiariosFactory", ["$firebaseArray",
 
@@ -95,10 +128,12 @@ app.factory("BeneficiariosFactory", ["$firebaseArray",
 /**
  * Controlador para los usuarios.
  */
-app.controller("UsuarioCtrl", function ($scope, $location, $rootScope, RefFBFactory, UsuariosFactory,EstadosFactory) {
+app.controller("UsuarioCtrl", function ($scope, $location, $rootScope, RefFBFactory, UsuariosFactory,EstadosFactory,RolesFactory) {
 
+	/** Se inicializan los objetos traidos de fabricas */
 	$scope.usuariosArray = UsuariosFactory;
 	$scope.estadosArray = EstadosFactory;
+	$scope.rolesArray = RolesFactory;
 
 	/** Funcion encargada de enviar a la pagina para crear un nuevo usuarios */
 	$scope.irNuevoUsuario = function(){
@@ -118,15 +153,10 @@ app.controller("UsuarioCtrl", function ($scope, $location, $rootScope, RefFBFact
         	estado: $scope.usuario.estado
       	}).then(function(ref) {
 		  var id = ref.key();
-		  console.log("added record with id " + id);
+		  console.log("Usuario Agregado con el id " + id);
 		  $scope.usuariosArray.$indexFor(id); // returns location in the array
 
 		  $location.path('/usuarios');
-		/*  $rootScope.$apply(function() {
-
-		  	$location.path('/usuarios');
-		    console.log($location.path());
-		   });*/
 
 		});
 	};
@@ -155,15 +185,80 @@ app.controller("EstadoCtrl", function ($scope, $location, $rootScope, EstadosFac
         	descripcion: 	$scope.estado.descripcion
       	}).then(function(ref) {
 		  var id = ref.key();
-		  console.log("added record with id " + id);
+		  console.log("Estado agreado con el id: " + id);
 		  $scope.estadosArray.$indexFor(id); // returns location in the array
 
+			/** Se envia al listado de estados */
 		  $location.path('/estados');
+
+		});
+	};
+});
+
+/**
+ * Controlador para los Roles.
+ */
+app.controller("RolCtrl", function ($scope, $location, $rootScope, RolesFactory) {
+
+	$scope.rolesArray = RolesFactory;
+
+	/** Funcion encargada de enviar a la pagina para crear un nuevo rol */
+	$scope.irNuevoRol = function(){
+		console.log('irNuevoRol');
+		$location.path('/nuevoRol');
+	};
+
+	/** Funcion encargada de crear un nuevo rol*/
+	$scope.crearRol = function(){
+
+		console.log("Creando Rol");
+
+		$scope.rolesArray.$add({
+        	nombre: 			$scope.rol.nombre,
+        	descripcion: 	$scope.rol.descripcion
+      	}).then(function(ref) {
+		  var id = ref.key();
+		  console.log("Rol insertado con el id: " + id);
+		  $scope.rolesArray.$indexFor(id); // returns location in the array
+
+		  $location.path('/roles');
 		/*  $rootScope.$apply(function() {
 
 		  	$location.path('/usuarios');
 		    console.log($location.path());
 		   });*/
+
+		});
+	};
+});
+
+/**
+ * Controlador para los Tipos de Indetificación.
+ */
+app.controller("TipoIdentificacionCtrl", function ($scope, $location, $rootScope, TiposIdentificacionFactory) {
+
+	$scope.tiposIdentificacionArray = TiposIdentificacionFactory;
+
+	/** Funcion encargada de enviar a la pagina para crear un nuevo Tipo de Indentificación */
+	$scope.irNuevoTipoIdentificacion = function(){
+		console.log('irNuevoTipoIdentificacion');
+		$location.path('/nuevoTipoIdentificacion');
+	};
+
+	/** Funcion encargada de crear un nuevo Tipo de Identificacion*/
+	$scope.crearTipoIdentificacion = function(){
+
+		console.log("Creando Tipo de Identificacion");
+
+		$scope.tiposIdentificacionArray.$add({
+        	nombre: 			$scope.tipoIdentificacion.nombre,
+        	descripcion: 	$scope.tipoIdentificacion.descripcion
+      	}).then(function(ref) {
+		  var id = ref.key();
+		  console.log("Tipo de Indentificación insertado con el id: " + id);
+		  $scope.tiposIdentificacionArray.$indexFor(id); // returns location in the array
+
+		  $location.path('/tiposIdentificacion');
 
 		});
 	};
@@ -252,9 +347,10 @@ app.controller("LoginBeneficiarioCtrl", function ($scope, $location, $rootScope,
 /**
  *  Controlador para registro de los beneficiarios.
  */
-app.controller("RegistroBeneficiarioCtrl", function ($scope, $location, $rootScope, AuthFactory, BeneficiariosFactory) {
+app.controller("RegistroBeneficiarioCtrl", function ($scope, $location, $rootScope, AuthFactory, BeneficiariosFactory, TiposIdentificacionFactory) {
 
 	$scope.beneficiariosArray = BeneficiariosFactory;
+	$scope.tiposIdentificacionArray = TiposIdentificacionFactory;
 
 	/** Funcion encargada de registrar un beneficiario */
 	$scope.registrarBeneficiario = function () {
@@ -262,10 +358,10 @@ app.controller("RegistroBeneficiarioCtrl", function ($scope, $location, $rootSco
 		console.log("Inicia [LoginBeneficiarioCtrl registrarBeneficiario]");
 
 		$scope.beneficiariosArray.$add({
-        	nombre: 				$scope.beneficiario.nombre,
-        	tipoIdentificacion: 	$scope.beneficiario.tipoIdentificacion,
+        	nombre: 								$scope.beneficiario.nombre,
+        	tipoIdentificacion: 		$scope.beneficiario.tipoIdentificacion,
         	numeroIdentificacion: 	$scope.beneficiario.numeroIdentificacion,
-        	correo: 				$scope.beneficiario.correo
+        	correo: 								$scope.beneficiario.correo
       	}).then(function(ref) {
 			var id = ref.key();
 			console.log("Beneficiario agregado con el  id " + id);

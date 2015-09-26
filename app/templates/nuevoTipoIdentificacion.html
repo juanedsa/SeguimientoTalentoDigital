@@ -1,0 +1,27 @@
+<barra-navegacion></barra-navegacion>
+<div class="container">
+  <div class="jumbotron">
+      <h1>Nuevo Tipo de Identificacion</h1>
+      <form class="form-horizontal">
+          <fieldset>
+              <div class="form-group">
+                  <label class="control-label">Nombre (*)</label>
+                  <input type="text" class="form-control" ng-model="tipoIdentificacion.nombre">
+                  <p class="text-danger">Error</p>
+              </div>
+              <div class="form-group">
+                  <label class="control-label">Descripcion (*)</label>
+                  <input type="text" class="form-control" ng-model="tipoIdentificacion.descripcion">
+                  <p class="text-danger">Error</p>
+              </div>
+
+              <div class="form-group">
+                  <div class="col-lg-10 col-lg-offset-2">
+                      <button class="btn btn-default">Cancelar</button>
+                      <button type="submit" class="btn btn-primary" ng-click="crearTipoIdentificacion()">Aceptar</button>
+                  </div>
+              </div>
+          </fieldset>
+      </form>
+  </div>
+</div>

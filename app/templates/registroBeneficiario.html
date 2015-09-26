@@ -12,10 +12,8 @@
         </div>
         <div class="form-group">
             <label class="control-label">Tipo de identificacion (*)</label>
-            <select class="form-control" ng-model="beneficiario.tipoIdentificacion">
-                <option value="CC">Cedula</option>
-                <option value="TI">Tarjeta de Identidad</option>
-            </select>
+            <select class="form-control" ng-model="beneficiario.tipoIdentificacion" ng-options="tipoIdentificacion.nombre for tipoIdentificacion in tiposIdentificacionArray
+            "></select>
             <p class="text-danger">Error</p>
         </div>
         <div class="form-group">
