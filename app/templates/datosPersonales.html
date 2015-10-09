@@ -1,0 +1,40 @@
+<barra-navegacion></barra-navegacion>
+
+<div class="container">
+  <div class="jumbotron">
+    <div class="container">
+        <h1>Datos Personales</h1>
+        <form class="form-horizontal">
+            <fieldset>
+                <div class="form-group">
+                    <label class="control-label">Nombre Completo (*)</label>
+                    <input type="text" class="form-control" ng-model="nombre">
+                    <p class="text-danger">Error</p>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Tipo de identificacion (*)</label>
+                    <select class="form-control" ng-model="tipoIdentificacion" ng-options="tipoIdentificacion.id as tipoIdentificacion.nombre for tipoIdentificacion in tiposIdentificacionArray
+                    "></select>
+                    <p class="text-danger">Error</p>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Número de indentificación (*)</label>
+                    <input type="number" class="form-control" ng-model="numeroIdentificacion">
+                    <p class="text-danger">Error</p>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Correo (*)</label>
+                    <input type="email" class="form-control" ng-model="correo">
+                    <p class="text-danger">Error</p>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+                        <button class="btn btn-default">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" ng-click="crearUsuario()">Guardar</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+  </div>
+</div>

@@ -2,6 +2,9 @@
 # Material Desing for Boostrasp
 https://github.com/FezVrasta/bootstrap-material-design
 
+# Local Storage para AngularJs
+https://github.com/grevory/angular-local-storage
+
 # Cuenta de correo Gmail
 seguimiento.talentodigital@gmail.com
 talentodigital2015*

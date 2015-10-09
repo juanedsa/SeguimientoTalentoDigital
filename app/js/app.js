@@ -1,12 +1,10 @@
-var app = angular.module("SeguimientoTDApp", ["firebase", "ngRoute"]);
-
-/** Directiva barra de navegacion superior */
-app.directive('barraNavegacion', function () {
-	return{
-		restrict: 'E',
-		templateUrl: 'templates/barra-navegacion.html'
-	}
-});
+var app = angular.module("SeguimientoTDApp", [
+	"firebase",
+	"ngRoute",
+	"app.controllers",
+	"app.directives",
+	"app.constantes"
+]);
 
 /** Configuracion de la app */
 app.config(function($routeProvider, $locationProvider){
@@ -63,6 +61,10 @@ app.config(function($routeProvider, $locationProvider){
 		.when('/dashboardBeneficiario',{
 			templateUrl:'templates/dashboardBeneficiario.html',
 			controller: 'RegistroBeneficiarioCtrl'
+		})
+		.when('/datosPersonales',{
+			templateUrl:'templates/datosPersonales.html',
+			controller: 'DatosPersonalesCtrl'
 		})
 		.otherwise({
 			redirectTo: '/'
@@ -337,26 +339,6 @@ app.controller("LoginCtrl", function ($scope, $location, $rootScope) {
 		});
 	}
 });
-
-
-/**
- *  Controlador para login de los beneficiarios.
- */
-app.controller("LoginBeneficiarioCtrl", function ($scope, $location, $rootScope, AuthFactory) {
-
-	/** Funcion encargada de enviar a la pagina de registro de un beneficiario */
-	$scope.irRegistroBeneficiario= function () {
-
-   		$location.path('/registroBeneficiario');
-
-	};
-
-
-
-});
-
-
-
 
 /**
  *  Controlador para registro de los beneficiarios.
