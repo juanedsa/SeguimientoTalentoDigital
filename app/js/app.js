@@ -3,7 +3,8 @@ var app = angular.module("SeguimientoTDApp", [
 	"ngRoute",
 	"app.controllers",
 	"app.directives",
-	"app.constantes"
+	"app.constantes",
+	"app.services"
 ]);
 
 /** Configuracion de la app */
@@ -60,7 +61,7 @@ app.config(function($routeProvider, $locationProvider){
 		})
 		.when('/dashboardBeneficiario',{
 			templateUrl:'templates/dashboardBeneficiario.html',
-			controller: 'RegistroBeneficiarioCtrl'
+			controller: 'DashBoardBeneficiarioCtrl'
 		})
 		.when('/datosPersonales',{
 			templateUrl:'templates/datosPersonales.html',
@@ -70,6 +71,23 @@ app.config(function($routeProvider, $locationProvider){
 			redirectTo: '/'
 		});
 
+});
+
+/** Filtro para ciudades segun su departamento */
+app.filter('ciudadesFitro', function () {
+  return function (item, padre) {
+		
+    var tempCiudades = [];
+        angular.forEach(item, function (ciudad) {
+
+            if (angular.equals(ciudad.departamentoId, padre)) {
+                tempCiudades.push(ciudad);
+            }
+        });
+
+    return tempCiudades;
+
+  };
 });
 
 /** Fabrica para la autenticacion con firebase */
@@ -122,14 +140,7 @@ app.factory("TiposIdentificacionFactory", ["$firebaseArray",
 	}
 ]);
 
-/** Fabrica de Beneficiarios */
-app.factory("BeneficiariosFactory", ["$firebaseArray",
 
-	function($firebaseArray) {
-		var ref = new Firebase("https://seguimientotalentodigital.firebaseio.com/beneficiarios");
-		return $firebaseArray(ref);
-	}
-]);
 
 /**
  * Controlador para los usuarios.
@@ -168,15 +179,7 @@ app.controller("UsuarioCtrl", function ($scope, $location, $rootScope, RefFBFact
 	};
 });
 
-/**
- * Controlador para los Beneficiarios.
- */
-app.controller("BeneficiarioCtrl", function ($scope, $location, $rootScope, RefFBFactory, BeneficiariosFactory) {
 
-	/** Se inicializan los objetos traidos de fabricas */
-	$scope.beneficiariosArray = BeneficiariosFactory;
-
-});
 
 /**
  * Controlador para los estados.

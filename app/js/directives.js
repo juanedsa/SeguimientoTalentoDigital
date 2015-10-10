@@ -1,6 +1,6 @@
 var directivas = angular.module('app.directives', []);
 
-/** Directiva barra de navegacion superior */
+/** Directiva barra de navegación superior */
 directivas.directive('barraNavegacion', function () {
 	return{
 		restrict: 'E',

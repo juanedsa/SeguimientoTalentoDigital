@@ -8,29 +8,41 @@
             <fieldset>
                 <div class="form-group">
                     <label class="control-label">Nombre Completo (*)</label>
-                    <input type="text" class="form-control" ng-model="nombre">
+                    <input type="text" class="form-control" ng-model="usuarioActual.nombre">
                     <p class="text-danger">Error</p>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Tipo de identificacion (*)</label>
-                    <select class="form-control" ng-model="tipoIdentificacion" ng-options="tipoIdentificacion.id as tipoIdentificacion.nombre for tipoIdentificacion in tiposIdentificacionArray
+                    <select class="form-control" ng-model="usuarioActual.tipoIdentificacion" ng-options="tipoIdentificacion.id as tipoIdentificacion.nombre for tipoIdentificacion in tiposIdentificacionArray
                     "></select>
                     <p class="text-danger">Error</p>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Número de indentificación (*)</label>
-                    <input type="number" class="form-control" ng-model="numeroIdentificacion">
+                    <input type="number" class="form-control" ng-model="usuarioActual.numeroIdentificacion">
                     <p class="text-danger">Error</p>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Correo (*)</label>
-                    <input type="email" class="form-control" ng-model="correo">
+                    <input type="email" class="form-control" ng-model="usuarioActual.correo">
+                    <p class="text-danger">Error</p>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Departamento (*)</label>
+                    <select class="form-control" ng-model="usuarioActual.departamento" ng-options="departamento.id as departamento.nombre for departamento in departamentosList
+                    "></select>
+                    <p class="text-danger">Error</p>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Ciudad (*)</label>
+                    <select class="form-control" ng-model="usuarioActual.ciudad" ng-options="ciudad.id as ciudad.nombre for ciudad in ciudadesList | ciudadesFitro:usuarioActual.departamento
+                    "></select>
                     <p class="text-danger">Error</p>
                 </div>
                 <div class="form-group">
                     <div class="col-lg-10 col-lg-offset-2">
-                        <button class="btn btn-default">Cancelar</button>
-                        <button type="submit" class="btn btn-primary" ng-click="crearUsuario()">Guardar</button>
+                        <button class="btn btn-default" ng-click="irDashBoardBeneficiario()">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" ng-click="guardarDatos()">Guardar</button>
                     </div>
                 </div>
             </fieldset>

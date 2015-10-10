@@ -2,31 +2,80 @@ var controladores = angular.module('app.controllers', [
   "LocalStorageModule"
 ]);
 
+/** Controlador para el dashboard del beneficiario. */
+controladores.controller("DashBoardBeneficiarioCtrl", function (
+  $scope,
+  $location) {
+
+  /** Funcion encargada de enviar a la pagina de datos personales */
+  $scope.irDatosPersonales = function () {
+    $location.path('/datosPersonales');
+  };
+
+});
+
+/** Controlador para los Beneficiarios. */
+controladores.controller("BeneficiarioCtrl", function (
+  $scope,
+  BeneficiariosFactory) {
+
+	/** Se inicializan los objetos traidos de fabricas */
+	$scope.beneficiariosArray = BeneficiariosFactory;
+
+});
+
 /** Controlador para los datos personales del Beneficiario */
 controladores.controller('DatosPersonalesCtrl', function (
   $scope,
-  BeneficiariosFactory,
+  $location,
+  $firebaseObject,
   localStorageService,
   TiposIdentificacionFactory,
+  DepartamentosFactory,
+  CiudadesFactory,
   LOCAL_STOGARE,
   FB) {
 
+  /** Se obtienen los tipos de documento */
 	$scope.tiposIdentificacionArray = TiposIdentificacionFactory;
+  /** Se obtienen departamentos */
+  $scope.departamentosList = DepartamentosFactory.all();
+  /** Se obtienen ciudades */
+  $scope.ciudadesList = CiudadesFactory.all();
 
+  /** Se obtiene el correo del usuario que esta en la sesion */
   var correoUsuario = localStorageService.get(LOCAL_STOGARE.CORREO_USUARIO);
 
   var ref = new Firebase(FB.BENEFICIARIOS);
+  ref.orderByChild("correo").equalTo(correoUsuario).on("value", function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
 
-  ref.orderByChild("correo").equalTo(correoUsuario).on("child_added", function(snapshot) {
-    console.log(snapshot.key());
-    console.log(snapshot.val());
+        /** Se obtiene el Key del beneficario */
+        var key = childSnapshot.key();
+        var refBen = new Firebase(FB.BENEFICIARIOS + "/" + key );
 
-    var usuario = snapshot.val();
-    $scope.nombre = usuario.nombre;
-    $scope.numeroIdentificacion = usuario.numeroIdentificacion;
-    $scope.correo = usuario.correo;
-    $scope.tipoIdentificacion = usuario.tipoIdentificacion.id;
-  });
+        /** Se hace una copia local del usuario */
+        var syncObject = $firebaseObject(refBen);
+        $scope.usuarioActual = syncObject;
+
+      });
+    });
+
+
+  /** funcion encargada de guardar los datos del beneficario */
+  $scope.guardarDatos = function () {
+
+    $scope.usuarioActual.$save().then(function() {
+       alert('Profile saved!');
+     }).catch(function(error) {
+       alert('Error!');
+     });
+
+  };
+
+  $scope.irDashBoardBeneficiario = function () {
+    $location.path('/dashboardBeneficiario');
+  };
 
 });
 
@@ -38,10 +87,11 @@ controladores.controller("LoginBeneficiarioCtrl", function (
   $rootScope,
   AuthFactory,
   localStorageService,
-  LOCAL_STOGARE) {
+  LOCAL_STOGARE,
+  FB) {
 
 	/** Funcion encargada de enviar a la pagina de registro de un beneficiario */
-	$scope.irRegistroBeneficiario= function () {
+	$scope.irRegistroBeneficiario = function () {
    		$location.path('/registroBeneficiario');
 	};
 
@@ -52,7 +102,7 @@ controladores.controller("LoginBeneficiarioCtrl", function (
   /** Funcion encargada de hacer el login */
   $scope.login = function(){
 
-    var refAuth = new Firebase("https://seguimientotalentodigital.firebaseio.com/");
+    var refAuth = new Firebase(FB.APP);
 
     refAuth.authWithPassword({
       email    : $scope.correo,
@@ -76,6 +126,7 @@ controladores.controller("LoginBeneficiarioCtrl", function (
 
         console.log("Authenticated successfully with payload:", authData);
 
+        /** Se Guarda en el localStorage el correo del usuario que inicio la sesion */
         localStorageService.set(LOCAL_STOGARE.CORREO_USUARIO, $scope.correo);
         /** Se envia al usuario a la pagina de dashboard */
         $rootScope.$apply(function() {
@@ -85,7 +136,4 @@ controladores.controller("LoginBeneficiarioCtrl", function (
       }
     });
   }
-
-
-
 });

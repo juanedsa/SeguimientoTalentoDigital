@@ -5,5 +5,6 @@ constantes.constant('LOCAL_STOGARE', {
 });
 
 constantes.constant('FB', {
-	BENEFICIARIOS: "https://seguimientotalentodigital.firebaseio.com/beneficiarios"
+	APP: 						"https://seguimientotalentodigital.firebaseio.com/",
+	BENEFICIARIOS: 	"https://seguimientotalentodigital.firebaseio.com/beneficiarios"
 });
