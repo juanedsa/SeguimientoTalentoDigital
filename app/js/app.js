@@ -67,6 +67,10 @@ app.config(function($routeProvider, $locationProvider){
 			templateUrl:'templates/datosPersonales.html',
 			controller: 'DatosPersonalesCtrl'
 		})
+		.when('/datosUniversidad',{
+			templateUrl:'templates/datosUniversidad.html',
+			controller: 'DatosUniversidadCtrl'
+		})
 		.otherwise({
 			redirectTo: '/'
 		});
@@ -76,7 +80,7 @@ app.config(function($routeProvider, $locationProvider){
 /** Filtro para ciudades segun su departamento */
 app.filter('ciudadesFitro', function () {
   return function (item, padre) {
-		
+
     var tempCiudades = [];
         angular.forEach(item, function (ciudad) {
 

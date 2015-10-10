@@ -12,6 +12,11 @@ controladores.controller("DashBoardBeneficiarioCtrl", function (
     $location.path('/datosPersonales');
   };
 
+  /** Funcion encargada de enviar a la pagina de datos de la universidad */
+  $scope.irDatosUniversidad = function () {
+    $location.path('/datosUniversidad');
+  };
+
 });
 
 /** Controlador para los Beneficiarios. */
@@ -33,6 +38,7 @@ controladores.controller('DatosPersonalesCtrl', function (
   TiposIdentificacionFactory,
   DepartamentosFactory,
   CiudadesFactory,
+  ConvocatoriasFactory,
   LOCAL_STOGARE,
   FB) {
 
@@ -42,6 +48,8 @@ controladores.controller('DatosPersonalesCtrl', function (
   $scope.departamentosList = DepartamentosFactory.all();
   /** Se obtienen ciudades */
   $scope.ciudadesList = CiudadesFactory.all();
+  /** Se obtienen Convocatorias */
+  $scope.convocatoriasList = ConvocatoriasFactory.all();
 
   /** Se obtiene el correo del usuario que esta en la sesion */
   var correoUsuario = localStorageService.get(LOCAL_STOGARE.CORREO_USUARIO);
@@ -66,6 +74,65 @@ controladores.controller('DatosPersonalesCtrl', function (
   $scope.guardarDatos = function () {
 
     $scope.usuarioActual.$save().then(function() {
+       alert('Profile saved!');
+     }).catch(function(error) {
+       alert('Error!');
+     });
+
+  };
+
+  $scope.irDashBoardBeneficiario = function () {
+    $location.path('/dashboardBeneficiario');
+  };
+
+});
+
+/** Controlador para los datos de la universidad del Beneficiario */
+controladores.controller('DatosUniversidadCtrl', function (
+  $scope,
+  $location,
+  $firebaseObject,
+  localStorageService,
+  DepartamentosFactory,
+  CiudadesFactory,
+  SemestresFactory,
+  NivelFormacionFactory,
+  LOCAL_STOGARE,
+  FB) {
+
+  /** Se obtienen departamentos */
+  $scope.departamentosList = DepartamentosFactory.all();
+  /** Se obtienen ciudades */
+  $scope.ciudadesList = CiudadesFactory.all();
+  /** Se obtienen los semestres */
+  $scope.semestreList = SemestresFactory.all();
+  /** Se obtienen niveles de formacion */
+  $scope.nivelFormacionList = NivelFormacionFactory.all();
+
+
+  /** Se obtiene el correo del usuario que esta en la sesion */
+  var correoUsuario = localStorageService.get(LOCAL_STOGARE.CORREO_USUARIO);
+
+  var ref = new Firebase(FB.BENEFICIARIOS);
+  ref.orderByChild("correo").equalTo(correoUsuario).on("value", function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+
+        /** Se obtiene el Key del beneficario */
+        var key = childSnapshot.key();
+        var refBen = new Firebase(FB.BENEFICIARIOS + "/" + key + "/datosUniversidad");
+
+        /** Se hace una copia local del usuario */
+        var syncObject = $firebaseObject(refBen);
+        $scope.datosUniversidad = syncObject;
+
+      });
+    });
+
+
+  /** funcion encargada de guardar los datos del beneficario */
+  $scope.guardarDatos = function () {
+
+    $scope.datosUniversidad.$save().then(function() {
        alert('Profile saved!');
      }).catch(function(error) {
        alert('Error!');

@@ -39,3 +39,62 @@ services.factory('CiudadesFactory', function() {
     }
   };
 });
+
+/** Fabrica de Convocatorias */
+services.factory('ConvocatoriasFactory', function() {
+
+  var ConvocatoriasList = [
+		{id: 1 , nombre: "2012"},
+		{id: 2 , nombre: "2013-1"},
+		{id: 3 , nombre: "2013-2"},
+		{id: 4 , nombre: "2014-1"},
+		{id: 5 , nombre: "2014-2"},
+		{id: 6 , nombre: "2015-1"}
+	];
+
+  return {
+    all: function() {
+      return ConvocatoriasList;
+    }
+  };
+});
+
+/** Fabrica de Semestres */
+services.factory('SemestresFactory', function() {
+
+  var SemestresList = [
+		{id: 1 , nombre: "1"},
+		{id: 2 , nombre: "2"},
+		{id: 3 , nombre: "3"},
+		{id: 4 , nombre: "4"},
+		{id: 5 , nombre: "5"},
+		{id: 6 , nombre: "6"},
+		{id: 7 , nombre: "7"},
+		{id: 8 , nombre: "8"},
+		{id: 9 , nombre: "9"},
+		{id: 10 , nombre: "10"}
+	];
+
+  return {
+    all: function() {
+      return SemestresList;
+    }
+  };
+});
+
+/** Fabrica de Nivel Formacion */
+services.factory('NivelFormacionFactory', function() {
+
+  var NivelFormacionList = [
+		{id: 1 , nombre: "Tecnico"},
+		{id: 2 , nombre: "Tecnologo"},
+		{id: 3 , nombre: "Universitario"},
+		{id: 4 , nombre: "Maestria"}
+	];
+
+  return {
+    all: function() {
+      return NivelFormacionList;
+    }
+  };
+});
