@@ -4,76 +4,97 @@
 
 <div class="container">
   <div class="page-header">
-    <h1>Datos de la Universidad</h1>
+    <h1>Datos de la entidad de naturaleza pública del proyecto</h1>
     <h4 class="text-info">Todos los campos marcados con (*) son obligatorios.</h4>
   </div>
   <div class="jumbotron">
     <div class="container-fluid">
         <form class="form-horizontal">
             <fieldset>
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">Nombre de la Universidad(*)</label>
+              <div class="form-group">
+                    <label class="col-lg-2 control-label">Nombre de la Entidad(*)</label>
                     <div class="col-lg-9">
-                      <input type="text" class="form-control" ng-model="datosUniversidad.nombre">
+                      <input type="text" class="form-control" ng-model="datosEntidadPublica.nombre">
                     </div>
                     <div class="col-lg-1">
                       <p class="text-danger"><i class="mdi-alert-error"></i></p>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-lg-2 control-label">Departamento (*)</label>
+                    <label class="col-lg-2 control-label">Departamento(*)</label>
                     <div class="col-lg-9">
-                      <select class="form-control" ng-model="datosUniversidad.departamento" ng-options="departamento.id as departamento.nombre for departamento in departamentosList"></select>
+                      <select class="form-control" ng-model="datosEntidadPublica.departamento" ng-options="departamento.id as departamento.nombre for departamento in departamentosList
+                      "></select>
                     </div>
                     <div class="col-lg-1">
                       <p class="text-danger"><i class="mdi-alert-error"></i></p>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-lg-2 control-label">Ciudad (*)</label>
+                    <label class="col-lg-2 control-label">Ciudad(*)</label>
                     <div class="col-lg-9">
-                      <select class="form-control" ng-model="datosUniversidad.ciudad" ng-options="ciudad.id as ciudad.nombre for ciudad in ciudadesList | ciudadesFitro:datosUniversidad.departamento"></select>
+                      <select class="form-control" ng-model="datosEntidadPublica.ciudad" ng-options="ciudad.id as ciudad.nombre for ciudad in ciudadesList | ciudadesFitro:datosEntidadPublica.departamento
+                      "></select>
                     </div>
                     <div class="col-lg-1">
                       <p class="text-danger"><i class="mdi-alert-error"></i></p>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-lg-2 control-label">Nivel de Formación(*)</label>
+                    <label class="col-lg-2 control-label">Dependiencia Responsable(*)</label>
                     <div class="col-lg-9">
-                      <select class="form-control" ng-model="datosUniversidad.nivelFormacion" ng-options="nivelFormacion.id as nivelFormacion.nombre for nivelFormacion in nivelFormacionList"></select>
+                      <input type="text" class="form-control" ng-model="datosEntidadPublica.dependenciaResponsable">
                     </div>
                     <div class="col-lg-1">
                       <p class="text-danger"><i class="mdi-alert-error"></i></p>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-lg-2 control-label">Nombre del programa(*)</label>
+                    <label class="col-lg-2 control-label">Coordinador Responsable(*)</label>
                     <div class="col-lg-9">
-                      <input type="text" class="form-control" ng-model="datosUniversidad.nombrePrograma">
+                      <input type="text" class="form-control" ng-model="datosEntidadPublica.coordinadorResponsable">
                     </div>
                     <div class="col-lg-1">
                       <p class="text-danger"><i class="mdi-alert-error"></i></p>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-lg-2 control-label">Semestre que cursa(*)</label>
+                    <label class="col-lg-2 control-label">Dirección de contacto(*)</label>
                     <div class="col-lg-9">
-                      <select class="form-control" ng-model="datosUniversidad.semestre" ng-options="semestre.id as semestre.nombre for semestre in semestreList"></select>
+                      <input type="text" class="form-control" ng-model="datosEntidadPublica.direccionContacto">
                     </div>
                     <div class="col-lg-1">
                       <p class="text-danger"><i class="mdi-alert-error"></i></p>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-lg-2 control-label">Semestre que inicio con TD(*)</label>
+                    <label class="col-lg-2 control-label">Telefono fijo(*)</label>
                     <div class="col-lg-9">
-                      <select class="form-control" ng-model="datosUniversidad.semestreInicioTD" ng-options="semestreInicioTD.id as semestreInicioTD.nombre for semestreInicioTD in semestreList"></select>
+                      <input type="number" class="form-control" ng-model="datosEntidadPublica.telefono">
                     </div>
                     <div class="col-lg-1">
                       <p class="text-danger"><i class="mdi-alert-error"></i></p>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Celular(*)</label>
+                    <div class="col-lg-9">
+                      <input type="number" class="form-control" ng-model="datosEntidadPublica.celular">
+                    </div>
+                    <div class="col-lg-1">
+                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Correo(*)</label>
+                    <div class="col-lg-9">
+                      <input type="email" class="form-control" ng-model="datosEntidadPublica.correo">
+                    </div>
+                    <div class="col-lg-1">
+                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <div class="col-lg-10 col-lg-offset-2">
                         <button class="btn btn-default" ng-click="irDashBoardBeneficiario()">Cancelar</button>

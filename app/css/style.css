@@ -16,9 +16,3 @@
   bottom: 30px;
 	right: 30px;
 }
-
-/** elementos que se pueden clickear */
-.clickleable{
-  cursor: pointer;
-  cursor: hand;
-}

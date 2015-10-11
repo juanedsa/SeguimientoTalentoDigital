@@ -16,6 +16,11 @@ controladores.controller("DashBoardBeneficiarioCtrl", function (
   $scope.irDatosUniversidad = function () {
     $location.path('/datosUniversidad');
   };
+
+  /** Funcion encargada de enviar a la pagina de datos de la entidad publica */
+  $scope.irDatosEntidadPublica = function () {
+    $location.path('/datosEntidadPublica');
+  };
 });
 
 /** Controlador para los Beneficiarios. */
@@ -77,7 +82,7 @@ controladores.controller('DatosPersonalesCtrl', function (
         titulo: "Mensaje",
         mensaje: "Datos Personales Guardados con Exito"
       };
-      
+
 
       $('#modal-general').modal('show');
      }).catch(function(error) {
@@ -104,6 +109,11 @@ controladores.controller('DatosUniversidadCtrl', function (
   NivelFormacionFactory,
   LOCAL_STOGARE,
   FB) {
+
+  /** Se inicializa el material desing */
+  angular.element(document).ready(function () {
+      $.material.init();
+  });
 
   /** Se obtienen departamentos */
   $scope.departamentosList = DepartamentosFactory.all();
@@ -147,6 +157,71 @@ controladores.controller('DatosUniversidadCtrl', function (
 
       $('#modal-general').modal('show');
 
+
+     }).catch(function(error) {
+       alert('Error!');
+     });
+
+  };
+
+  $scope.irDashBoardBeneficiario = function () {
+    $location.path('/dashboardBeneficiario');
+  };
+
+});
+
+/** Controlador para los datos de la entidad publica del Beneficiario */
+controladores.controller('DatosEntidadPublicaCtrl', function (
+  $scope,
+  $location,
+  $firebaseObject,
+  localStorageService,
+  DepartamentosFactory,
+  CiudadesFactory,
+  LOCAL_STOGARE,
+  FB) {
+
+    /** Se inicializa el material desing */
+    angular.element(document).ready(function () {
+        $.material.init();
+    });
+
+  /** Se obtienen departamentos */
+  $scope.departamentosList = DepartamentosFactory.all();
+  /** Se obtienen ciudades */
+  $scope.ciudadesList = CiudadesFactory.all();
+
+  /** Se obtiene el correo del usuario que esta en la sesion */
+  var correoUsuario = localStorageService.get(LOCAL_STOGARE.CORREO_USUARIO);
+
+  var ref = new Firebase(FB.BENEFICIARIOS);
+  ref.orderByChild("correo").equalTo(correoUsuario).on("value", function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+
+        /** Se obtiene el Key del beneficario */
+        var key = childSnapshot.key();
+        console.log("key");
+        console.log(key);
+        var refBen = new Firebase(FB.BENEFICIARIOS + "/" + key + "/datosEntidadPublica");
+
+        /** Se hace una copia local del beneficiario */
+        var syncObject = $firebaseObject(refBen);
+        $scope.datosEntidadPublica = syncObject;
+
+      });
+    });
+
+
+  /** funcion encargada de guardar los datos del beneficario */
+  $scope.guardarDatos = function () {
+
+    $scope.datosEntidadPublica.$save().then(function() {
+
+      $scope.modal = {
+        titulo: "Mensaje",
+        mensaje: "Datos de la entidad publica guardados con exito!"
+      };
+      $('#modal-general').modal('show');
 
      }).catch(function(error) {
        alert('Error!');
