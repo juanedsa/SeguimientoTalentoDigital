@@ -21,6 +21,11 @@ controladores.controller("DashBoardBeneficiarioCtrl", function (
   $scope.irDatosEntidadPublica = function () {
     $location.path('/datosEntidadPublica');
   };
+
+  /** Funcion encargada de enviar a la pagina de datos del proyecto */
+  $scope.irDatosProyecto = function () {
+    $location.path('/datosProyecto');
+  };
 });
 
 /** Controlador para los Beneficiarios. */
@@ -45,6 +50,11 @@ controladores.controller('DatosPersonalesCtrl', function (
   ConvocatoriasFactory,
   LOCAL_STOGARE,
   FB) {
+
+  /** Se inicializa el material desing */
+  angular.element(document).ready(function () {
+      $.material.init();
+  });
 
   /** Se obtienen los tipos de documento */
 	$scope.tiposIdentificacionArray = TiposIdentificacionFactory;
@@ -220,6 +230,66 @@ controladores.controller('DatosEntidadPublicaCtrl', function (
       $scope.modal = {
         titulo: "Mensaje",
         mensaje: "Datos de la entidad publica guardados con exito!"
+      };
+      $('#modal-general').modal('show');
+
+     }).catch(function(error) {
+       alert('Error!');
+     });
+
+  };
+
+  $scope.irDashBoardBeneficiario = function () {
+    $location.path('/dashboardBeneficiario');
+  };
+
+});
+
+/** Controlador para los datos del proyecto del Beneficiario */
+controladores.controller('DatosProyectoCtrl', function (
+  $scope,
+  $location,
+  $firebaseObject,
+  localStorageService,
+  AvanceFactory,
+  LOCAL_STOGARE,
+  FB) {
+
+  /** Se inicializa el material desing */
+  angular.element(document).ready(function () {
+      $.material.init();
+  });
+
+  /** Se obtienen lista de avance */
+  $scope.avanceList = AvanceFactory.all();
+
+  /** Se obtiene el correo del usuario que esta en la sesion */
+  var correoUsuario = localStorageService.get(LOCAL_STOGARE.CORREO_USUARIO);
+
+  var ref = new Firebase(FB.BENEFICIARIOS);
+  ref.orderByChild("correo").equalTo(correoUsuario).on("value", function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+
+        /** Se obtiene el Key del beneficario */
+        var key = childSnapshot.key();
+        var refBen = new Firebase(FB.BENEFICIARIOS + "/" + key + "/datosProyecto");
+
+        /** Se hace una copia local del beneficiario */
+        var syncObject = $firebaseObject(refBen);
+        $scope.datosProyecto = syncObject;
+
+      });
+    });
+
+
+  /** funcion encargada de guardar los datos del beneficario */
+  $scope.guardarDatos = function () {
+
+    $scope.datosProyecto.$save().then(function() {
+
+      $scope.modal = {
+        titulo: "Mensaje",
+        mensaje: "Datos del proyecto guardados con exito!"
       };
       $('#modal-general').modal('show');
 

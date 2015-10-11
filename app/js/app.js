@@ -75,6 +75,10 @@ app.config(function($routeProvider, $locationProvider){
 			templateUrl:'templates/datosEntidadPublica.html',
 			controller: 'DatosEntidadPublicaCtrl'
 		})
+		.when('/datosProyecto',{
+			templateUrl:'templates/datosProyecto.html',
+			controller: 'DatosProyectoCtrl'
+		})
 		.otherwise({
 			redirectTo: '/'
 		});

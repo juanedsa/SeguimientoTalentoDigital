@@ -8,3 +8,6 @@ https://github.com/grevory/angular-local-storage
 # Cuenta de correo Gmail
 seguimiento.talentodigital@gmail.com
 talentodigital2015*
+
+# Servidor local
+https://www.npmjs.com/package/http-server

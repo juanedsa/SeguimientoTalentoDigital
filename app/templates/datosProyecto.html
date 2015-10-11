@@ -1,0 +1,137 @@
+<barra-navegacion></barra-navegacion>
+
+<modal-general></modal-general>
+
+<div class="container">
+  <div class="page-header">
+    <h1>Datos del proyecto</h1>
+    <h4 class="text-info">Todos los campos marcados con (*) son obligatorios.</h4>
+  </div>
+  <div class="jumbotron">
+    <div class="container-fluid">
+        <form class="form-horizontal">
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Nombre del proyecto(*)</label>
+                    <div class="col-lg-9">
+                      <input type="text" class="form-control" ng-model="datosProyecto.nombre">
+                    </div>
+                    <div class="col-lg-1">
+                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Descripción de Proyecto(*)</label>
+                    <div class="col-lg-9">
+                        <textarea class="form-control" rows="4" ng-model="datosProyecto.descripcion"></textarea>
+                        <span class="help-block">Descripción breve del proyecto a realizar.</span>
+                    </div>
+                    <div class="col-lg-1">
+                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Objetivos(*)</label>
+                    <div class="col-lg-9">
+                        <textarea class="form-control" rows="4" ng-model="datosProyecto.objetivos"></textarea>
+                        <span class="help-block">Presentación del objetivo general y los objetivos especificos de su proyecto.</span>
+                    </div>
+                    <div class="col-lg-1">
+                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Relación(*)</label>
+                    <div class="col-lg-9">
+                        <textarea class="form-control" rows="4" ng-model="datosProyecto.relacion"></textarea>
+                        <span class="help-block">Relación del Proyecto con la Estrategia de Gobierno en línea.</span>
+                    </div>
+                    <div class="col-lg-1">
+                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Avance del proyecto(*)</label>
+                    <div class="col-lg-9">
+                      <select class="form-control" ng-model="datosProyecto.avance" ng-options="avance.id as avance.nombre for avance in avanceList"></select>
+                    </div>
+                    <div class="col-lg-1">
+                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Metodología(*)</label>
+                    <div class="col-lg-9">
+                        <textarea class="form-control" rows="4" ng-model="datosProyecto.metodologia"></textarea>
+                        <span class="help-block">Metodología a seguir en su proyecto.</span>
+                    </div>
+                    <div class="col-lg-1">
+                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Observaciones(*)</label>
+                    <div class="col-lg-9">
+                        <textarea class="form-control" rows="4" ng-model="datosProyecto.observaciones"></textarea>
+                        <span class="help-block">Observaciones a tener encuenta en su proyecto.</span>
+                    </div>
+                    <div class="col-lg-1">
+                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Se contacto con la entidad(*)</label>
+                    <div class="col-lg-9">
+                      <div class="radio radio-primary">
+                          <label>
+                              <input type="radio" name="contactoEntidad" ng-model="datosProyecto.contactoEntidad" value="Si" checked="">Si
+                          </label>
+                      </div>
+                      <div class="radio radio-primary">
+                          <label>
+                              <input type="radio" name="optionsRadios" ng-model="datosProyecto.contactoEntidad" value="No">No
+                          </label>
+                      </div>
+                    </div>
+                    <div class="col-lg-1">
+                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Necesita carta de presentación(*)</label>
+                    <div class="col-lg-9">
+                      <div class="radio radio-primary">
+                          <label>
+                              <input type="radio" name="cartaPresentacion" ng-model="datosProyecto.cartaPresentacion" value="Si" checked="">Si
+                          </label>
+                      </div>
+                      <div class="radio radio-primary">
+                          <label>
+                              <input type="radio" name="cartaPresentacion" ng-model="datosProyecto.cartaPresentacion" value="No">No
+                          </label>
+                      </div>
+                    </div>
+                    <div class="col-lg-1">
+                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Duración en meses(*)</label>
+                    <div class="col-lg-9">
+                      <input type="number" class="form-control" ng-model="datosProyecto.duracion">
+                    </div>
+                    <div class="col-lg-1">
+                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+                        <button class="btn btn-default" ng-click="irDashBoardBeneficiario()">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" ng-click="guardarDatos()">Guardar</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+  </div>
+</div>

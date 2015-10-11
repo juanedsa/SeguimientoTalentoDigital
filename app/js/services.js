@@ -98,3 +98,26 @@ services.factory('NivelFormacionFactory', function() {
     }
   };
 });
+
+/** Fabrica de Avance */
+services.factory('AvanceFactory', function() {
+
+  var AvanceList = [
+		{id: 10 , nombre: "10%"},
+		{id: 20 , nombre: "20%"},
+		{id: 30 , nombre: "30%"},
+		{id: 40 , nombre: "40%"},
+		{id: 50 , nombre: "50%"},
+		{id: 60 , nombre: "70%"},
+		{id: 70 , nombre: "70%"},
+		{id: 80 , nombre: "80%"},
+		{id: 90 , nombre: "90%"},
+		{id: 100 , nombre: "100%"}
+	];
+
+  return {
+    all: function() {
+      return AvanceList;
+    }
+  };
+});
