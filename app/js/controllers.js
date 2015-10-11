@@ -16,7 +16,6 @@ controladores.controller("DashBoardBeneficiarioCtrl", function (
   $scope.irDatosUniversidad = function () {
     $location.path('/datosUniversidad');
   };
-
 });
 
 /** Controlador para los Beneficiarios. */
@@ -74,7 +73,13 @@ controladores.controller('DatosPersonalesCtrl', function (
   $scope.guardarDatos = function () {
 
     $scope.usuarioActual.$save().then(function() {
-       alert('Profile saved!');
+      $scope.modal = {
+        titulo: "Mensaje",
+        mensaje: "Datos Personales Guardados con Exito"
+      };
+      
+
+      $('#modal-general').modal('show');
      }).catch(function(error) {
        alert('Error!');
      });
@@ -133,7 +138,16 @@ controladores.controller('DatosUniversidadCtrl', function (
   $scope.guardarDatos = function () {
 
     $scope.datosUniversidad.$save().then(function() {
-       alert('Profile saved!');
+      //  alert('Profile saved!');
+
+      $scope.modal = {
+        titulo: "Mensaje",
+        mensaje: "Datos Guardados con Exito"
+      };
+
+      $('#modal-general').modal('show');
+
+
      }).catch(function(error) {
        alert('Error!');
      });

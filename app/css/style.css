@@ -10,9 +10,15 @@
 
 /** Boton Flotante */
 .floating-action-button .btn {
-	cursor: pointer; 
- 	cursor: hand;
-    position: fixed;
-    bottom: 30px;
-  	right: 30px;
+ 	cursor: pointer;
+  cursor: hand;
+  position: fixed;
+  bottom: 30px;
+	right: 30px;
+}
+
+/** elementos que se pueden clickear */
+.clickleable{
+  cursor: pointer;
+  cursor: hand;
 }

@@ -2,41 +2,48 @@
 
 <div class="container">
   <div class="row">
-      <div class="col-3"></div>
-      <div class="well col-3" ng-click="irDatosPersonales()">
-          <img src="img/usuarioLogo.png" class="img-circle">
-          <blockquote class="pull-right">
-              <h2>Datos Personales</h2>
-              <small>Datos personales del beneficiario.</small>
-          </blockquote>
+    <div class="col-md-6">
+      <div class="thumbnail">
+        <img src="img/estudiante.jpg" alt="">
+        <div class="caption">
+          <h2>Datos Personales</h2>
+          <small>Datos personales del beneficiario.</small>
+          <p><a  ng-click="irDatosPersonales()" class="btn btn-primary" role="button">Editar</a> </p>
+        </div>
       </div>
 
-      <div class="well col-3" ng-click="irDatosUniversidad()" >
-          <img src="img/universidadLogo.png" class="img-circle">
-          <blockquote class="pull-right">
-              <h2>Datos de la universidad</h2>
-              <small>Datos de la universidad en la que se encuentra estudiando.</small>
-          </blockquote>
+    </div>
+    <div class="col-md-6">
+      <div class="thumbnail">
+        <img src="img/libros.jpg" alt="">
+        <div class="caption">
+          <h2>Datos de la universidad</h2>
+          <small>Datos de la universidad en la que se encuentra estudiando.</small>
+          <p><a ng-click="irDatosUniversidad()" class="btn btn-primary" role="button">Editar</a> </p>
+        </div>
       </div>
-      <div class="col-3"></div>
+    </div>
   </div>
   <div class="row">
-      <div class="col-3"></div>
-      <div class="well col-3">
-          <img src="img/gobiernoLogo.png" class="img-circle">
-          <blockquote class="pull-right">
-              <h2>Datos de la entidad pública</h2>
-              <small>Datos de la entidad  de naturaleza pública del proyecto.</small>
-          </blockquote>
+    <div class="col-md-6">
+      <div class="thumbnail">
+        <img src="img/gobierno-en-linea.jpg" alt="">
+        <div class="caption">
+          <h2>Datos de la entidad pública</h2>
+          <small>Datos de la entidad  de naturaleza pública del proyecto.</small>
+          <p><a  ng-click="irDatosPersonales()" class="btn btn-primary" role="button">Editar</a> </p>
+        </div>
       </div>
-
-      <div class="well col-3">
-          <img src="img/documentoLogo.png" class="img-circle">
-          <blockquote class="pull-right">
-              <h2>Datos del proyecto</h2>
-              <small>Datos del proyecto que esta realizando.</small>
-          </blockquote>
+    </div>
+    <div class="col-md-6">
+      <div class="thumbnail">
+        <img src="img/ux-project.jpg" alt="">
+        <div class="caption">
+          <h2>Datos del proyecto</h2>
+          <small>Datos del proyecto que esta realizando.</small>
+          <p><a ng-click="irDatosUniversidad()" class="btn btn-primary" role="button">Editar</a> </p>
+        </div>
       </div>
-      <div class="col-3"></div>
+    </div>
   </div>
 </div>

@@ -7,3 +7,11 @@ directivas.directive('barraNavegacion', function () {
 		templateUrl: 'templates/barra-navegacion.html'
 	}
 });
+
+/** Directiva mostrar un modal general */
+directivas.directive('modalGeneral', function () {
+	return{
+		restrict: 'E',
+		templateUrl: 'templates/modal-general.html'
+	}
+});
