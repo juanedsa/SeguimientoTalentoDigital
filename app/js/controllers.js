@@ -363,3 +363,88 @@ controladores.controller("LoginBeneficiarioCtrl", function (
     });
   }
 });
+
+
+/** Controlador para registro de los beneficiarios.*/
+controladores.controller("RegistroBeneficiarioCtrl", function (
+  $scope,
+  $location,
+  $rootScope,
+  AuthFactory,
+  BeneficiariosFactory,
+  TiposIdentificacionFactory,
+  localStorageService,
+  LOCAL_STOGARE) {
+
+	$scope.beneficiariosArray = BeneficiariosFactory;
+	$scope.tiposIdentificacionArray = TiposIdentificacionFactory;
+
+	/** Funcion encargada de registrar un beneficiario */
+	$scope.registrarBeneficiario = function () {
+
+		console.log("Inicia [LoginBeneficiarioCtrl registrarBeneficiario]");
+
+		$scope.beneficiariosArray.$add({
+        	nombre: 								$scope.beneficiario.nombre,
+        	tipoIdentificacion: 		$scope.beneficiario.tipoIdentificacion,
+        	numeroIdentificacion: 	$scope.beneficiario.numeroIdentificacion,
+        	correo: 								$scope.beneficiario.correo
+      	}).then(function(ref) {
+			var id = ref.key();
+			console.log("Beneficiario agregado con el  id " + id);
+			$scope.beneficiariosArray.$indexFor(id); // returns location in the array
+
+			/** Se crea el usuario */
+			AuthFactory.$createUser({
+				email: 		$scope.beneficiario.correo,
+				password: 	$scope.beneficiario.clave
+			}).then(function(userData) {
+				console.log("Usuario creado con el id: " + userData.uid);
+
+				var refAuth = new Firebase("https://seguimientotalentodigital.firebaseio.com/");
+
+				refAuth
+				.authWithPassword({
+				  email    : $scope.beneficiario.correo,
+				  password : $scope.beneficiario.clave
+				}, function(error, authData) {
+				  if (error) {
+				    switch (error.code) {
+				      case "INVALID_EMAIL":
+				        console.log("The specified user account email is invalid.");
+				        break;
+				      case "INVALID_PASSWORD":
+				        console.log("The specified user account password is incorrect.");
+				        break;
+				      case "INVALID_USER":
+				        console.log("The specified user account does not exist.");
+				        break;
+				      default:
+				        console.log("Error logging user in:", error);
+				    }
+				  } else {
+
+				    console.log("Usuario inicio sesion con exito");
+
+            /** Se Guarda en el localStorage el correo del usuario que inicio la sesion */
+            localStorageService.set(LOCAL_STOGARE.CORREO_USUARIO, $scope.beneficiario.correo);
+
+				    /** Se envia al usuario a la pagina de dashboard */
+				    $rootScope.$apply(function() {
+				        $location.path('/dashboardBeneficiario');
+				        console.log($location.path());
+				    });
+				  }
+				});
+
+
+			}).catch(function(error) {
+				console.log("ERROR: al crear usuario " + error);
+			});
+		});
+	};
+
+  $scope.irLoginBeneficiario = function () {
+    $location.path('/loginBeneficiario');
+  };
+});
