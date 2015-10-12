@@ -1,5 +1,20 @@
 var services = angular.module('app.services', []);
 
+/** Fabrica de detalle Usuario */
+services.factory('DetalleUsuarioFactory', function() {
+
+	var detalleUsuario;
+
+  return {
+    set: function(usuario) {
+      detalleUsuario = usuario;
+    },
+		get: function() {
+			return detalleUsuario;
+		}
+  };
+});
+
 /** Fabrica de Beneficiarios */
 services.factory("BeneficiariosFactory", ["$firebaseArray", "FB",
 	function($firebaseArray, FB) {

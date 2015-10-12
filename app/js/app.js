@@ -27,6 +27,10 @@ app.config(function($routeProvider, $locationProvider){
 			templateUrl:'templates/nuevoUsuario.html',
 			controller: 'UsuarioCtrl'
 		})
+		.when('/detalleUsuario',{
+			templateUrl:'templates/detalleUsuario.html',
+			controller: 'DetalleUsuarioCtrl'
+		})
 		.when('/estados',{
 			templateUrl:'templates/estados.html',
 			controller: 'EstadoCtrl'
@@ -151,47 +155,6 @@ app.factory("TiposIdentificacionFactory", ["$firebaseArray",
 		return $firebaseArray(ref);
 	}
 ]);
-
-
-
-/**
- * Controlador para los usuarios.
- */
-app.controller("UsuarioCtrl", function ($scope, $location, $rootScope, RefFBFactory, UsuariosFactory,EstadosFactory,RolesFactory) {
-
-	/** Se inicializan los objetos traidos de fabricas */
-	$scope.usuariosArray = UsuariosFactory;
-	$scope.estadosArray = EstadosFactory;
-	$scope.rolesArray = RolesFactory;
-
-	/** Funcion encargada de enviar a la pagina para crear un nuevo usuarios */
-	$scope.irNuevoUsuario = function(){
-		console.log('irNuevoUsuario');
-		$location.path('/nuevoUsuario');
-	};
-
-	/** Funcion encargada de crear un nuevo usuario*/
-	$scope.crearUsuario = function(){
-
-		console.log("Creando Usuario");
-
-		$scope.usuariosArray.$add({
-        	nombre: $scope.usuario.nombre,
-        	correo: $scope.usuario.correo,
-        	rol: 		$scope.usuario.rol,
-        	estado: $scope.usuario.estado
-      	}).then(function(ref) {
-		  var id = ref.key();
-		  console.log("Usuario Agregado con el id " + id);
-		  $scope.usuariosArray.$indexFor(id); // returns location in the array
-
-		  $location.path('/usuarios');
-
-		});
-	};
-});
-
-
 
 /**
  * Controlador para los estados.

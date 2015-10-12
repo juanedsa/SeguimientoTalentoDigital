@@ -314,16 +314,17 @@ controladores.controller("LoginBeneficiarioCtrl", function (
   AuthFactory,
   localStorageService,
   LOCAL_STOGARE,
+  ERROR,
   FB) {
+
+  /** Para Pruebas */
+  $scope.correo = 'juanedsa@gmail.com';
+  $scope.clave = '123456';
 
 	/** Funcion encargada de enviar a la pagina de registro de un beneficiario */
 	$scope.irRegistroBeneficiario = function () {
    		$location.path('/registroBeneficiario');
 	};
-
-  /** Para Pruebas */
-  $scope.correo = 'juanedsa@gmail.com';
-  $scope.clave = '123456';
 
   /** Funcion encargada de hacer el login */
   $scope.login = function(){
@@ -337,23 +338,34 @@ controladores.controller("LoginBeneficiarioCtrl", function (
       if (error) {
         switch (error.code) {
           case "INVALID_EMAIL":
-            console.log("The specified user account email is invalid.");
+            console.log("El correo electrónico de cuenta de usuario especificado no es válido.");
             break;
           case "INVALID_PASSWORD":
-            console.log("The specified user account password is incorrect.");
+            console.log("La contraseña de la cuenta de usuario especificada es incorrecta.");
             break;
           case "INVALID_USER":
-            console.log("The specified user account does not exist.");
+            console.log("La cuenta de usuario especificada no existe.");
             break;
           default:
-            console.log("Error logging user in:", error);
+            console.log("Error de registro de usuario en:", error);
         }
+
+        /** Se muestra un mensaje de error al usuario */
+        $scope.$apply(function() {
+          $scope.modal = {
+            titulo: "Error",
+            mensaje: ERROR.INICIAR_SESION
+          };
+          $('#modal-general').modal('show');
+        });
+
       } else {
 
-        console.log("Authenticated successfully with payload:", authData);
+        console.log("Logeo exitoso con la siguiente información: ", authData);
 
         /** Se Guarda en el localStorage el correo del usuario que inicio la sesion */
         localStorageService.set(LOCAL_STOGARE.CORREO_USUARIO, $scope.correo);
+
         /** Se envia al usuario a la pagina de dashboard */
         $rootScope.$apply(function() {
             $location.path('/dashboardBeneficiario');
@@ -389,7 +401,7 @@ controladores.controller("RegistroBeneficiarioCtrl", function (
         	tipoIdentificacion: 		$scope.beneficiario.tipoIdentificacion,
         	numeroIdentificacion: 	$scope.beneficiario.numeroIdentificacion,
         	correo: 								$scope.beneficiario.correo
-      	}).then(function(ref) {
+    }).then(function(ref) {
 			var id = ref.key();
 			console.log("Beneficiario agregado con el  id " + id);
 			$scope.beneficiariosArray.$indexFor(id); // returns location in the array
@@ -447,4 +459,123 @@ controladores.controller("RegistroBeneficiarioCtrl", function (
   $scope.irLoginBeneficiario = function () {
     $location.path('/loginBeneficiario');
   };
+});
+
+
+/** Controlador para los usuarios.*/
+controladores.controller("UsuarioCtrl", function (
+  $scope,
+  $location,
+  $rootScope,
+  DetalleUsuarioFactory,
+  AuthFactory,
+  UsuariosFactory,
+  EstadosFactory,
+  RolesFactory) {
+
+	/** Se inicializan los objetos traidos de fabricas */
+	$scope.usuariosArray = UsuariosFactory;
+	$scope.estadosArray = EstadosFactory;
+	$scope.rolesArray = RolesFactory;
+
+	/** Funcion encargada de enviar a la pagina para crear un nuevo usuarios */
+	$scope.irNuevoUsuario = function(){
+		console.log('irNuevoUsuario');
+		$location.path('/nuevoUsuario');
+	};
+
+  $scope.irDetalleUsuario = function (usuario) {
+
+    DetalleUsuarioFactory.set(usuario);
+
+    $location.path('/detalleUsuario');
+  };
+
+	/** Funcion encargada de enviar a la pagina con el listado de usuarios */
+	$scope.irUsuarios = function(){
+		console.log('irUsuarios');
+		$location.path('/usuarios');
+	};
+
+	/** Funcion encargada de crear un nuevo usuario*/
+	$scope.crearUsuario = function(){
+
+		console.log("Creando Usuario");
+
+		$scope.usuariosArray.$add({
+        	nombre: $scope.usuario.nombre,
+        	correo: $scope.usuario.correo,
+        	rol: 		$scope.usuario.rol,
+        	estado: $scope.usuario.estado
+    }).then(function(ref) {
+		  var id = ref.key();
+		  console.log("Usuario Agregado con el id " + id);
+
+      $scope.usuariosArray.$indexFor(id); // returns location in the array
+
+      /** Se crea el usuario en FireBase*/
+			AuthFactory.$createUser({
+				email: 		   $scope.usuario.correo,
+				password: 	 $scope.usuario.clave
+			}).then(function(userData) {
+				console.log("Usuario creado en firebase con el id: " + userData.uid);
+
+        $location.path('/usuarios');
+			}).catch(function(error) {error
+        console.log(error);
+
+      });
+
+		});
+	};
+});
+
+/** Controlador para los usuarios.*/
+controladores.controller("DetalleUsuarioCtrl", function (
+  $scope,
+  $location,
+  DetalleUsuarioFactory,
+  EstadosFactory,
+  $firebaseObject,
+  RolesFactory,
+  FB) {
+
+    /** Se inicializan los objetos traidos de fabricas */
+    $scope.estadosArray = EstadosFactory;
+    $scope.rolesArray = RolesFactory;
+
+    //$scope.usuarioActual = DetalleUsuarioFactory.get();
+
+    /** Se obtiene el Key del beneficario */
+    var refUsuario = new Firebase(FB.USUARIOS + "/" + DetalleUsuarioFactory.get().$id);
+
+    /** Se hace una copia local del beneficiario */
+    var syncObject = $firebaseObject(refUsuario);
+    $scope.usuarioActual = syncObject;
+
+    console.log($scope.usuarioActual);
+
+    /** Funcion encargada de enviar a la pagina con el listado de usuarios */
+    $scope.irUsuarios = function(){
+      console.log('irUsuarios');
+      $location.path('/usuarios');
+    };
+
+    /** funcion encargada de guardar los datos del beneficario */
+    $scope.actualizarUsuario = function () {
+
+      $scope.usuarioActual.$save().then(function() {
+
+        $scope.modal = {
+          titulo: "Mensaje",
+          mensaje: "Datos el usuario guardados con exito!"
+        };
+        $('#modal-general').modal('show');
+
+       }).catch(function(error) {
+         alert('Error!');
+       });
+
+    };
+
 });

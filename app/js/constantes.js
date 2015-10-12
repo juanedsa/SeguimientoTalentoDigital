@@ -6,5 +6,10 @@ constantes.constant('LOCAL_STOGARE', {
 
 constantes.constant('FB', {
 	APP: 						"https://seguimientotalentodigital.firebaseio.com/",
-	BENEFICIARIOS: 	"https://seguimientotalentodigital.firebaseio.com/beneficiarios"
+	BENEFICIARIOS: 	"https://seguimientotalentodigital.firebaseio.com/beneficiarios",
+	USUARIOS: 	"https://seguimientotalentodigital.firebaseio.com/usuarios"
+});
+
+constantes.constant('ERROR', {
+	INICIAR_SESION: "Correo y/o Clave invalidos por favor verifique e intente de nuevo."
 });

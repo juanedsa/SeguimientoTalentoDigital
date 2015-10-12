@@ -6,8 +6,8 @@
           <tr>
               <th>Nombre</th>
               <th>Correo</th>
-              <th>Rol</th>
-              <th>Estado</th>
+              <!-- <th>Rol</th>
+              <th>Estado</th> -->
               <th>Acciones</th>
           </tr>
       </thead>
@@ -15,10 +15,10 @@
           <tr ng-repeat="usuario in usuariosArray">
               <td>{{usuario.nombre}}</td>
               <td>{{usuario.correo}}</td>
-              <td>{{usuario.rol.nombre}}</td>
-              <td>{{usuario.estado.nombre}}</td>
+              <!-- <td>{{usuario.rol.nombre}}</td>
+              <td>{{usuario.estado.nombre}}</td> -->
                <td>
-                  <a href="javascript:void(0)" class="btn btn-flat btn-info btn-xs">Detalle</a>
+                  <a ng-click="irDetalleUsuario(usuario)" class="btn btn-flat btn-info btn-xs">Detalle</a>
                   <a href="javascript:void(0)" class="btn btn-flat btn-danger btn-xs">Eliminar</a>
               </td>
           </tr>
