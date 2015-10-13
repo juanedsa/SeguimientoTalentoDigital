@@ -136,3 +136,53 @@ services.factory('AvanceFactory', function() {
     }
   };
 });
+
+/** Fabrica para la autenticacion con firebase */
+services.factory("AuthFactory", ["$firebaseAuth",
+  function($firebaseAuth) {
+    var ref = new Firebase("https://seguimientotalentodigital.firebaseio.com/");
+    return $firebaseAuth(ref);
+  }
+]);
+
+/** Fabrica referencias FireBase */
+services.factory("RefFBFactory", function(){
+	var ref = new Firebase("https://seguimientotalentodigital.firebaseio.com/");
+	return ref;
+});
+
+/** Fabrica de usuarios */
+services.factory("UsuariosFactory", ["$firebaseArray",
+
+	function($firebaseArray) {
+		var ref = new Firebase("https://seguimientotalentodigital.firebaseio.com/usuarios");
+		return $firebaseArray(ref);
+	}
+]);
+
+/** Fabrica de estados */
+services.factory("EstadosFactory", ["$firebaseArray",
+
+	function($firebaseArray) {
+		var ref = new Firebase("https://seguimientotalentodigital.firebaseio.com/configuracion/estados");
+		return $firebaseArray(ref);
+	}
+]);
+
+/** Fabrica de Roles */
+services.factory("RolesFactory", ["$firebaseArray",
+
+	function($firebaseArray) {
+		var ref = new Firebase("https://seguimientotalentodigital.firebaseio.com/configuracion/roles");
+		return $firebaseArray(ref);
+	}
+]);
+
+/** Fabrica de Tipos de Indentificación */
+services.factory("TiposIdentificacionFactory", ["$firebaseArray",
+
+	function($firebaseArray) {
+		var ref = new Firebase("https://seguimientotalentodigital.firebaseio.com/configuracion/tiposIdentificacion");
+		return $firebaseArray(ref);
+	}
+]);

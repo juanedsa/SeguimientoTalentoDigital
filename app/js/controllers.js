@@ -579,3 +579,152 @@ controladores.controller("DetalleUsuarioCtrl", function (
     };
 
 });
+
+
+
+/** Controlador para los estados. */
+controladores.controller("EstadoCtrl", function ($scope, $location, $rootScope, EstadosFactory) {
+
+	$scope.estadosArray = EstadosFactory;
+
+	/** Funcion encargada de enviar a la pagina para crear un nuevo estado */
+	$scope.irNuevoEstado = function(){
+		console.log('irNuevoEstado');
+		$location.path('/nuevoEstado');
+	};
+
+	/** Funcion encargada de crear un nuevo estado*/
+	$scope.crearEstado = function(){
+
+		console.log("Creando Estado");
+
+		$scope.estadosArray.$add({
+          id:           $scope.estadosArray.length + 1,
+        	nombre: 			$scope.estado.nombre,
+        	descripcion: 	$scope.estado.descripcion
+    }).then(function(ref) {
+		  var id = ref.key();
+		  console.log("Estado agreado con el id: " + id);
+
+			/** Se envia al listado de estados */
+		  $location.path('/estados');
+
+		});
+	};
+});
+
+/** Controlador para los Roles. */
+controladores.controller("RolCtrl", function ($scope, $location, $rootScope, RolesFactory) {
+
+	$scope.rolesArray = RolesFactory;
+
+	/** Funcion encargada de enviar a la pagina para crear un nuevo rol */
+	$scope.irNuevoRol = function(){
+		console.log('irNuevoRol');
+		$location.path('/nuevoRol');
+	};
+
+	/** Funcion encargada de crear un nuevo rol*/
+	$scope.crearRol = function(){
+
+		console.log("Creando Rol");
+
+		$scope.rolesArray.$add({
+        	nombre: 			$scope.rol.nombre,
+        	descripcion: 	$scope.rol.descripcion
+      	}).then(function(ref) {
+		  var id = ref.key();
+		  console.log("Rol insertado con el id: " + id);
+		  $scope.rolesArray.$indexFor(id); // returns location in the array
+
+		  $location.path('/roles');
+
+		});
+	};
+});
+
+/** Controlador para los Tipos de Indetificación. */
+controladores.controller("TipoIdentificacionCtrl", function ($scope, $location, $rootScope, TiposIdentificacionFactory) {
+
+	$scope.tiposIdentificacionArray = TiposIdentificacionFactory;
+
+	/** Funcion encargada de enviar a la pagina para crear un nuevo Tipo de Indentificación */
+	$scope.irNuevoTipoIdentificacion = function(){
+		console.log('irNuevoTipoIdentificacion');
+		$location.path('/nuevoTipoIdentificacion');
+	};
+
+	/** Funcion encargada de crear un nuevo Tipo de Identificacion*/
+	$scope.crearTipoIdentificacion = function(){
+
+		console.log("Creando Tipo de Identificacion");
+
+		$scope.tiposIdentificacionArray.$add({
+        	nombre: 			$scope.tipoIdentificacion.nombre,
+        	descripcion: 	$scope.tipoIdentificacion.descripcion
+      	}).then(function(ref) {
+		  var id = ref.key();
+		  console.log("Tipo de Indentificación insertado con el id: " + id);
+		  $scope.tiposIdentificacionArray.$indexFor(id); // returns location in the array
+
+		  $location.path('/tiposIdentificacion');
+
+		});
+	};
+});
+
+/** Controlador para login.*/
+controladores.controller("LoginCtrl", function ($scope, $location, $rootScope) {
+
+	/**
+	 *  Para Pruebas
+	 */
+	$scope.correo = 'admin@admin.com';
+	$scope.clave = 'admin';
+
+	$scope.redirectToDraftPage= function () {
+
+   		$location.path('/usuarios');
+
+	};
+
+
+	$scope.login = function(){
+
+		console.log($scope.correo);
+
+		var refAuth = new Firebase("https://seguimientotalentodigital.firebaseio.com/");
+
+		refAuth.authWithPassword({
+		  email    : $scope.correo,
+		  password : $scope.clave
+		}, function(error, authData) {
+		  if (error) {
+		    switch (error.code) {
+		      case "INVALID_EMAIL":
+		        console.log("The specified user account email is invalid.");
+		        break;
+		      case "INVALID_PASSWORD":
+		        console.log("The specified user account password is incorrect.");
+		        break;
+		      case "INVALID_USER":
+		        console.log("The specified user account does not exist.");
+		        break;
+		      default:
+		        console.log("Error logging user in:", error);
+		    }
+		  } else {
+
+
+		  	//$location.path('/usuarios');
+		    console.log("Authenticated successfully with payload:", authData);
+
+		    $rootScope.$apply(function() {
+
+		        $location.path('/usuarios');
+		        console.log($location.path());
+		      });
+		  }
+		});
+	}
+});
