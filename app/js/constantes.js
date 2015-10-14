@@ -5,11 +5,19 @@ constantes.constant('LOCAL_STOGARE', {
 });
 
 constantes.constant('FB', {
-	APP: 						"https://seguimientotalentodigital.firebaseio.com/",
-	BENEFICIARIOS: 	"https://seguimientotalentodigital.firebaseio.com/beneficiarios",
-	USUARIOS: 	"https://seguimientotalentodigital.firebaseio.com/usuarios"
+	APP: 									"https://seguimientotalentodigital.firebaseio.com/",
+	BENEFICIARIOS: 				"https://seguimientotalentodigital.firebaseio.com/beneficiarios",
+	USUARIOS: 						"https://seguimientotalentodigital.firebaseio.com/usuarios",
+	ESTADOS: 							"https://seguimientotalentodigital.firebaseio.com/configuracion/estados",
+	TIPOS_IDENTIFICACION: "https://seguimientotalentodigital.firebaseio.com/configuracion/tiposIdentificacion"
 });
 
 constantes.constant('ERROR', {
 	INICIAR_SESION: "Correo y/o Clave invalidos por favor verifique e intente de nuevo."
+});
+
+constantes.constant('ROL', {
+	ADMINISTRADOR: 	1,
+	BENEFICIARIO: 	2,
+	FUNCIONARIO: 		3
 });

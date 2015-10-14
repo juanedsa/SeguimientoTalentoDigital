@@ -5,7 +5,7 @@
       <thead>
           <tr>
               <th>Nombre</th>
-              <th>Descripcion</th>
+              <th>Descripción</th>
           </tr>
       </thead>
       <tbody>
@@ -13,8 +13,7 @@
               <td>{{tipoIdentificacion.nombre}}</td>
               <td>{{tipoIdentificacion.descripcion}}</td>
                <td>
-                  <a href="javascript:void(0)" class="btn btn-flat btn-info btn-xs">Detalle</a>
-                  <a href="javascript:void(0)" class="btn btn-flat btn-danger btn-xs">Eliminar</a>
+                  <a ng-click="irDetalle(tipoIdentificacion)" class="btn btn-flat btn-info btn-xs">Detalle</a>
               </td>
           </tr>
       </tbody>

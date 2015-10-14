@@ -40,13 +40,9 @@ app.config(function($routeProvider, $locationProvider){
 			templateUrl:'templates/nuevoEstado.html',
 			controller: 'EstadoCtrl'
 		})
-		.when('/roles',{
-			templateUrl:'templates/roles.html',
-			controller: 'RolCtrl'
-		})
-		.when('/nuevoRol',{
-			templateUrl:'templates/nuevoRol.html',
-			controller: 'RolCtrl'
+		.when('/detalleEstado',{
+			templateUrl:'templates/detalleEstado.html',
+			controller: 'DetalleEstadoCtrl'
 		})
 		.when('/tiposIdentificacion',{
 			templateUrl:'templates/tiposIdentificacion.html',
@@ -55,6 +51,10 @@ app.config(function($routeProvider, $locationProvider){
 		.when('/nuevoTipoIdentificacion',{
 			templateUrl:'templates/nuevoTipoIdentificacion.html',
 			controller: 'TipoIdentificacionCtrl'
+		})
+		.when('/detalleTipoIdentificacion',{
+			templateUrl:'templates/detalleTipoIdentificacion.html',
+			controller: 'DetalleTipoIdentificacionCtrl'
 		})
 		.when('/loginBeneficiario',{
 			templateUrl:'templates/loginBeneficiario.html',

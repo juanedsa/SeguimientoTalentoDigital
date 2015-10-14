@@ -15,6 +15,36 @@ services.factory('DetalleUsuarioFactory', function() {
   };
 });
 
+/** Fabrica de detalle Tipo de Identificacion */
+services.factory('DetalleTipoIndetificacionFactory', function() {
+
+	var detalleTipoIdentificacion;
+
+  return {
+    set: function(tipoIdentificacion) {
+      detalleTipoIdentificacion = tipoIdentificacion;
+    },
+		get: function() {
+			return detalleTipoIdentificacion;
+		}
+  };
+});
+
+/** Fabrica de detalle Estado */
+services.factory('DetalleEstadoFactory', function() {
+
+	var detalleEstado;
+
+  return {
+    set: function(estado) {
+      detalleEstado = estado;
+    },
+		get: function() {
+			return detalleEstado;
+		}
+  };
+});
+
 /** Fabrica de Beneficiarios */
 services.factory("BeneficiariosFactory", ["$firebaseArray", "FB",
 	function($firebaseArray, FB) {
@@ -170,13 +200,19 @@ services.factory("EstadosFactory", ["$firebaseArray",
 ]);
 
 /** Fabrica de Roles */
-services.factory("RolesFactory", ["$firebaseArray",
+services.factory("RolesFactory", function () {
+	var RolesList = [
+		{id: 1 , nombre: "Administrador"},
+		{id: 2 , nombre: "Beneficiario"},
+		{id: 3 , nombre: "Funcionario"}
+	];
 
-	function($firebaseArray) {
-		var ref = new Firebase("https://seguimientotalentodigital.firebaseio.com/configuracion/roles");
-		return $firebaseArray(ref);
-	}
-]);
+  return {
+    all: function() {
+      return RolesList;
+    }
+  };
+});
 
 /** Fabrica de Tipos de Indentificación */
 services.factory("TiposIdentificacionFactory", ["$firebaseArray",

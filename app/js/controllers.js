@@ -476,7 +476,7 @@ controladores.controller("UsuarioCtrl", function (
 	/** Se inicializan los objetos traidos de fabricas */
 	$scope.usuariosArray = UsuariosFactory;
 	$scope.estadosArray = EstadosFactory;
-	$scope.rolesArray = RolesFactory;
+	$scope.rolesArray = RolesFactory.all();
 
 	/** Funcion encargada de enviar a la pagina para crear un nuevo usuarios */
 	$scope.irNuevoUsuario = function(){
@@ -542,7 +542,7 @@ controladores.controller("DetalleUsuarioCtrl", function (
 
     /** Se inicializan los objetos traidos de fabricas */
     $scope.estadosArray = EstadosFactory;
-    $scope.rolesArray = RolesFactory;
+    $scope.rolesArray = RolesFactory.all();
 
     //$scope.usuarioActual = DetalleUsuarioFactory.get();
 
@@ -583,7 +583,11 @@ controladores.controller("DetalleUsuarioCtrl", function (
 
 
 /** Controlador para los estados. */
-controladores.controller("EstadoCtrl", function ($scope, $location, $rootScope, EstadosFactory) {
+controladores.controller("EstadoCtrl", function (
+  $scope,
+  $location,
+  EstadosFactory,
+  DetalleEstadoFactory) {
 
 	$scope.estadosArray = EstadosFactory;
 
@@ -591,6 +595,12 @@ controladores.controller("EstadoCtrl", function ($scope, $location, $rootScope, 
 	$scope.irNuevoEstado = function(){
 		console.log('irNuevoEstado');
 		$location.path('/nuevoEstado');
+	};
+
+	/** Funcion encargada de enviar a la pagina con el listado de estados*/
+	$scope.irEstados = function(){
+		console.log('irEstados');
+		$location.path('/estados');
 	};
 
 	/** Funcion encargada de crear un nuevo estado*/
@@ -611,40 +621,78 @@ controladores.controller("EstadoCtrl", function ($scope, $location, $rootScope, 
 
 		});
 	};
+
+  $scope.irDetalleEstado = function (estado) {
+
+    DetalleEstadoFactory.set(estado);
+    $location.path('/detalleEstado');
+  };
+
+
 });
 
-/** Controlador para los Roles. */
-controladores.controller("RolCtrl", function ($scope, $location, $rootScope, RolesFactory) {
+/** Controlador para el detalle de un Estado. */
+controladores.controller("DetalleEstadoCtrl", function (
+  $scope,
+  $location,
+  $rootScope,
+  EstadosFactory,
+  DetalleEstadoFactory,
+  $firebaseObject,
+  FB) {
 
-	$scope.rolesArray = RolesFactory;
+	$scope.estadosArray = EstadosFactory;
 
-	/** Funcion encargada de enviar a la pagina para crear un nuevo rol */
-	$scope.irNuevoRol = function(){
-		console.log('irNuevoRol');
-		$location.path('/nuevoRol');
-	};
+  /** Se obtiene la referencia al estado */
+  var refEstado = new Firebase(FB.ESTADOS + "/" + DetalleEstadoFactory.get().$id);
 
-	/** Funcion encargada de crear un nuevo rol*/
-	$scope.crearRol = function(){
+  /** Se hace una copia local del estado */
+  var syncObject = $firebaseObject(refEstado);
+  $scope.detalleEstado = syncObject;
 
-		console.log("Creando Rol");
 
-		$scope.rolesArray.$add({
-        	nombre: 			$scope.rol.nombre,
-        	descripcion: 	$scope.rol.descripcion
-      	}).then(function(ref) {
-		  var id = ref.key();
-		  console.log("Rol insertado con el id: " + id);
-		  $scope.rolesArray.$indexFor(id); // returns location in the array
+  /** Funcion encargada de guardar el estado */
+  $scope.guardarEstado = function () {
 
-		  $location.path('/roles');
+    $scope.detalleEstado.$save().then(function() {
 
-		});
-	};
+      $scope.modal = {
+        titulo: "Mensaje",
+        mensaje: "Estado guardado con exito!"
+      };
+      $('#modal-general').modal('show');
+
+      /** Funcion que se ejecuta cuando se oculta el modal */
+      $('#modal-general').on('hidden.bs.modal', function (e) {
+
+        $rootScope.$apply(function() {
+            $location.path('/estados');
+        });
+      });
+
+     }).catch(function(error) {
+       alert('Error!');
+     });
+
+
+  };
+
+  /** Funcion encargada de enviar a la pagina con el listado de estados*/
+  $scope.irEstados = function(){
+    console.log('irEstados');
+    $location.path('/estados');
+  };
+
+
 });
 
 /** Controlador para los Tipos de Indetificación. */
-controladores.controller("TipoIdentificacionCtrl", function ($scope, $location, $rootScope, TiposIdentificacionFactory) {
+controladores.controller("TipoIdentificacionCtrl", function (
+  $scope,
+  $location,
+  $rootScope,
+  TiposIdentificacionFactory,
+  DetalleTipoIndetificacionFactory) {
 
 	$scope.tiposIdentificacionArray = TiposIdentificacionFactory;
 
@@ -652,6 +700,19 @@ controladores.controller("TipoIdentificacionCtrl", function ($scope, $location, 
 	$scope.irNuevoTipoIdentificacion = function(){
 		console.log('irNuevoTipoIdentificacion');
 		$location.path('/nuevoTipoIdentificacion');
+	};
+
+	/** Funcion encargada de enviar a la pagina con el listado de Tipos de Indentificación */
+	$scope.irTiposIdentificacion = function(){
+		console.log('irTiposIdentificacion');
+		$location.path('/tiposIdentificacion');
+	};
+
+	/** Funcion encargada de enviar a la pagina con el listado de Tipos de Indentificación */
+	$scope.irDetalle = function(tipoIdentificacion){
+
+    DetalleTipoIndetificacionFactory.set(tipoIdentificacion);
+		$location.path('/detalleTipoIdentificacion');
 	};
 
 	/** Funcion encargada de crear un nuevo Tipo de Identificacion*/
@@ -671,6 +732,62 @@ controladores.controller("TipoIdentificacionCtrl", function ($scope, $location, 
 
 		});
 	};
+});
+
+/** Controlador para el detalle de un Tipo de Identificacion. */
+controladores.controller("DetalleTipoIdentificacionCtrl", function (
+  $scope,
+  $location,
+  $rootScope,
+  TiposIdentificacionFactory,
+  DetalleTipoIndetificacionFactory,
+  $firebaseObject,
+  FB) {
+
+	$scope.estadosArray = TiposIdentificacionFactory;
+
+  /** Se obtiene la referencia al tipo de Identificacion */
+  var refTipoIdentificacion = new Firebase(FB.TIPOS_IDENTIFICACION + "/" + DetalleTipoIndetificacionFactory.get().$id);
+
+  /** Se hace una copia local del tipo de Identificacion */
+  var syncObject = $firebaseObject(refTipoIdentificacion);
+  $scope.detalleTipoIdentificacion = syncObject;
+
+  /** Funcion encargada de guardar el Tipo de Identificacion */
+  $scope.guardarTipoIdentificacion = function () {
+
+    console.log("Inicia guardarTipoIdentificacion");
+
+    $scope.detalleTipoIdentificacion.$save().then(function() {
+
+      $scope.modal = {
+        titulo: "Mensaje",
+        mensaje: "Tipo de Indentificación guardado con exito!"
+      };
+      $('#modal-general').modal('show');
+
+      /** Funcion que se ejecuta cuando se oculta el modal */
+      $('#modal-general').on('hidden.bs.modal', function (e) {
+
+        $rootScope.$apply(function() {
+            $location.path('/tiposIdentificacion');
+        });
+      });
+
+     }).catch(function(error) {
+       alert('Error!');
+     });
+
+
+  };
+
+  /** Funcion encargada de enviar a la pagina con el listado de Tipos de Identificacion*/
+  $scope.irTiposIdentificacion = function(){
+    console.log('irTiposIdentificacion');
+    $location.path('/tiposIdentificacion');
+  };
+
+
 });
 
 /** Controlador para login.*/
