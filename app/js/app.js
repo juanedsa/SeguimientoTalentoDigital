@@ -72,10 +72,6 @@ app.config(function($routeProvider, $locationProvider){
 			templateUrl:'templates/detalleTipoIdentificacion.html',
 			controller: 'DetalleTipoIdentificacionCtrl'
 		})
-		.when('/loginBeneficiario',{
-			templateUrl:'templates/loginBeneficiario.html',
-			controller: 'LoginBeneficiarioCtrl'
-		})
 		.when('/registroBeneficiario',{
 			templateUrl:'templates/registroBeneficiario.html',
 			controller: 'RegistroBeneficiarioCtrl'

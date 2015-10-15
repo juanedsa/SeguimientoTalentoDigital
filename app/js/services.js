@@ -272,3 +272,12 @@ services.factory("TiposIdentificacionFactory", ["$firebaseArray",
 		return $firebaseArray(ref);
 	}
 ]);
+
+/** Fabrica de Roles Usuario*/
+services.factory("RolesUsuarioFactory", ["$firebaseArray",
+
+	function($firebaseArray) {
+		var ref = new Firebase("https://seguimientotalentodigital.firebaseio.com/rolesUsuario");
+		return $firebaseArray(ref);
+	}
+]);

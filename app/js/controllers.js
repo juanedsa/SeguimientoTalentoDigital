@@ -333,20 +333,21 @@ controladores.controller('DatosProyectoCtrl', function (
 });
 
 
-/** Controlador para login de los beneficiarios. */
-controladores.controller("LoginBeneficiarioCtrl", function (
+/** Controlador para login. */
+controladores.controller("LoginCtrl", function (
   $scope,
   $location,
   $rootScope,
   AuthFactory,
   localStorageService,
   LOCAL_STOGARE,
+  ADMIN,
   ERROR,
   FB) {
 
   /** Para Pruebas */
-  $scope.correo = 'juanedsa@gmail.com';
-  $scope.clave = '123456';
+  $scope.correo = ADMIN.CORREO;
+  $scope.clave = 'admin';
 
 	/** Funcion encargada de enviar a la pagina de registro de un beneficiario */
 	$scope.irRegistroBeneficiario = function () {
@@ -393,11 +394,22 @@ controladores.controller("LoginBeneficiarioCtrl", function (
         /** Se Guarda en el localStorage el correo del usuario que inicio la sesion */
         localStorageService.set(LOCAL_STOGARE.CORREO_USUARIO, $scope.correo);
 
-        /** Se envia al usuario a la pagina de dashboard */
-        $rootScope.$apply(function() {
-            $location.path('/dashboardBeneficiario');
-            console.log($location.path());
-        });
+        /** Se verifica si es el administrador del sistema */
+        if (angular.equals(ADMIN.CORREO, $scope.correo)) {
+            console.log("Login Administrador");
+
+            /** Se envia la pagina principal del administrador */
+            $rootScope.$apply(function() {
+                $location.path('/usuarios');
+                console.log($location.path());
+            });
+        }else{
+            /** Se envia al usuario a la pagina de dashboard */
+            $rootScope.$apply(function() {
+                $location.path('/dashboardBeneficiario');
+                console.log($location.path());
+            });
+        }
       }
     });
   }
@@ -494,6 +506,9 @@ controladores.controller("UsuarioCtrl", function (
   $scope,
   $location,
   $rootScope,
+  $firebaseObject,
+  $firebaseAuth,
+  RolesUsuarioFactory,
   DetalleUsuarioFactory,
   AuthFactory,
   UsuariosFactory,
@@ -504,7 +519,73 @@ controladores.controller("UsuarioCtrl", function (
 	/** Se inicializan los objetos traidos de fabricas */
 	$scope.usuariosArray = UsuariosFactory;
 	$scope.estadosArray = EstadosFactory;
+	$scope.rolesUsuarioArray = RolesUsuarioFactory;
 	$scope.rolesArray = RolesFactory.all();
+
+  $scope.ejemplo = function () {
+    var FIREBASEURL = "https://seguimientotalentodigital.firebaseio.com"
+
+    var ref = new Firebase(FIREBASEURL);
+    $rootScope.authObj = $firebaseAuth(ref);
+
+    var newUser = {
+      email: "email@email.com",
+      password: "password",
+      displayName: "Display Name",
+      favFood: "Food"
+    };
+
+    $rootScope.authObj.$createUser(
+      {
+				email: 		   newUser.email,
+				password: 	 newUser.password
+			}
+
+
+    ).then(function(authData) {
+      console.log(authData.uid); //should log new uid.
+      //return createProfile(newUser, authData);
+
+
+      $scope.rolesUsuarioArray.$add({
+          	usuario: newUser.email,
+          	rol: 		1
+      }).then(function(ref) {
+  		  var id = ref.key();
+  		  console.log("Usuario Agregado con el id " + id);
+
+        var rolesUsuario = $scope.rolesUsuarioArray;
+        //console.log(rolesUsuario);
+        angular.forEach(rolesUsuario, function (rolUsuario) {
+            //console.log(rolUsuario);
+            if (angular.equals(rolUsuario.usuario, newUser.email)) {
+                console.log("Encontrado");
+                console.log(rolUsuario);
+            }
+        });
+
+
+  		});
+    });
+
+
+    function createProfile(user, authData){
+      var ref = new Firebase('https://seguimientotalentodigital.firebaseio.com/rolesUsuario/' + authData.uid);
+      var profileRef = $firebaseObject(ref);
+      console.log(profileRef);
+      profileRef = {
+        rol: "1"
+      }
+
+      profileRef.$save().then(function() {
+
+        console.log("exito");
+      }, function(error) {
+        console.log("Error:", error);
+      });
+      //return profileRef.$save();
+    };
+  }
 
 	/** Funcion encargada de enviar a la pagina para crear un nuevo usuarios */
 	$scope.irNuevoUsuario = function(){
@@ -933,60 +1014,4 @@ controladores.controller("DetalleTipoIdentificacionCtrl", function (
   };
 
 
-});
-
-/** Controlador para login.*/
-controladores.controller("LoginCtrl", function ($scope, $location, $rootScope) {
-
-	/**
-	 *  Para Pruebas
-	 */
-	$scope.correo = 'admin@admin.com';
-	$scope.clave = 'admin';
-
-	$scope.redirectToDraftPage= function () {
-
-   		$location.path('/usuarios');
-
-	};
-
-
-	$scope.login = function(){
-
-		console.log($scope.correo);
-
-		var refAuth = new Firebase("https://seguimientotalentodigital.firebaseio.com/");
-
-		refAuth.authWithPassword({
-		  email    : $scope.correo,
-		  password : $scope.clave
-		}, function(error, authData) {
-		  if (error) {
-		    switch (error.code) {
-		      case "INVALID_EMAIL":
-		        console.log("The specified user account email is invalid.");
-		        break;
-		      case "INVALID_PASSWORD":
-		        console.log("The specified user account password is incorrect.");
-		        break;
-		      case "INVALID_USER":
-		        console.log("The specified user account does not exist.");
-		        break;
-		      default:
-		        console.log("Error logging user in:", error);
-		    }
-		  } else {
-
-
-		  	//$location.path('/usuarios');
-		    console.log("Authenticated successfully with payload:", authData);
-
-		    $rootScope.$apply(function() {
-
-		        $location.path('/usuarios');
-		        console.log($location.path());
-		      });
-		  }
-		});
-	}
 });

@@ -1,4 +1,4 @@
-<barra-navegacion></barra-navegacion>
+<barra-navegacion-admin></barra-navegacion-admin>
 
 <modal-Confirmacion></modal-Confirmacion>
 
@@ -8,8 +8,6 @@
           <tr>
               <th>Nombre</th>
               <th>Correo</th>
-              <!-- <th>Rol</th>
-              <th>Estado</th> -->
               <th>Acciones</th>
           </tr>
       </thead>
@@ -17,8 +15,6 @@
           <tr ng-repeat="usuario in usuariosArray">
               <td>{{usuario.nombre}}</td>
               <td>{{usuario.correo}}</td>
-              <!-- <td>{{usuario.rol.nombre}}</td>
-              <td>{{usuario.estado.nombre}}</td> -->
                <td>
                   <a ng-click="irDetalleUsuario(usuario)" class="btn btn-flat btn-info btn-xs">Detalle</a>
                   <a ng-click="eliminarUsuario(usuario)" class="btn btn-flat btn-danger btn-xs">Eliminar</a>
@@ -26,6 +22,7 @@
           </tr>
       </tbody>
   </table>
+  <button ng-click="ejemplo()" class="btn btn-flat btn-info btn-xs">Ejemplo</button>
   <div class="floating-action-button">
       <button ng-click="irNuevoUsuario()" class="btn btn-fab btn-raised btn-material-red"><i class="mdi-content-add"></i></button>
   </div>

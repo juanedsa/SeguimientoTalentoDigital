@@ -4,6 +4,10 @@ constantes.constant('LOCAL_STOGARE', {
 	CORREO_USUARIO: "correo_usuario"
 });
 
+constantes.constant('ADMIN', {
+	CORREO: "admin@admin.com"
+});
+
 constantes.constant('FB', {
 	APP: 									"https://seguimientotalentodigital.firebaseio.com/",
 	BENEFICIARIOS: 				"https://seguimientotalentodigital.firebaseio.com/beneficiarios",

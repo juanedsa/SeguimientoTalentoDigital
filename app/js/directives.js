@@ -8,6 +8,14 @@ directivas.directive('barraNavegacion', function () {
 	}
 });
 
+/** Directiva barra de navegación superior del Administrador */
+directivas.directive('barraNavegacionAdmin', function () {
+	return{
+		restrict: 'E',
+		templateUrl: 'templates/barra-navegacion-admin.html'
+	}
+});
+
 /** Directiva mostrar un modal general */
 directivas.directive('modalGeneral', function () {
 	return{
