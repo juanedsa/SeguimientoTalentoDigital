@@ -5,7 +5,7 @@ constantes.constant('LOCAL_STOGARE', {
 });
 
 constantes.constant('ADMIN', {
-	CORREO: "admin@admin.com"
+	UID: "529d8d30-9ff1-4787-b5e2-e03ac96eb794"
 });
 
 constantes.constant('FB', {

@@ -96,6 +96,14 @@ app.config(function($routeProvider, $locationProvider){
 			templateUrl:'templates/datosProyecto.html',
 			controller: 'DatosProyectoCtrl'
 		})
+		.when('/cambiarCorreoAdmin',{
+			templateUrl:'templates/cambiarCorreoAdmin.html',
+			controller: 'CambiarCorreoCtrl'
+		})
+		.when('/cambiarClaveAdmin',{
+			templateUrl:'templates/cambiarClaveAdmin.html',
+			controller: 'CambiarClaveCtrl'
+		})
 		.otherwise({
 			redirectTo: '/'
 		});

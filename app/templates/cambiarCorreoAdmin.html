@@ -4,49 +4,45 @@
 
 <div class="container">
   <div class="jumbotron">
-    <div class="container-fluid">
       <div class="page-header">
-        <h1>Detalle Usuario</h1>
+        <h1>Cambio de correo</h1>
         <h4 class="text-info">Todos los campos marcados con (*) son obligatorios.</h4>
-        <button class="btn btn-primary btn-flat"  ng-click="irUsuarios()"><i class="mdi-navigation-arrow-back"></i> Atras</button>
       </div>
       <form class="form-horizontal">
           <fieldset>
               <div class="form-group">
-                  <label class="col-md-2 control-label">Nombre Completo(*)</label>
+                  <label class="col-md-2 control-label">Correo Actual(*)</label>
                   <div class="col-md-9">
-                    <input type="text" class="form-control" ng-model="usuarioActual.nombre">
+                    <input type="email" class="form-control" ng-model="correoActual">
                   </div>
                   <div class="col-md-1">
                     <p class="text-danger"><i class="mdi-alert-error"></i></p>
                   </div>
               </div>
               <div class="form-group">
-                  <label class="col-md-2 control-label">Correo(*)</label>
+                  <label class="col-md-2 control-label">Correo Nuevo(*)</label>
                   <div class="col-md-9">
-                    <input disabled="" type="email" class="form-control" ng-model="usuarioActual.correo">
+                    <input type="email" class="form-control" ng-model="correoNuevo">
                   </div>
                   <div class="col-md-1">
                     <p class="text-danger"><i class="mdi-alert-error"></i></p>
                   </div>
               </div>
               <div class="form-group">
-                  <label class="col-md-2 control-label">Estado(*)</label>
+                  <label class="col-md-2 control-label">Clave Actual(*)</label>
                   <div class="col-md-9">
-                    <select class="form-control" ng-model="usuarioActual.estado" ng-options="estado.id as estado.nombre for estado in estadosArray"></select>
+                    <input type="password" class="form-control" ng-model="claveActual">
                   </div>
                   <div class="col-md-1">
                     <p class="text-danger"><i class="mdi-alert-error"></i></p>
                   </div>
               </div>
               <div class="form-group">
-                  <div class="col-md-10 col-md-offset-2">
-                      <button class="btn btn-default" ng-click="irUsuarios()">Cancelar</button>
-                      <button type="submit" class="btn btn-primary" ng-click="actualizarUsuario()">Guardar</button>
+                  <div class="col-lg-10 col-lg-offset-2">
+                      <button type="submit" class="btn btn-primary" ng-click="cambiarCorreo()">Aceptar</button>
                   </div>
               </div>
           </fieldset>
       </form>
-    </div>
   </div>
 </div>
