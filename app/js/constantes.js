@@ -1,7 +1,8 @@
 var constantes = angular.module("app.constantes", []);
 
 constantes.constant('LOCAL_STOGARE', {
-	CORREO_USUARIO: "correo_usuario"
+	CORREO_USUARIO: "correo_usuario",
+	NOMBRE_USUARIO: "nombre_usuario"
 });
 
 constantes.constant('ADMIN', {

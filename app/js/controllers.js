@@ -5,7 +5,11 @@ var controladores = angular.module('app.controllers', [
 /** Controlador para el dashboard del beneficiario. */
 controladores.controller("DashBoardBeneficiarioCtrl", function (
   $scope,
+  localStorageService,
+  LOCAL_STOGARE,
   $location) {
+
+  $scope.nombreBeneficiario = localStorageService.get(LOCAL_STOGARE.NOMBRE_USUARIO);
 
   /** Funcion encargada de enviar a la pagina de datos personales */
   $scope.irDatosPersonales = function () {
@@ -341,6 +345,9 @@ controladores.controller("LoginCtrl", function (
   AuthFactory,
   localStorageService,
   LOCAL_STOGARE,
+  RolesUsuarioFactory,
+  BeneficiariosFactory,
+  ROL,
   ADMIN,
   ERROR,
   FB) {
@@ -348,6 +355,9 @@ controladores.controller("LoginCtrl", function (
   /** Para Pruebas */
   $scope.correo = "admin@admin.com";
   $scope.clave = 'admin';
+
+	$scope.rolesUsuarioArray = RolesUsuarioFactory;
+  $scope.beneficiariosArray = BeneficiariosFactory;
 
 	/** Funcion encargada de enviar a la pagina de registro de un beneficiario */
 	$scope.irRegistroBeneficiario = function () {
@@ -404,10 +414,42 @@ controladores.controller("LoginCtrl", function (
                 console.log($location.path());
             });
         }else{
-            /** Se envia al usuario a la pagina de dashboard */
-            $rootScope.$apply(function() {
-                $location.path('/dashboardBeneficiario');
-                console.log($location.path());
+
+            var rolesUsuario = $scope.rolesUsuarioArray;
+            //console.log(rolesUsuario);
+            angular.forEach(rolesUsuario, function (rolUsuario) {
+                //console.log(rolUsuario);
+                if (angular.equals(rolUsuario.correo, $scope.correo)) {
+
+                    if (angular.equals(rolUsuario.rol, ROL.FUNCIONARIO)) {
+                      /** Se envia al usuario a la pagina principal del rol funcionario*/
+                      $rootScope.$apply(function() {
+                          $location.path('/beneficiarios');
+                          console.log($location.path());
+                      });
+
+                    }else{
+
+                        var beneficiarios = $scope.beneficiariosArray;
+
+                        angular.forEach(beneficiarios, function (beneficario) {
+
+                            if (angular.equals(beneficario.correo, $scope.correo)) {
+
+                              /** Se Guarda en el localStorage el nombre del usuario que inicio la sesion */
+                              localStorageService.set(LOCAL_STOGARE.NOMBRE_USUARIO, beneficario.nombre);
+
+                              /** Se envia al usuario a la pagina de dashboard */
+                              $rootScope.$apply(function() {
+                                  $location.path('/dashboardBeneficiario');
+                                  console.log($location.path());
+                              });
+
+                            }
+                        });
+
+                    }
+                }
             });
         }
       }
