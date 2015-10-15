@@ -38,15 +38,6 @@
                   </div>
               </div>
               <div class="form-group">
-                  <label class="col-md-2 control-label">Rol(*)</label>
-                  <div class="col-md-9">
-                    <select class="form-control" ng-model="usuario.rol" ng-options="rol.id as rol.nombre for rol in rolesArray"></select>
-                  </div>
-                  <div class="col-md-1">
-                    <p class="text-danger"><i class="mdi-alert-error"></i></p>
-                  </div>
-              </div>
-              <div class="form-group">
                   <label class="col-md-2 control-label">Estado(*)</label>
                   <div class="col-md-9">
                     <select class="form-control" ng-model="usuario.estado" ng-options="estado.id as estado.nombre for estado in estadosArray"></select>
@@ -57,7 +48,7 @@
               </div>
               <div class="form-group">
                   <div class="col-md-10 col-md-offset-2">
-                      <button class="btn btn-default">Cancelar</button>
+                      <button class="btn btn-default" ng-click="irUsuarios()">Cancelar</button>
                       <button type="submit" class="btn btn-primary" ng-click="crearUsuario()">Aceptar</button>
                   </div>
               </div>

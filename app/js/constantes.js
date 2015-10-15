@@ -9,6 +9,7 @@ constantes.constant('FB', {
 	BENEFICIARIOS: 				"https://seguimientotalentodigital.firebaseio.com/beneficiarios",
 	USUARIOS: 						"https://seguimientotalentodigital.firebaseio.com/usuarios",
 	ESTADOS: 							"https://seguimientotalentodigital.firebaseio.com/configuracion/estados",
+	CONVOCATORIAS: 				"https://seguimientotalentodigital.firebaseio.com/configuracion/convocatorias",
 	TIPOS_IDENTIFICACION: "https://seguimientotalentodigital.firebaseio.com/configuracion/tiposIdentificacion"
 });
 

@@ -15,6 +15,21 @@ services.factory('DetalleUsuarioFactory', function() {
   };
 });
 
+/** Fabrica de detalle Convocatoria */
+services.factory('DetalleConvocatoriaFactory', function() {
+
+	var detalleConvocatoria;
+
+  return {
+    set: function(convocatoria) {
+      detalleConvocatoria = convocatoria;
+    },
+		get: function() {
+			return detalleConvocatoria;
+		}
+  };
+});
+
 /** Fabrica de detalle Tipo de Identificacion */
 services.factory('DetalleTipoIndetificacionFactory', function() {
 
@@ -85,24 +100,24 @@ services.factory('CiudadesFactory', function() {
   };
 });
 
-/** Fabrica de Convocatorias */
-services.factory('ConvocatoriasFactory', function() {
-
-  var ConvocatoriasList = [
-		{id: 1 , nombre: "2012"},
-		{id: 2 , nombre: "2013-1"},
-		{id: 3 , nombre: "2013-2"},
-		{id: 4 , nombre: "2014-1"},
-		{id: 5 , nombre: "2014-2"},
-		{id: 6 , nombre: "2015-1"}
-	];
-
-  return {
-    all: function() {
-      return ConvocatoriasList;
-    }
-  };
-});
+// /** Fabrica de Convocatorias */
+// services.factory('ConvocatoriasFactory', function() {
+//
+//   var ConvocatoriasList = [
+// 		{id: 1 , nombre: "2012"},
+// 		{id: 2 , nombre: "2013-1"},
+// 		{id: 3 , nombre: "2013-2"},
+// 		{id: 4 , nombre: "2014-1"},
+// 		{id: 5 , nombre: "2014-2"},
+// 		{id: 6 , nombre: "2015-1"}
+// 	];
+//
+//   return {
+//     all: function() {
+//       return ConvocatoriasList;
+//     }
+//   };
+// });
 
 /** Fabrica de Semestres */
 services.factory('SemestresFactory', function() {
@@ -195,6 +210,15 @@ services.factory("EstadosFactory", ["$firebaseArray",
 
 	function($firebaseArray) {
 		var ref = new Firebase("https://seguimientotalentodigital.firebaseio.com/configuracion/estados");
+		return $firebaseArray(ref);
+	}
+]);
+
+/** Fabrica de convocatorias */
+services.factory("ConvocatoriasFactory", ["$firebaseArray",
+
+	function($firebaseArray) {
+		var ref = new Firebase("https://seguimientotalentodigital.firebaseio.com/configuracion/convocatorias");
 		return $firebaseArray(ref);
 	}
 ]);

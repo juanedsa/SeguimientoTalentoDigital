@@ -63,7 +63,7 @@ controladores.controller('DatosPersonalesCtrl', function (
   /** Se obtienen ciudades */
   $scope.ciudadesList = CiudadesFactory.all();
   /** Se obtienen Convocatorias */
-  $scope.convocatoriasList = ConvocatoriasFactory.all();
+  $scope.convocatoriasList = ConvocatoriasFactory;
 
   /** Se obtiene el correo del usuario que esta en la sesion */
   var correoUsuario = localStorageService.get(LOCAL_STOGARE.CORREO_USUARIO);
@@ -471,7 +471,8 @@ controladores.controller("UsuarioCtrl", function (
   AuthFactory,
   UsuariosFactory,
   EstadosFactory,
-  RolesFactory) {
+  RolesFactory,
+  ROL) {
 
 	/** Se inicializan los objetos traidos de fabricas */
 	$scope.usuariosArray = UsuariosFactory;
@@ -497,6 +498,22 @@ controladores.controller("UsuarioCtrl", function (
 		$location.path('/usuarios');
 	};
 
+  /** Funcion en cargada de eliminar un usuario */
+  $scope.eliminarUsuario = function (usuario) {
+
+      /** Se almacena el usuario que se va a elmiminar */
+      $scope.usuarioParaEliminar = usuario;
+
+      /** Se muestra un mensaje para pedir confirmacion */
+      $scope.modalConfirmacion = {
+          titulo: "Confirmación",
+          mensaje: "¿Esta seguro que desea eliminar el usuario?"
+      };
+
+      $('#modal-confirmacion').modal('show');
+
+  };
+
 	/** Funcion encargada de crear un nuevo usuario*/
 	$scope.crearUsuario = function(){
 
@@ -505,7 +522,7 @@ controladores.controller("UsuarioCtrl", function (
 		$scope.usuariosArray.$add({
         	nombre: $scope.usuario.nombre,
         	correo: $scope.usuario.correo,
-        	rol: 		$scope.usuario.rol,
+        	rol: 		ROL.FUNCIONARIO,
         	estado: $scope.usuario.estado
     }).then(function(ref) {
 		  var id = ref.key();
@@ -686,6 +703,108 @@ controladores.controller("DetalleEstadoCtrl", function (
 
 });
 
+/** Controlador para los convocatorias. */
+controladores.controller("ConvocatoriaCtrl", function (
+  $scope,
+  $location,
+  ConvocatoriasFactory,
+  DetalleConvocatoriaFactory) {
+
+	$scope.convocatoriasArray = ConvocatoriasFactory;
+
+	/** Funcion encargada de enviar a la pagina para crear un nueva convocatoria */
+	$scope.irNuevaConvocatoria = function(){
+		console.log('irNuevaConvocatoria');
+		$location.path('/nuevaConvocatoria');
+	};
+
+	/** Funcion encargada de enviar a la pagina con el listado de convocatorias*/
+	$scope.irConvocatorias = function(){
+		console.log('irConvocatorias');
+		$location.path('/convocatorias');
+	};
+
+	/** Funcion encargada de crear un nueva convocatoria*/
+	$scope.crearConvocatoria = function(){
+
+		console.log("Creando Convocatoria");
+
+		$scope.convocatoriasArray.$add({
+          id:           $scope.convocatoriasArray.length + 1,
+        	nombre: 			$scope.convocatoria.nombre,
+        	descripcion: 	$scope.convocatoria.descripcion
+    }).then(function(ref) {
+		  var id = ref.key();
+		  console.log("Convocatoria creada con el id: " + id);
+
+			/** Se envia al listado de estados */
+		  $location.path('/convocatorias');
+
+		});
+	};
+
+  $scope.irDetalleConvocatoria = function (convocatoria) {
+
+    DetalleConvocatoriaFactory.set(convocatoria);
+    $location.path('/detalleConvocatoria');
+  };
+
+
+});
+
+/** Controlador para el detalle de un Estado. */
+controladores.controller("DetalleConvocatoriaCtrl", function (
+  $scope,
+  $location,
+  $rootScope,
+  ConvocatoriasFactory,
+  DetalleConvocatoriaFactory,
+  $firebaseObject,
+  FB) {
+
+  /** Se obtiene la referencia a la convocatoria */
+  var refConvocatoria = new Firebase(FB.CONVOCATORIAS + "/" + DetalleConvocatoriaFactory.get().$id);
+
+  /** Se hace una copia local del estado */
+  var syncObject = $firebaseObject(refConvocatoria);
+  $scope.detalleConvocatoria = syncObject;
+
+
+  /** Funcion encargada de guardar la convocatoria */
+  $scope.guardarConvocatoria = function () {
+
+    $scope.detalleConvocatoria.$save().then(function() {
+
+      $scope.modal = {
+        titulo: "Mensaje",
+        mensaje: "Convocatoria guardada con exito!"
+      };
+      $('#modal-general').modal('show');
+
+      /** Funcion que se ejecuta cuando se oculta el modal */
+      $('#modal-general').on('hidden.bs.modal', function (e) {
+
+        $rootScope.$apply(function() {
+            $location.path('/convocatorias');
+        });
+      });
+
+     }).catch(function(error) {
+       alert('Error!');
+     });
+
+
+  };
+
+  /** Funcion encargada de enviar a la pagina con el listado de convocatorias*/
+  $scope.irConvocatorias = function(){
+    console.log('irConvocatorias');
+    $location.path('/convocatorias');
+  };
+
+
+});
+
 /** Controlador para los Tipos de Indetificación. */
 controladores.controller("TipoIdentificacionCtrl", function (
   $scope,
@@ -721,6 +840,7 @@ controladores.controller("TipoIdentificacionCtrl", function (
 		console.log("Creando Tipo de Identificacion");
 
 		$scope.tiposIdentificacionArray.$add({
+          id:           $scope.tiposIdentificacionArray.length + 1,
         	nombre: 			$scope.tipoIdentificacion.nombre,
         	descripcion: 	$scope.tipoIdentificacion.descripcion
       	}).then(function(ref) {
@@ -743,8 +863,6 @@ controladores.controller("DetalleTipoIdentificacionCtrl", function (
   DetalleTipoIndetificacionFactory,
   $firebaseObject,
   FB) {
-
-	$scope.estadosArray = TiposIdentificacionFactory;
 
   /** Se obtiene la referencia al tipo de Identificacion */
   var refTipoIdentificacion = new Firebase(FB.TIPOS_IDENTIFICACION + "/" + DetalleTipoIndetificacionFactory.get().$id);

@@ -44,6 +44,18 @@ app.config(function($routeProvider, $locationProvider){
 			templateUrl:'templates/detalleEstado.html',
 			controller: 'DetalleEstadoCtrl'
 		})
+		.when('/convocatorias',{
+			templateUrl:'templates/convocatorias.html',
+			controller: 'ConvocatoriaCtrl'
+		})
+		.when('/nuevaConvocatoria',{
+			templateUrl:'templates/nuevaConvocatoria.html',
+			controller: 'ConvocatoriaCtrl'
+		})
+		.when('/detalleConvocatoria',{
+			templateUrl:'templates/detalleConvocatoria.html',
+			controller: 'DetalleConvocatoriaCtrl'
+		})
 		.when('/tiposIdentificacion',{
 			templateUrl:'templates/tiposIdentificacion.html',
 			controller: 'TipoIdentificacionCtrl'

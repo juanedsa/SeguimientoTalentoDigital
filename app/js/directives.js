@@ -15,3 +15,11 @@ directivas.directive('modalGeneral', function () {
 		templateUrl: 'templates/modal-general.html'
 	}
 });
+
+/** Directiva mostrar un modal confirmacion */
+directivas.directive('modalConfirmacion', function () {
+	return{
+		restrict: 'E',
+		templateUrl: 'templates/modal-confirmacion.html'
+	}
+});
