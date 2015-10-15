@@ -1,0 +1,62 @@
+<barra-navegacion></barra-navegacion>
+
+<div class="container">
+  <div class="page-header">
+    <h1>Detalle del Beneficiario</h1>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-info">
+          <div class="panel-heading">
+              <h3 class="panel-title">Datos personales</h3>
+          </div>
+          <div class="panel-body">
+            <dl>
+              <dt>Nombre:</dt>
+              <dd>{{beneficiario.nombre}}</dd>
+              <dt>Tipo de Indentificación:</dt>
+              <dd>{{tiposIdentificacionArray[beneficiario.tipoIdentificacion - 1].nombre}}</dd>
+              <dt>Número de Indentificación:</dt>
+              <dd>{{beneficiario.numeroIdentificacion}}</dd>
+              <dt>Correo:</dt>
+              <dd>{{beneficiario.correo}}</dd>
+              <dt>Departamento:</dt>
+              <dd>{{beneficiario.departamento.nombre}}</dd>
+            </dl>
+          </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="panel panel-info">
+          <div class="panel-heading">
+              <h3 class="panel-title">Panel info</h3>
+          </div>
+          <div class="panel-body">
+              Panel content
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Panel info</h3>
+        </div>
+        <div class="panel-body">
+            Panel content
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="panel panel-info">
+          <div class="panel-heading">
+              <h3 class="panel-title">Panel info</h3>
+          </div>
+          <div class="panel-body">
+              Panel content
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

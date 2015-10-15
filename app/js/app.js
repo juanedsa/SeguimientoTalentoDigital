@@ -24,6 +24,10 @@ app.config(function($routeProvider, $locationProvider){
 			templateUrl:'templates/beneficiarios.html',
 			controller: 'BeneficiarioCtrl'
 		})
+		.when('/detalleBeneficiario',{
+			templateUrl:'templates/detalleBeneficiario.html',
+			controller: 'DetalleBeneficiarioCtrl'
+		})
 		.when('/nuevoUsuario',{
 			templateUrl:'templates/nuevoUsuario.html',
 			controller: 'UsuarioCtrl'

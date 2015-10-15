@@ -15,6 +15,21 @@ services.factory('DetalleUsuarioFactory', function() {
   };
 });
 
+/** Fabrica de detalle Beneficiario */
+services.factory('DetalleBeneficiarioFactory', function() {
+
+	var detalleBeneficiario;
+
+  return {
+    set: function(beneficario) {
+      detalleBeneficiario = beneficario;
+    },
+		get: function() {
+			return detalleBeneficiario;
+		}
+  };
+});
+
 /** Fabrica de detalle Convocatoria */
 services.factory('DetalleConvocatoriaFactory', function() {
 
@@ -80,7 +95,18 @@ services.factory('DepartamentosFactory', function() {
   return {
     all: function() {
       return DepartamentosList;
-    }
+    },
+		getIndex: function (id) {
+			var deptoTemp;
+
+			angular.forEach(DepartamentosList, function (departamento) {
+					if (angular.equals(departamento.id, parseInt(id))) {
+							deptoTemp = departamento;
+					}
+			});
+
+			return deptoTemp;
+		}
   };
 });
 

@@ -31,10 +31,37 @@ controladores.controller("DashBoardBeneficiarioCtrl", function (
 /** Controlador para los Beneficiarios. */
 controladores.controller("BeneficiarioCtrl", function (
   $scope,
-  BeneficiariosFactory) {
+  $location,
+  BeneficiariosFactory,
+  DetalleBeneficiarioFactory) {
 
 	/** Se inicializan los objetos traidos de fabricas */
 	$scope.beneficiariosArray = BeneficiariosFactory;
+
+  $scope.irDetalleBeneficiario = function (beneficiario) {
+    console.log(beneficiario.$id);
+    console.log(beneficiario);
+
+    DetalleBeneficiarioFactory.set(beneficiario);
+
+    $location.path('/detalleBeneficiario');
+  };
+
+});
+
+/** Controlador para el detalle del Beneficiario. */
+controladores.controller("DetalleBeneficiarioCtrl", function (
+  $scope,
+  $location,
+  TiposIdentificacionFactory,
+  DepartamentosFactory,
+  DetalleBeneficiarioFactory) {
+
+  $scope.beneficiario = DetalleBeneficiarioFactory.get();
+
+  $scope.tiposIdentificacionArray = TiposIdentificacionFactory;
+
+  $scope.beneficiario.departamento = DepartamentosFactory.getIndex($scope.beneficiario.departamento);
 
 });
 

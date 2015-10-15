@@ -6,7 +6,6 @@
           <tr>
               <th>Nombre</th>
               <th>Correo</th>
-              <th>Tipo de Identificación</th>
               <th>Número Identificación</th>
           </tr>
       </thead>
@@ -14,10 +13,9 @@
           <tr ng-repeat="beneficiario in beneficiariosArray">
               <td>{{beneficiario.nombre}}</td>
               <td>{{beneficiario.correo}}</td>
-              <td>{{beneficiario.tipoIdentificacion.nombre}}</td>
               <td>{{beneficiario.numeroIdentificacion}}</td>
               <td>
-                  <a href="javascript:void(0)" class="btn btn-flat btn-info btn-xs">Detalle</a>
+                  <a ng-click="irDetalleBeneficiario(beneficiario)" class="btn btn-flat btn-info btn-xs">Detalle</a>
               </td>
           </tr>
       </tbody>
