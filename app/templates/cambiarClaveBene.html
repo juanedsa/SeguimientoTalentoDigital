@@ -1,0 +1,48 @@
+<barra-navegacion-beneficiario></barra-navegacion-beneficiario>
+
+<modal-general></modal-general>
+
+<div class="container">
+  <div class="jumbotron">
+      <div class="page-header">
+        <h1>Cambio de clave</h1>
+        <h4 class="text-info">Todos los campos marcados con (*) son obligatorios.</h4>
+      </div>
+      <form class="form-horizontal">
+          <fieldset>
+              <div class="form-group">
+                  <label class="col-md-2 control-label">Correo Actual(*)</label>
+                  <div class="col-md-9">
+                    <input type="email" class="form-control" ng-model="correoActual">
+                  </div>
+                  <div class="col-md-1">
+                    <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label class="col-md-2 control-label">Clave Actual(*)</label>
+                  <div class="col-md-9">
+                    <input type="password" class="form-control" ng-model="claveActual">
+                  </div>
+                  <div class="col-md-1">
+                    <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label class="col-md-2 control-label">Clave Nueva(*)</label>
+                  <div class="col-md-9">
+                    <input type="password" class="form-control" ng-model="claveNueva">
+                  </div>
+                  <div class="col-md-1">
+                    <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <div class="col-lg-10 col-lg-offset-2">
+                      <button type="submit" class="btn btn-primary" ng-click="cambiarClave()">Aceptar</button>
+                  </div>
+              </div>
+          </fieldset>
+      </form>
+  </div>
+</div>

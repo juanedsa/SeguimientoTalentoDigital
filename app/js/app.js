@@ -104,6 +104,10 @@ app.config(function($routeProvider, $locationProvider){
 			templateUrl:'templates/cambiarClaveAdmin.html',
 			controller: 'CambiarClaveCtrl'
 		})
+		.when('/cambiarClaveBene',{
+			templateUrl:'templates/cambiarClaveBene.html',
+			controller: 'CambiarClaveCtrl'
+		})
 		.otherwise({
 			redirectTo: '/'
 		});

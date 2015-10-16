@@ -416,12 +416,20 @@ controladores.controller("LoginCtrl", function (
         }else{
 
             var rolesUsuario = $scope.rolesUsuarioArray;
-            //console.log(rolesUsuario);
+
             angular.forEach(rolesUsuario, function (rolUsuario) {
-                //console.log(rolUsuario);
-                if (angular.equals(rolUsuario.correo, $scope.correo)) {
+
+              console.log(rolUsuario);
+              console.log(authData.uid);
+
+                if (angular.equals(rolUsuario.uid, authData.uid)) {
+
+                  console.log("Iguales");
 
                     if (angular.equals(rolUsuario.rol, ROL.FUNCIONARIO)) {
+
+                      console.log("Usuario Funcionario");
+
                       /** Se envia al usuario a la pagina principal del rol funcionario*/
                       $rootScope.$apply(function() {
                           $location.path('/beneficiarios');
@@ -429,6 +437,8 @@ controladores.controller("LoginCtrl", function (
                       });
 
                     }else{
+
+                        console.log("Usuario Beneficiario");
 
                         var beneficiarios = $scope.beneficiariosArray;
 
@@ -814,7 +824,7 @@ controladores.controller("UsuarioCtrl", function (
   				console.log("Usuario creado en firebase con el id: " + userData.uid);
 
           $scope.rolesUsuarioArray.$add({
-                correo: $scope.usuario.correo,
+                uid:    userData.uid,
                 rol:    ROL.FUNCIONARIO
           }).then(function(ref) {
             var id = ref.key();

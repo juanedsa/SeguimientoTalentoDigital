@@ -16,6 +16,14 @@ directivas.directive('barraNavegacionAdmin', function () {
 	}
 });
 
+/** Directiva barra de navegación superior del Beneficiario */
+directivas.directive('barraNavegacionBeneficiario', function () {
+	return{
+		restrict: 'E',
+		templateUrl: 'templates/barra-navegacion-Beneficiario.html'
+	}
+});
+
 /** Directiva mostrar un modal general */
 directivas.directive('modalGeneral', function () {
 	return{
