@@ -675,8 +675,8 @@ controladores.controller("RegistroBeneficiarioCtrl", function (
 		});
 	};
 
-  $scope.irLoginBeneficiario = function () {
-    $location.path('/loginBeneficiario');
+  $scope.irLogin = function () {
+    $location.path('/');
   };
 });
 
