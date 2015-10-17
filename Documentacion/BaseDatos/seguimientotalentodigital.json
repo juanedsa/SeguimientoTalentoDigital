@@ -1,0 +1,81 @@
+{
+  "beneficiarios" : {
+    "ID_BENEFICIARIO" : {
+      "ciudad" : ,
+      "convocatoria" : ,
+      "correo" : ,
+      "datosEntidadPublica" : {
+        "celular" : ,
+        "ciudad" : ,
+        "coordinadorResponsable" : ,
+        "correo" : ,
+        "departamento" : ,
+        "dependenciaResponsable" : ,
+        "direccionContacto" : ,
+        "nombre" : ,
+        "telefono" :
+      },
+      "datosProyecto" : {
+        "avance" : ,
+        "cartaPresentacion" : ,
+        "contactoEntidad" : ,
+        "descripcion" : ,
+        "duracion" : ,
+        "metodologia" : ,
+        "nombre" : ,
+        "objetivos" : ,
+        "observaciones" : ,
+        "relacion" :
+      },
+      "datosUniversidad" : {
+        "ciudad" : ,
+        "departamento" : ,
+        "nivelFormacion" : ,
+        "nombre" : ,
+        "nombrePrograma" : ,
+        "semestre" : ,
+        "semestreInicioTD" :
+      },
+      "departamento" : ,
+      "nombre" : ,
+      "numeroIdentificacion" : ,
+      "tipoIdentificacion" :
+    },
+  },
+  "configuracion" : {
+    "convocatorias" : {
+      "ID_CONVOCATORIA" : {
+        "descripcion" : ,
+        "id" : ,
+        "nombre" :
+      }
+    },
+    "estados" : {
+      "ID_ESTADOS" : {
+        "descripcion" : ,
+        "id" : ,
+        "nombre" :
+      }
+    },
+    "tiposIdentificacion" : {
+      "ID_TIPO_IDENTIFICACION" : {
+        "descripcion" : ,
+        "id" : ,
+        "nombre" :
+      }
+    }
+  },
+  "rolesUsuario" : {
+    "ID_ROL_USUARIO" : {
+      "rol" : ,
+      "uid" :
+    }
+  },
+  "usuarios" : {
+    "ID_USUARIO" : {
+      "correo" : ,
+      "estado" : ,
+      "nombre" :
+    }
+  }
+}
