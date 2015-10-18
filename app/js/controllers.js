@@ -39,6 +39,11 @@ controladores.controller("BeneficiarioCtrl", function (
   BeneficiariosFactory,
   DetalleBeneficiarioFactory) {
 
+  /** Se inicializa el material desing */
+  angular.element(document).ready(function () {
+      $.material.init();
+  });
+
 	/** Se inicializan los objetos traidos de fabricas */
 	$scope.beneficiariosArray = BeneficiariosFactory;
 
@@ -51,6 +56,11 @@ controladores.controller("BeneficiarioCtrl", function (
     $location.path('/detalleBeneficiario');
   };
 
+  /** Funcion encargada de ordenar la lista */
+  $scope.ordenarPor = function(orden) {
+    $scope.ordenSeleccionado = orden;
+  };
+
 });
 
 /** Controlador para el detalle del Beneficiario. */
@@ -60,6 +70,11 @@ controladores.controller("DetalleBeneficiarioCtrl", function (
   TiposIdentificacionFactory,
   DepartamentosFactory,
   DetalleBeneficiarioFactory) {
+
+    /** Se inicializa el material desing */
+    angular.element(document).ready(function () {
+        $.material.init();
+    });
 
   $scope.beneficiario = DetalleBeneficiarioFactory.get();
 

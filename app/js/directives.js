@@ -1,10 +1,10 @@
 var directivas = angular.module('app.directives', []);
 
-/** Directiva barra de navegación superior */
-directivas.directive('barraNavegacion', function () {
+/** Directiva barra de navegación superior del Funcionario */
+directivas.directive('barraNavegacionFuncionario', function () {
 	return{
 		restrict: 'E',
-		templateUrl: 'templates/barra-navegacion.html'
+		templateUrl: 'templates/barra-navegacion-funcionario.html'
 	}
 });
 
