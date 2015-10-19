@@ -1,4 +1,5 @@
 var app = angular.module("SeguimientoTDApp", [
+	'googlechart',
 	"firebase",
 	"ngRoute",
 	"app.controllers",
@@ -107,6 +108,14 @@ app.config(function($routeProvider, $locationProvider){
 		.when('/cambiarClaveBene',{
 			templateUrl:'templates/cambiarClaveBene.html',
 			controller: 'CambiarClaveCtrl'
+		})
+		.when('/cambiarClaveFun',{
+			templateUrl:'templates/cambiarClaveFun.html',
+			controller: 'CambiarClaveCtrl'
+		})
+		.when('/reportes',{
+			templateUrl:'templates/reportes.html',
+			controller: 'ReportesCtrl'
 		})
 		.otherwise({
 			redirectTo: '/'

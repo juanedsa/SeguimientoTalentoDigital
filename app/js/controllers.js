@@ -2,6 +2,233 @@ var controladores = angular.module('app.controllers', [
   "LocalStorageModule"
 ]);
 
+controladores.controller("ReportesCtrl", function (
+  $scope,
+  BeneficiariosFactory,
+  CIUDAD,
+  CONVOCATORIA,
+  NIVEL_FORMACION) {
+
+  $scope.beneficiariosArray = BeneficiariosFactory;
+
+  var tecnicoCantidad = 0;
+  var tecnologoCantidad = 0;
+  var universitarioCantidad = 0;
+  var maestriaCantidad = 0;
+
+  var tieneCantidad = 0;
+  var noTieneCantidad = 0;
+
+  var bogotaCantidad = 0;
+  var medellinCantidad = 0;
+  var caliCantidad = 0;
+
+  var primeraCantidad = 0;
+  var segundaCantidad = 0;
+  var terceraCantidad = 0;
+  var cuartaCantidad = 0;
+
+
+  var beneficiarios = $scope.beneficiariosArray;
+
+  beneficiarios.$loaded().then(function(beneficiarios) {
+    console.log("beneficiarios");
+    console.log(beneficiarios);
+    console.log(beneficiarios.length);
+
+    /** Se arman los datos para los reportes */
+    angular.forEach(beneficiarios, function (beneficario) {
+
+      console.log("beneficario");
+      console.log(beneficario);
+
+      if(beneficario.datosUniversidad != undefined){
+        var nivelFormacion = beneficario.datosUniversidad.nivelFormacion;
+        console.log(nivelFormacion);
+        if(nivelFormacion != undefined){
+          switch (nivelFormacion) {
+            case NIVEL_FORMACION.TECNICO:
+              tecnicoCantidad++;
+              break;
+            case NIVEL_FORMACION.TECNOLOGO:
+              tecnologoCantidad++;
+              break;
+            case NIVEL_FORMACION.UNIVERSITARIO:
+              universitarioCantidad++;
+              break;
+            case NIVEL_FORMACION.MAESTRIA:
+              maestriaCantidad++;
+              break;
+          }
+        }
+      }
+
+      /** Se detectan cuantos beneficiarios tienen proyecto y cuantos no */
+      if(beneficario.datosProyecto != undefined){
+        tieneCantidad++;
+      }else{
+        noTieneCantidad++;
+      }
+
+      if(beneficario.ciudad != undefined){
+        switch (beneficario.ciudad) {
+          case CIUDAD.BOGOTA:
+            bogotaCantidad++;
+            break;
+          case CIUDAD.MEDELLIN:
+            medellinCantidad++;
+            break;
+          case CIUDAD.CALI:
+            caliCantidad++;
+            break;
+        }
+      }
+
+      if(beneficario.convocatoria != undefined){
+        switch (beneficario.convocatoria) {
+          case CONVOCATORIA.UNO:
+            primeraCantidad++;
+            break;
+          case CONVOCATORIA.DOS:
+            segundaCantidad++;
+            break;
+          case CONVOCATORIA.TRES:
+            terceraCantidad++;
+            break;
+          case CONVOCATORIA.CUATRO:
+            cuartaCantidad++;
+            break;
+        }
+      }
+    });
+
+    /** Se construye el primer reporte */
+    $scope.chartObject = {};
+
+    $scope.tecnico = [
+        {v: "Técnico"},
+        {v: tecnicoCantidad},
+    ];
+    $scope.tecnologo = [
+        {v: "Tecnólogo"},
+        {v: tecnologoCantidad},
+    ];
+    $scope.universitario = [
+        {v: "Universitario"},
+        {v: universitarioCantidad},
+    ];
+    $scope.maestria = [
+        {v: "Maestria"},
+        {v: maestriaCantidad},
+    ];
+
+    $scope.chartObject.data = {"cols": [
+        {id: "t", label: "Topping", type: "string"},
+        {id: "s", label: "Beneficiarios", type: "number"}
+    ], "rows": [
+          {c: $scope.tecnico},
+          {c: $scope.tecnologo},
+          {c: $scope.universitario},
+          {c: $scope.maestria}
+    ]};
+    // $routeParams.chartType == BarChart or PieChart or ColumnChart...
+    $scope.chartObject.type = 'BarChart';
+    $scope.chartObject.options = {
+        'title': 'Niveles de formación de los beneficiarios'
+    };
+
+    /** Se construye el segundo reporte */
+    $scope.reporteDos = {};
+
+    $scope.tiene = [
+        {v: "Tiene"},
+        {v: tieneCantidad},
+    ];
+    $scope.noTiene = [
+        {v: "No tienen"},
+        {v: noTieneCantidad},
+    ];
+    $scope.reporteDos.data = {"cols": [
+        {id: "t", label: "Topping", type: "string"},
+        {id: "s", label: "Beneficiarios", type: "number"}
+    ], "rows": [
+          {c: $scope.tiene},
+          {c: $scope.noTiene}
+    ]};
+    // $routeParams.chartType == BarChart or PieChart or ColumnChart...
+    $scope.reporteDos.type = 'PieChart';
+    $scope.reporteDos.options = {
+        'title': 'Porcentaje de beneficiarios con proyectos'
+    };
+
+    /** Se construye el tercer reporte */
+    $scope.reporteTres = {};
+
+    $scope.bogota = [
+        {v: "Bogotá"},
+        {v: bogotaCantidad},
+    ];
+    $scope.medellin = [
+        {v: "Medellín"},
+        {v: medellinCantidad},
+    ];
+    $scope.cali = [
+        {v: "Cali"},
+        {v: caliCantidad},
+    ];
+    $scope.reporteTres.data = {"cols": [
+        {id: "t", label: "Topping", type: "string"},
+        {id: "s", label: "Beneficiarios", type: "number"}
+    ], "rows": [
+          {c: $scope.bogota},
+          {c: $scope.medellin},
+          {c: $scope.cali}
+    ]};
+    // $routeParams.chartType == BarChart or PieChart or ColumnChart...
+    $scope.reporteTres.type = 'AreaChart';
+    $scope.reporteTres.options = {
+        'title': 'Cantidad de beneficarios por ciudad'
+    };
+
+    /** Se construye el cuarto reporte */
+    $scope.reporteCuatro = {};
+
+    $scope.primera = [
+        {v: "2012"},
+        {v: primeraCantidad}
+    ];
+    $scope.segunda = [
+        {v: "2013-1"},
+        {v: segundaCantidad}
+    ];
+    $scope.tercera = [
+        {v: "2013-2"},
+        {v: terceraCantidad}
+    ];
+    $scope.cuarta = [
+        {v: "2014-1"},
+        {v: cuartaCantidad}
+    ];
+
+    $scope.reporteCuatro.data = {"cols": [
+        {id: "t", label: "Topping", type: "string"},
+        {id: "s", label: "Beneficiarios", type: "number"}
+    ], "rows": [
+          {c: $scope.primera},
+          {c: $scope.segunda},
+          {c: $scope.tercera},
+          {c: $scope.cuarta}
+    ]};
+    // $routeParams.chartType == BarChart or PieChart or ColumnChart...
+    $scope.reporteCuatro.type = 'ColumnChart';
+    $scope.reporteCuatro.options = {
+        'title': 'Cantidad de beneficarios por convocatoria'
+    };
+
+
+  });
+});
+
 /** Controlador para el dashboard del beneficiario. */
 controladores.controller("DashBoardBeneficiarioCtrl", function (
   $scope,

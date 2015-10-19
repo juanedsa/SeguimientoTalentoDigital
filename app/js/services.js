@@ -115,7 +115,7 @@ services.factory('CiudadesFactory', function() {
 
   var CiudadesList = [
 		{id: 1 , nombre: "Bogotá", departamentoId: 1},
-		{id: 2 , nombre: "Medellin", departamentoId: 2},
+		{id: 2 , nombre: "Medellín", departamentoId: 2},
 		{id: 3 , nombre: "Cali", departamentoId: 3}
 	];
 
@@ -164,8 +164,8 @@ services.factory('SemestresFactory', function() {
 services.factory('NivelFormacionFactory', function() {
 
   var NivelFormacionList = [
-		{id: 1 , nombre: "Tecnico"},
-		{id: 2 , nombre: "Tecnologo"},
+		{id: 1 , nombre: "Técnico"},
+		{id: 2 , nombre: "Tecnólogo"},
 		{id: 3 , nombre: "Universitario"},
 		{id: 4 , nombre: "Maestria"}
 	];

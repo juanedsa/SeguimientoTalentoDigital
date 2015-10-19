@@ -28,3 +28,23 @@ constantes.constant('ROL', {
 	BENEFICIARIO: 	2,
 	FUNCIONARIO: 		3
 });
+
+constantes.constant('NIVEL_FORMACION', {
+	TECNICO: 				1,
+	TECNOLOGO: 			2,
+	UNIVERSITARIO: 	3,
+	MAESTRIA: 			4
+});
+
+constantes.constant('CIUDAD', {
+	BOGOTA: 				1,
+	MEDELLIN: 			2,
+	CALI: 					3
+});
+
+constantes.constant('CONVOCATORIA', {
+	UNO: 			1,
+	DOS: 			2,
+	TRES: 		3,
+	CUATRO: 	4
+});
