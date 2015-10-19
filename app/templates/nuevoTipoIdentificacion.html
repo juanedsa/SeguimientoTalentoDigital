@@ -7,31 +7,30 @@
       <h4 class="text-info">Todos los campos marcados con (*) son obligatorios.</h4>
       <button class="btn btn-primary btn-flat"  ng-click="irTiposIdentificacion()"><i class="mdi-navigation-arrow-back"></i> Atras</button>
     </div>
-      <form class="form-horizontal">
+      <form class="form-horizontal" name="nuevoTipoId">
           <fieldset>
               <div class="form-group">
                   <label class="col-md-2 control-label">Nombre(*)</label>
                   <div class="col-md-9">
-                    <input type="text" class="form-control" ng-model="tipoIdentificacion.nombre">
+                    <input type="text" class="form-control" ng-model="tipoIdentificacion.nombre" name="nombre" required>
                   </div>
-                  <div class="col-md-1">
-                    <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                  <div class="col-md-3" ng-show="nuevoTipoId.nombre.$dirty">
+                    <h5 class="text-warning" ng-show="nuevoTipoId.nombre.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                   </div>
               </div>
               <div class="form-group">
                   <label class="col-md-2 control-label">Descripcion (*)</label>
                   <div class="col-md-9">
-                    <input type="text" class="form-control" ng-model="tipoIdentificacion.descripcion">
+                    <input type="text" class="form-control" ng-model="tipoIdentificacion.descripcion" name="descripcion" required>
                   </div>
-                  <div class="col-md-1">
-                    <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                  <div class="col-md-3" ng-show="nuevoTipoId.descripcion.$dirty">
+                    <h5 class="text-warning" ng-show="nuevoTipoId.descripcion.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                   </div>
               </div>
-
               <div class="form-group">
                   <div class="col-md-10 col-md-offset-2">
                       <button class="btn btn-default" ng-click="irTiposIdentificacion()">Cancelar</button>
-                      <button type="submit" class="btn btn-primary" ng-click="crearTipoIdentificacion()">Aceptar</button>
+                      <button type="submit" class="btn btn-primary" ng-click="crearTipoIdentificacion()" ng-disabled="nuevoTipoId.$invalid">Aceptar</button>
                   </div>
               </div>
           </fieldset>

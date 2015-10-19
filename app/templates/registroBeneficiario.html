@@ -2,59 +2,60 @@
   <div class="well">
     <div class="page-header">
       <h1>Registro Beneficiario</h1>
-      <h4 class="text-info">Todos los campos marcados con (*) son obligatorios.</h4>
+      <h5 class="text-info">Todos los campos marcados con (*) son obligatorios.</h5>
     </div>
-    <form class="form-horizontal">
+    <form class="form-horizontal" name="registroBene">
         <fieldset>
           <div class="form-group">
               <label class="col-md-2 control-label">Nombre Completo(*)</label>
-              <div class="col-md-9">
-                <input type="text" class="form-control" ng-model="beneficiario.nombre">
+              <div class="col-md-7">
+                <input type="text" class="form-control" ng-model="beneficiario.nombre" name="nombre" required>
               </div>
-              <div class="col-md-1">
-                <p class="text-danger"><i class="mdi-alert-error"></i></p>
+              <div class="col-md-3" ng-show="registroBene.nombre.$dirty">
+                <h5 class="text-warning" ng-show="registroBene.nombre.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
               </div>
           </div>
            <div class="form-group">
               <label class="col-md-2 control-label">Tipo de identificación(*)</label>
-              <div class="col-md-9">
-                <select class="form-control" ng-model="beneficiario.tipoIdentificacion" ng-options="tipoIdentificacion.id as tipoIdentificacion.nombre for tipoIdentificacion in tiposIdentificacionArray"></select>
+              <div class="col-md-7">
+                <select class="form-control" name="tipoId" ng-model="beneficiario.tipoIdentificacion" ng-options="tipoIdentificacion.id as tipoIdentificacion.nombre for tipoIdentificacion in tiposIdentificacionArray" required></select>
               </div>
-              <div class="col-md-1">
-                <p class="text-danger"><i class="mdi-alert-error"></i></p>
+              <div class="col-md-3" ng-show="registroBene.tipoId.$dirty">
+                <h5 class="text-warning" ng-show="registroBene.tipoId.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
               </div>
           </div>
           <div class="form-group">
               <label class="col-md-2 control-label">Número de indentificación(*)</label>
-              <div class="col-md-9">
-                <input type="number" class="form-control" ng-model="beneficiario.numeroIdentificacion">
+              <div class="col-md-7">
+                <input type="number" class="form-control" ng-model="beneficiario.numeroIdentificacion" name="numeroId" required>
               </div>
-              <div class="col-md-1">
-                <p class="text-danger"><i class="mdi-alert-error"></i></p>
+              <div class="col-md-3" ng-show="registroBene.numeroId.$dirty">
+                <h5 class="text-warning" ng-show="registroBene.numeroId.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
               </div>
           </div>
           <div class="form-group">
               <label class="col-md-2 control-label">Correo(*)</label>
-              <div class="col-md-9">
-                <input type="email" class="form-control" ng-model="beneficiario.correo">
+              <div class="col-md-7">
+                <input type="email" class="form-control" ng-model="beneficiario.correo" name="correo" required>
               </div>
-              <div class="col-md-1">
-                <p class="text-danger"><i class="mdi-alert-error"></i></p>
+              <div class="col-md-3" ng-show="registroBene.correo.$dirty && registroBene.correo.$invalid">
+                <h5 class="text-danger" ng-show="registroBene.correo.$error.email"><i class="mdi-alert-error"></i> Correo invalido</h5>
+                <h5 class="text-warning" ng-show="registroBene.correo.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
               </div>
           </div>
           <div class="form-group">
               <label class="col-md-2 control-label">Clave(*)</label>
-              <div class="col-md-9">
-                <input type="password" class="form-control" ng-model="beneficiario.clave">
+              <div class="col-md-7">
+                <input type="password" class="form-control" ng-model="beneficiario.clave" name="clave" required="">
               </div>
-              <div class="col-md-1">
-                <p class="text-danger"><i class="mdi-alert-error"></i></p>
+              <div class="col-md-3" ng-show="registroBene.clave.$dirty">
+                <h5 class="text-warning" ng-show="registroBene.clave.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
               </div>
           </div>
           <div class="form-group">
             <div class="col-md-10 col-md-offset-2">
               <a ng-click="irLogin()" class="btn btn-flat btn-primary">Cancelar</a>
-              <a ng-click="registrarBeneficiario()" class="btn btn-primary btn">Aceptar</a>
+              <a ng-click="registrarBeneficiario()" class="btn btn-primary btn" ng-disabled="registroBene.$invalid">Aceptar</a>
             </div>
           </div>
         </fieldset>

@@ -8,38 +8,40 @@
         <h1>Cambio de correo</h1>
         <h4 class="text-info">Todos los campos marcados con (*) son obligatorios.</h4>
       </div>
-      <form class="form-horizontal">
+      <form class="form-horizontal" name="cambiarCorreoForm">
           <fieldset>
               <div class="form-group">
                   <label class="col-md-2 control-label">Correo Actual(*)</label>
-                  <div class="col-md-9">
-                    <input type="email" class="form-control" ng-model="correoActual">
+                  <div class="col-md-7">
+                    <input type="email" class="form-control" ng-model="correoActual" name="correoActual" required>
                   </div>
-                  <div class="col-md-1">
-                    <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                  <div class="col-md-3" ng-show="cambiarCorreoForm.correoActual.$dirty && cambiarCorreoForm.correoActual.$invalid">
+                    <h5 class="text-danger" ng-show="cambiarCorreoForm.correoActual.$error.email"><i class="mdi-alert-error"></i> Correo invalido</h5>
+                    <h5 class="text-warning" ng-show="cambiarCorreoForm.correoActual.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                   </div>
               </div>
               <div class="form-group">
                   <label class="col-md-2 control-label">Correo Nuevo(*)</label>
-                  <div class="col-md-9">
-                    <input type="email" class="form-control" ng-model="correoNuevo">
+                  <div class="col-md-7">
+                    <input type="email" class="form-control" ng-model="correoNuevo" name="correoNuevo" required>
                   </div>
-                  <div class="col-md-1">
-                    <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                  <div class="col-md-3" ng-show="cambiarCorreoForm.correoNuevo.$dirty && cambiarCorreoForm.correoNuevo.$invalid">
+                    <h5 class="text-danger" ng-show="cambiarCorreoForm.correoNuevo.$error.email"><i class="mdi-alert-error"></i> Correo invalido</h5>
+                    <h5 class="text-warning" ng-show="cambiarCorreoForm.correoNuevo.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                   </div>
               </div>
               <div class="form-group">
                   <label class="col-md-2 control-label">Clave Actual(*)</label>
-                  <div class="col-md-9">
-                    <input type="password" class="form-control" ng-model="claveActual">
+                  <div class="col-md-7">
+                    <input type="password" class="form-control" ng-model="claveActual" name="claveActual" required>
                   </div>
-                  <div class="col-md-1">
-                    <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                  <div class="col-md-3" ng-show="cambiarCorreoForm.claveActual.$dirty">
+                    <h5 class="text-warning" ng-show="cambiarCorreoForm.claveActual.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                   </div>
               </div>
               <div class="form-group">
                   <div class="col-lg-10 col-lg-offset-2">
-                      <button type="submit" class="btn btn-primary" ng-click="cambiarCorreo()">Aceptar</button>
+                      <button type="submit" class="btn btn-primary" ng-click="cambiarCorreo()" ng-disabled="cambiarCorreoForm.$invalid">Aceptar</button>
                   </div>
               </div>
           </fieldset>

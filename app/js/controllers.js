@@ -939,10 +939,13 @@ controladores.controller("RegistroBeneficiarioCtrl", function (
   BeneficiariosFactory,
   TiposIdentificacionFactory,
   localStorageService,
+  ROL,
+  RolesUsuarioFactory,
   LOCAL_STOGARE) {
 
 	$scope.beneficiariosArray = BeneficiariosFactory;
 	$scope.tiposIdentificacionArray = TiposIdentificacionFactory;
+  $scope.rolesUsuarioArray = RolesUsuarioFactory;
 
 	/** Funcion encargada de registrar un beneficiario */
 	$scope.registrarBeneficiario = function () {
@@ -964,45 +967,58 @@ controladores.controller("RegistroBeneficiarioCtrl", function (
 				email: 		$scope.beneficiario.correo,
 				password: 	$scope.beneficiario.clave
 			}).then(function(userData) {
-				console.log("Usuario creado con el id: " + userData.uid);
+        console.log("Usuario creado en firebase con el id: " + userData.uid);
 
-				var refAuth = new Firebase("https://seguimientotalentodigital.firebaseio.com/");
+        $scope.rolesUsuarioArray.$add({
+              uid:    userData.uid,
+              rol:    ROL.BENEFICIARIO
+        }).then(function(ref) {
+            var id = ref.key();
+            console.log("Rol agregado a usuario con el id " + id);
 
-				refAuth
-				.authWithPassword({
-				  email    : $scope.beneficiario.correo,
-				  password : $scope.beneficiario.clave
-				}, function(error, authData) {
-				  if (error) {
-				    switch (error.code) {
-				      case "INVALID_EMAIL":
-				        console.log("The specified user account email is invalid.");
-				        break;
-				      case "INVALID_PASSWORD":
-				        console.log("The specified user account password is incorrect.");
-				        break;
-				      case "INVALID_USER":
-				        console.log("The specified user account does not exist.");
-				        break;
-				      default:
-				        console.log("Error logging user in:", error);
-				    }
-				  } else {
+            var refAuth = new Firebase("https://seguimientotalentodigital.firebaseio.com/");
 
-				    console.log("Usuario inicio sesion con exito");
+            refAuth.authWithPassword({
+              email    : $scope.beneficiario.correo,
+              password : $scope.beneficiario.clave
+            }, function(error, authData) {
+              if (error) {
+                switch (error.code) {
+                  case "INVALID_EMAIL":
+                    console.log("The specified user account email is invalid.");
+                    break;
+                  case "INVALID_PASSWORD":
+                    console.log("The specified user account password is incorrect.");
+                    break;
+                  case "INVALID_USER":
+                    console.log("The specified user account does not exist.");
+                    break;
+                  default:
+                    console.log("Error logging user in:", error);
+                }
+              } else {
 
-            /** Se Guarda en el localStorage el correo del usuario que inicio la sesion */
-            localStorageService.set(LOCAL_STOGARE.CORREO_USUARIO, $scope.beneficiario.correo);
+                console.log("Usuario inicio sesion con exito");
 
-				    /** Se envia al usuario a la pagina de dashboard */
-				    $rootScope.$apply(function() {
-				        $location.path('/dashboardBeneficiario');
-				        console.log($location.path());
-				    });
-				  }
-				});
+                /** Se Guarda en el localStorage el correo del usuario que inicio la sesion */
+                localStorageService.set(LOCAL_STOGARE.CORREO_USUARIO, $scope.beneficiario.correo);
+
+                /** Se Guarda en el localStorage el nombre del usuario que inicio la sesion */
+                localStorageService.set(LOCAL_STOGARE.NOMBRE_USUARIO, $scope.beneficiario.nombre);
+
+                /** Se envia al usuario a la pagina de dashboard */
+                $rootScope.$apply(function() {
+                    $location.path('/dashboardBeneficiario');
+                    console.log($location.path());
+                });
+              }
+            });
 
 
+        }).catch(function(error) {
+          console.log(error);
+
+        });
 			}).catch(function(error) {
 				console.log("ERROR: al crear usuario " + error);
 			});
@@ -1100,7 +1116,7 @@ controladores.controller("UsuarioCtrl", function (
             console.log("Rol agregado a usuario con el id " + id);
 
           $location.path('/usuarios');
-  			}).catch(function(error) {error
+  			}).catch(function(error) {
           console.log(error);
 
         });
@@ -1113,6 +1129,7 @@ controladores.controller("UsuarioCtrl", function (
 controladores.controller("DetalleUsuarioCtrl", function (
   $scope,
   $location,
+  $rootScope,
   DetalleUsuarioFactory,
   EstadosFactory,
   $firebaseObject,
@@ -1122,8 +1139,6 @@ controladores.controller("DetalleUsuarioCtrl", function (
     /** Se inicializan los objetos traidos de fabricas */
     $scope.estadosArray = EstadosFactory;
     $scope.rolesArray = RolesFactory.all();
-
-    //$scope.usuarioActual = DetalleUsuarioFactory.get();
 
     /** Se obtiene el Key del beneficario */
     var refUsuario = new Firebase(FB.USUARIOS + "/" + DetalleUsuarioFactory.get().$id);
@@ -1150,6 +1165,14 @@ controladores.controller("DetalleUsuarioCtrl", function (
           mensaje: "Datos el usuario guardados con exito!"
         };
         $('#modal-general').modal('show');
+
+        /** Funcion que se ejecuta cuando se oculta el modal */
+        $('#modal-general').on('hidden.bs.modal', function (e) {
+
+          $rootScope.$apply(function() {
+              $location.path('/usuarios');
+          });
+        });
 
        }).catch(function(error) {
          alert('Error!');

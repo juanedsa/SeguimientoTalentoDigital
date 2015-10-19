@@ -8,30 +8,30 @@
         <h4 class="text-info">Todos los campos marcados con (*) son obligatorios.</h4>
         <button class="btn btn-primary btn-flat"  ng-click="irEstados()"><i class="mdi-navigation-arrow-back"></i> Atras</button>
       </div>
-      <form class="form-horizontal">
+      <form class="form-horizontal" name="detalleEstadoForm">
           <fieldset>
               <div class="form-group">
                   <label class="col-md-2 control-label">Nombre(*)</label>
-                  <div class="col-md-9">
-                    <input type="text" class="form-control" ng-model="detalleEstado.nombre">
+                  <div class="col-md-7">
+                    <input type="text" class="form-control" ng-model="detalleEstado.nombre" name="nombre" required>
                   </div>
-                  <div class="col-md-1">
-                    <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                  <div class="col-md-3" ng-show="detalleEstadoForm.nombre.$dirty">
+                    <h5 class="text-warning" ng-show="detalleEstadoForm.nombre.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                   </div>
               </div>
               <div class="form-group">
                   <label class="col-md-2 control-label">Descripcion(*)</label>
-                  <div class="col-md-9">
-                    <input type="text" class="form-control" ng-model="detalleEstado.descripcion">
+                  <div class="col-md-7">
+                    <input type="text" class="form-control" ng-model="detalleEstado.descripcion" name="descripcion" required>
                   </div>
-                  <div class="col-md-1">
-                    <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                  <div class="col-md-3" ng-show="detalleEstadoForm.descripcion.$dirty">
+                    <h5 class="text-warning" ng-show="detalleEstadoForm.descripcion.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                   </div>
               </div>
               <div class="form-group">
                   <div class="col-lg-10 col-lg-offset-2">
                       <button class="btn btn-default" ng-click="irEstados()">Cancelar</button>
-                      <button type="submit" class="btn btn-primary" ng-click="guardarEstado()">Guardar</button>
+                      <button type="submit" class="btn btn-primary" ng-click="guardarEstado()" ng-disabled="detalleEstadoForm.$invalid">Guardar</button>
                   </div>
               </div>
           </fieldset>

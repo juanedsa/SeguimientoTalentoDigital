@@ -10,39 +10,40 @@
         <h4 class="text-info">Todos los campos marcados con (*) son obligatorios.</h4>
         <button class="btn btn-primary btn-flat"  ng-click="irUsuarios()"><i class="mdi-navigation-arrow-back"></i> Atras</button>
       </div>
-      <form class="form-horizontal">
+      <form class="form-horizontal" name="detalleUsuario">
           <fieldset>
               <div class="form-group">
                   <label class="col-md-2 control-label">Nombre Completo(*)</label>
-                  <div class="col-md-9">
-                    <input type="text" class="form-control" ng-model="usuarioActual.nombre">
+                  <div class="col-md-7">
+                    <input type="text" class="form-control" ng-model="usuarioActual.nombre" name="nombre" required="">
                   </div>
-                  <div class="col-md-1">
-                    <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                  <div class="col-md-3" ng-show="detalleUsuario.nombre.$dirty">
+                    <h5 class="text-warning" ng-show="detalleUsuario.nombre.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                   </div>
               </div>
               <div class="form-group">
                   <label class="col-md-2 control-label">Correo(*)</label>
-                  <div class="col-md-9">
-                    <input disabled="" type="email" class="form-control" ng-model="usuarioActual.correo">
+                  <div class="col-md-7">
+                    <input disabled="" type="email" class="form-control" ng-model="usuarioActual.correo" name="correo" required>
                   </div>
-                  <div class="col-md-1">
-                    <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                  <div class="col-md-3" ng-show="detalleUsuario.correo.$dirty && detalleUsuario.correo.$invalid">
+                    <h5 class="text-danger" ng-show="detalleUsuario.correo.$error.email"><i class="mdi-alert-error"></i> Correo invalido</h5>
+                    <h5 class="text-warning" ng-show="detalleUsuario.correo.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                   </div>
               </div>
               <div class="form-group">
                   <label class="col-md-2 control-label">Estado(*)</label>
-                  <div class="col-md-9">
-                    <select class="form-control" ng-model="usuarioActual.estado" ng-options="estado.id as estado.nombre for estado in estadosArray"></select>
+                  <div class="col-md-7">
+                    <select class="form-control" ng-model="usuarioActual.estado" ng-options="estado.id as estado.nombre for estado in estadosArray" name="estado" required=""></select>
                   </div>
-                  <div class="col-md-1">
-                    <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                  <div class="col-md-3" ng-show="detalleUsuario.estado.$dirty">
+                    <h5 class="text-warning" ng-show="detalleUsuario.correo.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                   </div>
               </div>
               <div class="form-group">
                   <div class="col-md-10 col-md-offset-2">
                       <button class="btn btn-default" ng-click="irUsuarios()">Cancelar</button>
-                      <button type="submit" class="btn btn-primary" ng-click="actualizarUsuario()">Guardar</button>
+                      <button type="submit" class="btn btn-primary" ng-click="actualizarUsuario()" ng-disabled="detalleUsuario.$invalid">Guardar</button>
                   </div>
               </div>
           </fieldset>

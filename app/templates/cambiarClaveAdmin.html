@@ -8,41 +8,42 @@
         <h1>Cambio de clave</h1>
         <h4 class="text-info">Todos los campos marcados con (*) son obligatorios.</h4>
       </div>
-      <form class="form-horizontal">
+      <form class="form-horizontal" name="cambioClave">
           <fieldset>
-              <div class="form-group">
-                  <label class="col-md-2 control-label">Correo Actual(*)</label>
-                  <div class="col-md-9">
-                    <input type="email" class="form-control" ng-model="correoActual">
-                  </div>
-                  <div class="col-md-1">
-                    <p class="text-danger"><i class="mdi-alert-error"></i></p>
-                  </div>
-              </div>
-              <div class="form-group">
-                  <label class="col-md-2 control-label">Clave Actual(*)</label>
-                  <div class="col-md-9">
-                    <input type="password" class="form-control" ng-model="claveActual">
-                  </div>
-                  <div class="col-md-1">
-                    <p class="text-danger"><i class="mdi-alert-error"></i></p>
-                  </div>
-              </div>
-              <div class="form-group">
-                  <label class="col-md-2 control-label">Clave Nueva(*)</label>
-                  <div class="col-md-9">
-                    <input type="password" class="form-control" ng-model="claveNueva">
-                  </div>
-                  <div class="col-md-1">
-                    <p class="text-danger"><i class="mdi-alert-error"></i></p>
-                  </div>
-              </div>
-              <div class="form-group">
-                  <div class="col-lg-10 col-lg-offset-2">
-                      <button type="submit" class="btn btn-primary btn-flat" ng-click="irUsuarios()">Cancelar</button>
-                      <button type="submit" class="btn btn-primary" ng-click="cambiarClave()">Aceptar</button>
-                  </div>
-              </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Correo Actual(*)</label>
+                <div class="col-md-7">
+                  <input type="email" class="form-control" ng-model="correoActual" name="correo" required="">
+                </div>
+                <div class="col-md-3" ng-show="cambioClave.correo.$dirty && cambioClave.correo.$invalid">
+                  <h5 class="text-danger" ng-show="cambioClave.correo.$error.email"><i class="mdi-alert-error"></i> Correo invalido</h5>
+                  <h5 class="text-warning" ng-show="cambioClave.correo.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Clave Actual(*)</label>
+                <div class="col-md-7">
+                  <input type="password" class="form-control" ng-model="claveActual" name="claveActual" required="">
+                </div>
+                <div class="col-md-3" ng-show="cambioClave.claveActual.$dirty">
+                  <h5 class="text-warning" ng-show="cambioClave.claveActual.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Clave Nueva(*)</label>
+                <div class="col-md-7">
+                  <input type="password" class="form-control" ng-model="claveNueva" name="claveNueva" required>
+                </div>
+                <div class="col-md-3" ng-show="cambioClave.claveNueva.$dirty">
+                  <h5 class="text-warning" ng-show="cambioClave.claveNueva.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-10 col-lg-offset-2">
+                    <button type="submit" class="btn btn-primary btn-flat" ng-click="irUsuarios()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" ng-click="cambiarClave()" ng-disabled="cambioClave.$invalid">Aceptar</button>
+                </div>
+            </div>
           </fieldset>
       </form>
   </div>

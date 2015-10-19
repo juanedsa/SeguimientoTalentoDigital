@@ -7,30 +7,30 @@
         <h4 class="text-info">Todos los campos marcados con (*) son obligatorios.</h4>
         <button class="btn btn-primary btn-flat"  ng-click="irConvocatorias()"><i class="mdi-navigation-arrow-back"></i> Atras</button>
       </div>
-      <form class="form-horizontal">
+      <form class="form-horizontal" name="nuevaConvocatoria">
           <fieldset>
               <div class="form-group">
                   <label class="col-md-2 control-label">Nombre(*)</label>
-                  <div class="col-md-9">
-                    <input type="text" class="form-control" ng-model="convocatoria.nombre">
+                  <div class="col-md-7">
+                    <input type="text" class="form-control" ng-model="convocatoria.nombre" name="nombre" required>
                   </div>
-                  <div class="col-md-1">
-                    <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                  <div class="col-md-3" ng-show="nuevaConvocatoria.nombre.$dirty">
+                    <h5 class="text-warning" ng-show="nuevaConvocatoria.nombre.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                   </div>
               </div>
               <div class="form-group">
                   <label class="col-md-2 control-label">Descripcion(*)</label>
-                  <div class="col-md-9">
-                    <input type="text" class="form-control" ng-model="convocatoria.descripcion">
+                  <div class="col-md-7">
+                    <input type="text" class="form-control" ng-model="convocatoria.descripcion" name="descripcion" required>
                   </div>
-                  <div class="col-md-1">
-                    <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                  <div class="col-md-3" ng-show="nuevaConvocatoria.descripcion.$dirty">
+                    <h5 class="text-warning" ng-show="nuevaConvocatoria.descripcion.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                   </div>
               </div>
               <div class="form-group">
                   <div class="col-lg-10 col-lg-offset-2">
                       <button class="btn btn-default" ng-click="irConvocatorias()">Cancelar</button>
-                      <button type="submit" class="btn btn-primary" ng-click="crearConvocatoria()">Aceptar</button>
+                      <button type="submit" class="btn btn-primary" ng-click="crearConvocatoria()" ng-disabled="nuevaConvocatoria.$invalid">Aceptar</button>
                   </div>
               </div>
           </fieldset>
