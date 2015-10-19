@@ -114,7 +114,7 @@ services.factory('DepartamentosFactory', function() {
 services.factory('CiudadesFactory', function() {
 
   var CiudadesList = [
-		{id: 1 , nombre: "Bogota", departamentoId: 1},
+		{id: 1 , nombre: "Bogotá", departamentoId: 1},
 		{id: 2 , nombre: "Medellin", departamentoId: 2},
 		{id: 3 , nombre: "Cali", departamentoId: 3}
 	];
@@ -122,28 +122,20 @@ services.factory('CiudadesFactory', function() {
   return {
     all: function() {
       return CiudadesList;
-    }
+    },
+		getIndex: function (id) {
+			var ciudadTemp;
+
+			angular.forEach(CiudadesList, function (ciudad) {
+					if (angular.equals(ciudad.id, parseInt(id))) {
+							ciudadTemp = ciudad;
+					}
+			});
+
+			return ciudadTemp;
+		}
   };
 });
-
-// /** Fabrica de Convocatorias */
-// services.factory('ConvocatoriasFactory', function() {
-//
-//   var ConvocatoriasList = [
-// 		{id: 1 , nombre: "2012"},
-// 		{id: 2 , nombre: "2013-1"},
-// 		{id: 3 , nombre: "2013-2"},
-// 		{id: 4 , nombre: "2014-1"},
-// 		{id: 5 , nombre: "2014-2"},
-// 		{id: 6 , nombre: "2015-1"}
-// 	];
-//
-//   return {
-//     all: function() {
-//       return ConvocatoriasList;
-//     }
-//   };
-// });
 
 /** Fabrica de Semestres */
 services.factory('SemestresFactory', function() {
@@ -181,7 +173,18 @@ services.factory('NivelFormacionFactory', function() {
   return {
     all: function() {
       return NivelFormacionList;
-    }
+    },
+		getIndex: function (id) {
+			var nivelFormacionTemp;
+
+			angular.forEach(NivelFormacionList, function (nivelFormacion) {
+					if (angular.equals(nivelFormacion.id, parseInt(id))) {
+							nivelFormacionTemp = nivelFormacion;
+					}
+			});
+
+			return nivelFormacionTemp;
+		}
   };
 });
 

@@ -3,6 +3,7 @@
 <div class="container">
   <div class="page-header">
     <h1>Detalle del Beneficiario</h1>
+    <button class="btn btn-primary btn-flat"  ng-click="irBeneficiarios()"><i class="mdi-navigation-arrow-back"></i> Atras</button>
   </div>
   <div class="row">
     <div class="col-md-6">
@@ -22,6 +23,10 @@
               <dd>{{beneficiario.correo}}</dd>
               <dt>Departamento:</dt>
               <dd>{{beneficiario.departamento.nombre}}</dd>
+              <dt>Ciudad:</dt>
+              <dd>{{beneficiario.ciudad.nombre}}</dd>
+              <dt>Convocatoria:</dt>
+              <dd>{{beneficiario.convocatoria.nombre}}</dd>
             </dl>
           </div>
       </div>
@@ -29,10 +34,25 @@
     <div class="col-md-6">
       <div class="panel panel-info">
           <div class="panel-heading">
-              <h3 class="panel-title">Panel info</h3>
+              <h3 class="panel-title">Datos de la Universidad</h3>
           </div>
           <div class="panel-body">
-              Panel content
+            <dl>
+              <dt>Nombre:</dt>
+              <dd>{{beneficiario.datosUniversidad.nombre}}</dd>
+              <dt>Programa:</dt>
+              <dd>{{beneficiario.datosUniversidad.nombrePrograma}}</dd>
+              <dt>Semestre:</dt>
+              <dd>{{beneficiario.datosUniversidad.semestre}}</dd>
+              <dt>Semestre que empezo con TD:</dt>
+              <dd>{{beneficiario.datosUniversidad.semestreInicioTD}}</dd>
+              <dt>Departamento:</dt>
+              <dd>{{beneficiario.datosUniversidad.departamento.nombre}}</dd>
+              <dt>Ciudad:</dt>
+              <dd>{{beneficiario.datosUniversidad.ciudad.nombre}}</dd>
+              <dt>Nivel de Formación:</dt>
+              <dd>{{beneficiario.datosUniversidad.nivelFormacion.nombre}}</dd>
+            </dl>
           </div>
       </div>
     </div>
@@ -41,20 +61,65 @@
     <div class="col-md-6">
       <div class="panel panel-info">
         <div class="panel-heading">
-            <h3 class="panel-title">Panel info</h3>
+            <h3 class="panel-title">Datos Entidad Pública</h3>
         </div>
         <div class="panel-body">
-            Panel content
+          <dl>
+            <dt>Nombre:</dt>
+            <dd>{{beneficiario.datosEntidadPublica.nombre}}</dd>
+            <dt>Dependencia responsable:</dt>
+            <dd>{{beneficiario.datosEntidadPublica.dependenciaResponsable}}</dd>
+            <dt>Coordinador Responsable:</dt>
+            <dd>{{beneficiario.datosEntidadPublica.coordinadorResponsable}}</dd>
+            <dt>Correo:</dt>
+            <dd>{{beneficiario.datosEntidadPublica.correo}}</dd>
+            <dt>Celular:</dt>
+            <dd>{{beneficiario.datosEntidadPublica.celular}}</dd>
+            <dt>Télefono:</dt>
+            <dd>{{beneficiario.datosEntidadPublica.telefono}}</dd>
+            <dt>Dirección Contacto:</dt>
+            <dd>{{beneficiario.datosEntidadPublica.direccionContacto}}</dd>
+            <dt>Departamento:</dt>
+            <dd>{{beneficiario.datosEntidadPublica.departamento.nombre}}</dd>
+            <dt>Ciudad:</dt>
+            <dd>{{beneficiario.datosEntidadPublica.ciudad.nombre}}</dd>
+          </dl>
         </div>
       </div>
     </div>
     <div class="col-md-6">
       <div class="panel panel-info">
           <div class="panel-heading">
-              <h3 class="panel-title">Panel info</h3>
+              <h3 class="panel-title">Datos del Proyecto</h3>
           </div>
           <div class="panel-body">
-              Panel content
+              <dl>
+                <dt>Nombre:</dt>
+                <dd>{{beneficiario.datosProyecto.nombre}}</dd>
+                <dt>Descripción:</dt>
+                <dd>{{beneficiario.datosProyecto.descripcion}}</dd>
+                <dt>Relación con la estrategia de gobierno en línea:</dt>
+                <dd>{{beneficiario.datosProyecto.relacion}}</dd>
+                <dt>Objetivos:</dt>
+                <dd>{{beneficiario.datosProyecto.objetivos}}</dd>
+                <dt>Metodologia:</dt>
+                <dd>{{beneficiario.datosProyecto.metodologia}}</dd>
+                <dt>Observaciones:</dt>
+                <dd>{{beneficiario.datosProyecto.observaciones}}</dd>
+                <dt>Duración en meses:</dt>
+                <dd>{{beneficiario.datosProyecto.duracion}}</dd>
+                <dt>Avance:</dt>
+                <dd>
+                  {{beneficiario.datosProyecto.avance}}%
+                  <div class="progress">
+                      <div class="progress-bar progress-bar-success" style="width: {{beneficiario.datosProyecto.avance}}%"></div>
+                  </div>
+                <dd>
+                <dt>Tiene carta de presentación:</dt>
+                <dd>{{beneficiario.datosProyecto.cartaPresentacion}}</dd>
+                <dt>Tiene contacto con la entidad:</dt>
+                <dd>{{beneficiario.datosProyecto.contactoEntidad}}</dd>
+              </dl>
           </div>
       </div>
     </div>

@@ -69,19 +69,49 @@ controladores.controller("DetalleBeneficiarioCtrl", function (
   $location,
   TiposIdentificacionFactory,
   DepartamentosFactory,
+  CiudadesFactory,
+  ConvocatoriasFactory,
+  NivelFormacionFactory,
   DetalleBeneficiarioFactory) {
 
-    /** Se inicializa el material desing */
-    angular.element(document).ready(function () {
-        $.material.init();
-    });
+  /** Se inicializa el material desing */
+  angular.element(document).ready(function () {
+      $.material.init();
+  });
+
+  $scope.irBeneficiarios = function () {
+    $location.path('/beneficiarios');
+  };
 
   $scope.beneficiario = DetalleBeneficiarioFactory.get();
 
   $scope.tiposIdentificacionArray = TiposIdentificacionFactory;
 
-  $scope.beneficiario.departamento = DepartamentosFactory.getIndex($scope.beneficiario.departamento);
+  if($scope.beneficiario.departamento != undefined)
+    $scope.beneficiario.departamento = DepartamentosFactory.getIndex($scope.beneficiario.departamento);
 
+  if($scope.beneficiario.ciudad != undefined)
+    $scope.beneficiario.ciudad = CiudadesFactory.getIndex($scope.beneficiario.ciudad);
+
+  /** Se obtiene la convocatoria */
+  var keyConvocatoria = ConvocatoriasFactory.$keyAt($scope.beneficiario.convocatoria - 1);
+  $scope.beneficiario.convocatoria = ConvocatoriasFactory.$getRecord(keyConvocatoria);
+
+  if($scope.beneficiario.datosUniversidad != undefined){
+    if($scope.beneficiario.datosUniversidad.departamento != undefined)
+      $scope.beneficiario.datosUniversidad.departamento = DepartamentosFactory.getIndex($scope.beneficiario.datosUniversidad.departamento);
+    if($scope.beneficiario.datosUniversidad.ciudad != undefined)
+      $scope.beneficiario.datosUniversidad.ciudad = CiudadesFactory.getIndex($scope.beneficiario.datosUniversidad.ciudad);
+    if($scope.beneficiario.datosUniversidad.nivelFormacion != undefined)
+      $scope.beneficiario.datosUniversidad.nivelFormacion = NivelFormacionFactory.getIndex($scope.beneficiario.datosUniversidad.nivelFormacion);
+  }
+
+  if($scope.beneficiario.datosEntidadPublica != undefined){
+    if($scope.beneficiario.datosEntidadPublica.departamento != undefined)
+      $scope.beneficiario.datosEntidadPublica.departamento = DepartamentosFactory.getIndex($scope.beneficiario.datosEntidadPublica.departamento);
+    if($scope.beneficiario.datosEntidadPublica.ciudad != undefined)
+      $scope.beneficiario.datosEntidadPublica.ciudad = CiudadesFactory.getIndex($scope.beneficiario.datosEntidadPublica.ciudad);
+  }
 });
 
 /** Controlador para los datos personales del Beneficiario */
