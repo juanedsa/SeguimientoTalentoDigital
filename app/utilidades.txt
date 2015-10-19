@@ -11,3 +11,7 @@ talentodigital2015*
 
 # Servidor local
 https://www.npmjs.com/package/http-server
+
+# Reportes Google Charts
+https://bouil.github.io/angular-google-chart/#/fat
+https://github.com/angular-google-chart/angular-google-chart

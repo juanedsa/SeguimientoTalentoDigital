@@ -2,6 +2,45 @@ var controladores = angular.module('app.controllers', [
   "LocalStorageModule"
 ]);
 
+controladores.controller("OlvidoClaveCtrl", function (
+  $scope,
+  $rootScope,
+  $location,
+  AuthFactory) {
+
+  /** Funcion encargada de enviar a la pagina de login */
+	$scope.irLogin = function () {
+   		$location.path('/');
+	};
+
+  /** Funcion encargada de procesar el olvido de clave del usuario */
+  $scope.recuperarClave = function () {
+
+    AuthFactory.$resetPassword({
+      email: $scope.correo
+    }).then(function() {
+      $scope.modal = {
+        titulo: "Mensaje",
+        mensaje: "Su clave ha sido enviada a su cuenta de correo."
+      };
+      $('#modal-general').modal('show');
+
+      /** Funcion que se ejecuta cuando se oculta el modal */
+      $('#modal-general').on('hidden.bs.modal', function (e) {
+
+        $rootScope.$apply(function() {
+            $location.path('/');
+        });
+      });
+    }).catch(function(error) {
+      console.error("Error: ", error);
+    });
+
+  }
+
+});
+
+/** Controlador encargado de los reportes */
 controladores.controller("ReportesCtrl", function (
   $scope,
   BeneficiariosFactory,
@@ -9,7 +48,8 @@ controladores.controller("ReportesCtrl", function (
   CONVOCATORIA,
   NIVEL_FORMACION) {
 
-  $scope.beneficiariosArray = BeneficiariosFactory;
+  /** Arreglo con la informacion de los beneficiarios */
+  var beneficiarios = BeneficiariosFactory;
 
   var tecnicoCantidad = 0;
   var tecnologoCantidad = 0;
@@ -28,9 +68,7 @@ controladores.controller("ReportesCtrl", function (
   var terceraCantidad = 0;
   var cuartaCantidad = 0;
 
-
-  var beneficiarios = $scope.beneficiariosArray;
-
+  /** Se verifica cuando el arreglo este descargado de firebase */
   beneficiarios.$loaded().then(function(beneficiarios) {
     console.log("beneficiarios");
     console.log(beneficiarios);
@@ -39,9 +77,7 @@ controladores.controller("ReportesCtrl", function (
     /** Se arman los datos para los reportes */
     angular.forEach(beneficiarios, function (beneficario) {
 
-      console.log("beneficario");
-      console.log(beneficario);
-
+      /** Se detectan los niveles de formacion de cada uno de los beneficiarios */
       if(beneficario.datosUniversidad != undefined){
         var nivelFormacion = beneficario.datosUniversidad.nivelFormacion;
         console.log(nivelFormacion);
@@ -84,6 +120,7 @@ controladores.controller("ReportesCtrl", function (
         }
       }
 
+      /** Se detectan cuantos beneficiarios y en que convocatorias estan */
       if(beneficario.convocatoria != undefined){
         switch (beneficario.convocatoria) {
           case CONVOCATORIA.UNO:
@@ -246,6 +283,11 @@ controladores.controller("DashBoardBeneficiarioCtrl", function (
   /** Funcion encargada de enviar a la pagina de datos de la universidad */
   $scope.irDatosUniversidad = function () {
     $location.path('/datosUniversidad');
+  };
+
+  /** Funcion encargada de enviar a la pagina del dashboard del beneficiario */
+  $scope.irDashBoardBeneficiario = function () {
+    $location.path('/dashboardBeneficiario');
   };
 
   /** Funcion encargada de enviar a la pagina de datos de la entidad publica */
@@ -636,6 +678,11 @@ controladores.controller("LoginCtrl", function (
    		$location.path('/registroBeneficiario');
 	};
 
+  /** Funcion encargada de enviar a la pagina de olvido de clave */
+  $scope.irOlvidoClave = function () {
+    $location.path('/olvidoClave');
+  };
+
   /** Funcion encargada de hacer el login */
   $scope.login = function(){
 
@@ -809,6 +856,21 @@ controladores.controller("CambiarClaveCtrl", function (
   $location,
   $rootScope,
   AuthFactory) {
+
+    /** Funcion encargada de enviar a la pagina de usuarios */
+    $scope.irUsuarios = function () {
+      $location.path('/usuarios');
+    };
+
+    /** Funcion encargada de enviar a la pagina de beneficiarios */
+    $scope.irBeneficiarios = function () {
+      $location.path('/beneficiarios');
+    };
+
+    /** Funcion encargada de enviar a la pagina del dashboard del beneficiario */
+    $scope.irDashBoardBeneficiario = function () {
+      $location.path('/dashboardBeneficiario');
+    };
 
     $scope.cambiarClave = function () {
 

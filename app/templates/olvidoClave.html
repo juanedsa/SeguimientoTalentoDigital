@@ -1,0 +1,30 @@
+<modal-general></modal-general>
+
+<div class="container">
+  <div class="jumbotron">
+      <div class="page-header">
+        <h1>Olvido de clave</h1>
+        <h4 class="text-info">Todos los campos marcados con (*) son obligatorios.</h4>
+      </div>
+      <form class="form-horizontal" name="olvidoClave">
+          <fieldset>
+              <div class="form-group">
+                  <label class="col-md-2 control-label">Correo(*)</label>
+                  <div class="col-md-7">
+                    <input type="email" class="form-control" ng-model="correo" name="correo" required>
+                  </div>
+                  <div class="col-md-3" ng-show="olvidoClave.correo.$dirty && olvidoClave.correo.$invalid">
+                    <h4 class="text-danger" ng-show="olvidoClave.correo.$error.email"><i class="mdi-alert-error"></i> Correo invalido</h4>
+                    <h4 class="text-warning" ng-show="olvidoClave.correo.$error.required"><i class="mdi-alert-warning"></i> Requerido</h4>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <div class="col-lg-10 col-lg-offset-2">
+                      <button type="submit" class="btn btn-primary btn-flat" ng-click="irLogin()">Cancelar</button>
+                      <button type="submit" class="btn btn-primary" ng-click="recuperarClave()" ng-disabled="olvidoClave.$invalid">Aceptar</button>
+                  </div>
+              </div>
+          </fieldset>
+      </form>
+  </div>
+</div>

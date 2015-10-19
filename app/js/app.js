@@ -117,6 +117,10 @@ app.config(function($routeProvider, $locationProvider){
 			templateUrl:'templates/reportes.html',
 			controller: 'ReportesCtrl'
 		})
+		.when('/olvidoClave',{
+			templateUrl:'templates/olvidoClave.html',
+			controller: 'OlvidoClaveCtrl'
+		})
 		.otherwise({
 			redirectTo: '/'
 		});
