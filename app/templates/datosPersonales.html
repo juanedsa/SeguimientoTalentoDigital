@@ -11,75 +11,77 @@
         <h4 class="text-info">Todos los campos marcados con (*) son obligatorios.</h4>
         <button class="btn btn-primary btn-flat"  ng-click="irDashBoardBeneficiario()"><i class="mdi-navigation-arrow-back"></i> Atras</button>
       </div>
-        <form class="form-horizontal">
+        <form class="form-horizontal" name="datosPersonalesForm">
             <fieldset>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Nombre Completo(*)</label>
-                    <div class="col-md-9">
-                      <input type="text" class="form-control" ng-model="usuarioActual.nombre">
+                    <div class="col-md-7">
+                      <input type="text" class="form-control" ng-model="usuarioActual.nombre" name="nombre" required>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosPersonalesForm.nombre.$dirty">
+                      <h5 class="text-warning" ng-show="datosPersonalesForm.nombre.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Tipo de identificacion(*)</label>
-                    <div class="col-md-9">
-                      <select class="form-control" ng-model="usuarioActual.tipoIdentificacion" ng-options="tipoIdentificacion.id as tipoIdentificacion.nombre for tipoIdentificacion in tiposIdentificacionArray"></select>
+                    <div class="col-md-7">
+                      <select class="form-control" ng-model="usuarioActual.tipoIdentificacion" ng-options="tipoIdentificacion.id as tipoIdentificacion.nombre for tipoIdentificacion in tiposIdentificacionArray" name="tipoId" required></select>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosPersonalesForm.tipoId.$dirty">
+                      <h5 class="text-warning" ng-show="datosPersonalesForm.tipoId.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Número de indentificación(*)</label>
-                    <div class="col-md-9">
-                      <input type="number" class="form-control" ng-model="usuarioActual.numeroIdentificacion">
+                    <div class="col-md-7">
+                      <input type="number" class="form-control" ng-model="usuarioActual.numeroIdentificacion" name="numeroId" required>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosPersonalesForm.numeroId.$dirty && datosPersonalesForm.numeroId.$invalid">
+                      <h5 class="text-danger" ng-show="datosPersonalesForm.numeroId.$error.number"><i class="mdi-alert-error"></i> Número invalido</h5>
+                      <h5 class="text-warning" ng-show="datosPersonalesForm.numeroId.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Correo(*)</label>
-                    <div class="col-md-9">
-                      <input disabled="" type="email" class="form-control" ng-model="usuarioActual.correo">
+                    <div class="col-md-7">
+                      <input disabled="" type="email" class="form-control" ng-model="usuarioActual.correo" name="correo" required>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosPersonalesForm.correo.$dirty && datosPersonalesForm.correo.$invalid">
+                      <h5 class="text-danger" ng-show="datosPersonalesForm.correo.$error.email"><i class="mdi-alert-error"></i> Correo invalido</h5>
+                      <h5 class="text-warning" ng-show="datosPersonalesForm.correo.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Departamento(*)</label>
-                    <div class="col-md-9">
-                      <select class="form-control" ng-model="usuarioActual.departamento" ng-options="departamento.id as departamento.nombre for departamento in departamentosList"></select>
+                    <div class="col-md-7">
+                      <select class="form-control" ng-model="usuarioActual.departamento" ng-options="departamento.id as departamento.nombre for departamento in departamentosList" name="depto" required></select>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosPersonalesForm.depto.$dirty">
+                      <h5 class="text-warning" ng-show="datosPersonalesForm.depto.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Ciudad(*)</label>
-                    <div class="col-md-9">
-                      <select class="form-control" ng-model="usuarioActual.ciudad" ng-options="ciudad.id as ciudad.nombre for ciudad in ciudadesList | ciudadesFitro:usuarioActual.departamento"></select>
+                    <div class="col-md-7">
+                      <select class="form-control" ng-model="usuarioActual.ciudad" ng-options="ciudad.id as ciudad.nombre for ciudad in ciudadesList | ciudadesFitro:usuarioActual.departamento" name="ciu" required></select>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosPersonalesForm.ciu.$dirty">
+                      <h5 class="text-warning" ng-show="datosPersonalesForm.ciu.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Convocatoria(*)</label>
-                    <div class="col-md-9">
-                      <select class="form-control" ng-model="usuarioActual.convocatoria" ng-options="convocatoria.id as convocatoria.nombre for convocatoria in convocatoriasList"></select>
+                    <div class="col-md-7">
+                      <select class="form-control" ng-model="usuarioActual.convocatoria" ng-options="convocatoria.id as convocatoria.nombre for convocatoria in convocatoriasList" name="convoca" required></select>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosPersonalesForm.convoca.$dirty">
+                      <h5 class="text-warning" ng-show="datosPersonalesForm.convoca.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-10 col-md-offset-2">
                         <button class="btn btn-default" ng-click="irDashBoardBeneficiario()">Cancelar</button>
-                        <button type="submit" class="btn btn-primary" ng-click="guardarDatos()">Guardar</button>
+                        <button type="submit" class="btn btn-primary" ng-click="guardarDatos()" ng-disabled="datosPersonalesForm.$invalid">Guardar</button>
                     </div>
                 </div>
             </fieldset>

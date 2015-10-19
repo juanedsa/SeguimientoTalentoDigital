@@ -10,75 +10,75 @@
   </div>
   <div class="jumbotron">
     <div class="container-fluid">
-        <form class="form-horizontal">
+        <form class="form-horizontal" name="datosUniversidadForm">
             <fieldset>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Nombre de la Universidad(*)</label>
-                    <div class="col-md-9">
-                      <input type="text" class="form-control" ng-model="datosUniversidad.nombre">
+                    <div class="col-md-7">
+                      <input type="text" class="form-control" ng-model="datosUniversidad.nombre" name="nombre" required>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosUniversidadForm.nombre.$dirty">
+                      <h5 class="text-warning" ng-show="datosUniversidadForm.nombre.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Departamento (*)</label>
-                    <div class="col-md-9">
-                      <select class="form-control" ng-model="datosUniversidad.departamento" ng-options="departamento.id as departamento.nombre for departamento in departamentosList"></select>
+                    <div class="col-md-7">
+                      <select class="form-control" ng-model="datosUniversidad.departamento" ng-options="departamento.id as departamento.nombre for departamento in departamentosList" name="depto" required></select>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosUniversidadForm.depto.$dirty">
+                      <h5 class="text-warning" ng-show="datosUniversidadForm.depto.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Ciudad (*)</label>
-                    <div class="col-md-9">
-                      <select class="form-control" ng-model="datosUniversidad.ciudad" ng-options="ciudad.id as ciudad.nombre for ciudad in ciudadesList | ciudadesFitro:datosUniversidad.departamento"></select>
+                    <div class="col-md-7">
+                      <select class="form-control" ng-model="datosUniversidad.ciudad" ng-options="ciudad.id as ciudad.nombre for ciudad in ciudadesList | ciudadesFitro:datosUniversidad.departamento" name="ciu" required></select>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosUniversidadForm.ciu.$dirty">
+                      <h5 class="text-warning" ng-show="datosUniversidadForm.ciu.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Nivel de Formación(*)</label>
-                    <div class="col-md-9">
-                      <select class="form-control" ng-model="datosUniversidad.nivelFormacion" ng-options="nivelFormacion.id as nivelFormacion.nombre for nivelFormacion in nivelFormacionList"></select>
+                    <div class="col-md-7">
+                      <select class="form-control" ng-model="datosUniversidad.nivelFormacion" ng-options="nivelFormacion.id as nivelFormacion.nombre for nivelFormacion in nivelFormacionList" name="nivelForma" required></select>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosUniversidadForm.nivelForma.$dirty">
+                      <h5 class="text-warning" ng-show="datosUniversidadForm.nivelForma.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Nombre del programa(*)</label>
-                    <div class="col-md-9">
-                      <input type="text" class="form-control" ng-model="datosUniversidad.nombrePrograma">
+                    <div class="col-md-7">
+                      <input type="text" class="form-control" ng-model="datosUniversidad.nombrePrograma" name="nombrePrograma" required>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosUniversidadForm.nombrePrograma.$dirty">
+                      <h5 class="text-warning" ng-show="datosUniversidadForm.nombrePrograma.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Semestre que cursa(*)</label>
-                    <div class="col-md-9">
-                      <select class="form-control" ng-model="datosUniversidad.semestre" ng-options="semestre.id as semestre.nombre for semestre in semestreList"></select>
+                    <div class="col-md-7">
+                      <select class="form-control" ng-model="datosUniversidad.semestre" ng-options="semestre.id as semestre.nombre for semestre in semestreList" name="semestre" required></select>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosUniversidadForm.semestre.$dirty">
+                      <h5 class="text-warning" ng-show="datosUniversidadForm.semestre.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Semestre que inicio con TD(*)</label>
-                    <div class="col-md-9">
-                      <select class="form-control" ng-model="datosUniversidad.semestreInicioTD" ng-options="semestreInicioTD.id as semestreInicioTD.nombre for semestreInicioTD in semestreList"></select>
+                    <div class="col-md-7">
+                      <select class="form-control" ng-model="datosUniversidad.semestreInicioTD" ng-options="semestreInicioTD.id as semestreInicioTD.nombre for semestreInicioTD in semestreList" name="semestreTD" required></select>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosUniversidadForm.semestreTD.$dirty">
+                      <h5 class="text-warning" ng-show="datosUniversidadForm.semestreTD.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-10 col-md-offset-2">
                         <button class="btn btn-default" ng-click="irDashBoardBeneficiario()">Cancelar</button>
-                        <button type="submit" class="btn btn-primary" ng-click="guardarDatos()">Guardar</button>
+                        <button type="submit" class="btn btn-primary" ng-click="guardarDatos()" ng-disabled="datosUniversidadForm.$invalid">Guardar</button>
                     </div>
                 </div>
             </fieldset>
