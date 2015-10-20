@@ -10,79 +10,79 @@
           <h4 class="text-info">Todos los campos marcados con (*) son obligatorios.</h4>
           <button class="btn btn-primary btn-flat"  ng-click="irDashBoardBeneficiario()"><i class="mdi-navigation-arrow-back"></i> Atras</button>
         </div>
-        <form class="form-horizontal">
+        <form class="form-horizontal" name="datosProyectoForm">
             <fieldset>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Nombre del proyecto(*)</label>
-                    <div class="col-md-9">
-                      <input type="text" class="form-control" ng-model="datosProyecto.nombre">
+                    <div class="col-md-7">
+                      <input type="text" class="form-control" ng-model="datosProyecto.nombre" name="nombre" required>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosProyectoForm.nombre.$dirty">
+                      <h5 class="text-warning" ng-show="datosProyectoForm.nombre.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Descripción de Proyecto(*)</label>
-                    <div class="col-md-9">
-                        <textarea class="form-control" rows="4" ng-model="datosProyecto.descripcion"></textarea>
+                    <div class="col-md-7">
+                        <textarea class="form-control" rows="4" ng-model="datosProyecto.descripcion" name="descripcion" required></textarea>
                         <span class="help-block">Descripción breve del proyecto a realizar.</span>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosProyectoForm.descripcion.$dirty">
+                      <h5 class="text-warning" ng-show="datosProyectoForm.descripcion.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Objetivos(*)</label>
-                    <div class="col-md-9">
-                        <textarea class="form-control" rows="4" ng-model="datosProyecto.objetivos"></textarea>
+                    <div class="col-md-7">
+                        <textarea class="form-control" rows="4" ng-model="datosProyecto.objetivos" name="objetivos" required></textarea>
                         <span class="help-block">Presentación del objetivo general y los objetivos especificos de su proyecto.</span>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosProyectoForm.objetivos.$dirty">
+                      <h5 class="text-warning" ng-show="datosProyectoForm.objetivos.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Relación(*)</label>
-                    <div class="col-md-9">
-                        <textarea class="form-control" rows="4" ng-model="datosProyecto.relacion"></textarea>
+                    <div class="col-md-7">
+                        <textarea class="form-control" rows="4" ng-model="datosProyecto.relacion" name="relacion" required></textarea>
                         <span class="help-block">Relación del Proyecto con la Estrategia de Gobierno en línea.</span>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosProyectoForm.relacion.$dirty">
+                      <h5 class="text-warning" ng-show="datosProyectoForm.relacion.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Avance del proyecto(*)</label>
-                    <div class="col-md-9">
-                      <select class="form-control" ng-model="datosProyecto.avance" ng-options="avance.id as avance.nombre for avance in avanceList"></select>
+                    <div class="col-md-7">
+                      <select class="form-control" ng-model="datosProyecto.avance" ng-options="avance.id as avance.nombre for avance in avanceList" name="avance" required></select>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosProyectoForm.avance.$dirty">
+                      <h5 class="text-warning" ng-show="datosProyectoForm.avance.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Metodología(*)</label>
-                    <div class="col-md-9">
-                        <textarea class="form-control" rows="4" ng-model="datosProyecto.metodologia"></textarea>
+                    <div class="col-md-7">
+                        <textarea class="form-control" rows="4" ng-model="datosProyecto.metodologia" name="metodologia" required></textarea>
                         <span class="help-block">Metodología a seguir en su proyecto.</span>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosProyectoForm.metodologia.$dirty">
+                      <h5 class="text-warning" ng-show="datosProyectoForm.metodologia.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Observaciones(*)</label>
-                    <div class="col-md-9">
-                        <textarea class="form-control" rows="4" ng-model="datosProyecto.observaciones"></textarea>
+                    <div class="col-md-7">
+                        <textarea class="form-control" rows="4" ng-model="datosProyecto.observaciones" name="observaciones" required></textarea>
                         <span class="help-block">Observaciones a tener encuenta en su proyecto.</span>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosProyectoForm.observaciones.$dirty">
+                      <h5 class="text-warning" ng-show="datosProyectoForm.observaciones.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Se contacto con la entidad(*)</label>
-                    <div class="col-md-9">
+                    <div class="col-md-7">
                       <div class="radio radio-primary">
                           <label>
                               <input type="radio" name="contactoEntidad" ng-model="datosProyecto.contactoEntidad" value="Si" checked="">Si
@@ -94,13 +94,11 @@
                           </label>
                       </div>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
-                    </div>
+                    <div class="col-md-3"></div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Necesita carta de presentación(*)</label>
-                    <div class="col-md-9">
+                    <div class="col-md-7">
                       <div class="radio radio-primary">
                           <label>
                               <input type="radio" name="cartaPresentacion" ng-model="datosProyecto.cartaPresentacion" value="Si" checked="">Si
@@ -112,23 +110,21 @@
                           </label>
                       </div>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
-                    </div>
+                    <div class="col-md-3"></div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Duración en meses(*)</label>
-                    <div class="col-md-9">
-                      <input type="number" class="form-control" ng-model="datosProyecto.duracion">
+                    <div class="col-md-7">
+                      <input type="number" class="form-control" ng-model="datosProyecto.duracion" name="duracion" required>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosProyectoForm.duracion.$dirty">
+                      <h5 class="text-warning" ng-show="datosProyectoForm.duracion.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-10 col-md-offset-2">
                         <button class="btn btn-default" ng-click="irDashBoardBeneficiario()">Cancelar</button>
-                        <button type="submit" class="btn btn-primary" ng-click="guardarDatos()">Guardar</button>
+                        <button type="submit" class="btn btn-primary" ng-click="guardarDatos()" ng-disabled="datosProyectoForm.$invalid">Guardar</button>
                     </div>
                 </div>
             </fieldset>

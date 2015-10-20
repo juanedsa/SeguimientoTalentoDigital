@@ -10,96 +10,98 @@
   </div>
   <div class="jumbotron">
     <div class="container-fluid">
-        <form class="form-horizontal">
+        <form class="form-horizontal" name="datosEntidadPublicaForm">
             <fieldset>
               <div class="form-group">
                     <label class="col-md-2 control-label">Nombre de la Entidad(*)</label>
-                    <div class="col-md-9">
-                      <input type="text" class="form-control" ng-model="datosEntidadPublica.nombre">
+                    <div class="col-md-7">
+                      <input type="text" class="form-control" ng-model="datosEntidadPublica.nombre" name="name" required>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosEntidadPublicaForm.nombre.$dirty">
+                      <h5 class="text-warning" ng-show="datosEntidadPublicaForm.nombre.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Departamento(*)</label>
-                    <div class="col-md-9">
-                      <select class="form-control" ng-model="datosEntidadPublica.departamento" ng-options="departamento.id as departamento.nombre for departamento in departamentosList
-                      "></select>
+                    <div class="col-md-7">
+                      <select class="form-control" ng-model="datosEntidadPublica.departamento"
+                        ng-options="departamento.id as departamento.nombre for departamento in departamentosList"
+                          name="depto" required></select>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosEntidadPublicaForm.depto.$dirty">
+                      <h5 class="text-warning" ng-show="datosEntidadPublicaForm.depto.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Ciudad(*)</label>
-                    <div class="col-md-9">
-                      <select class="form-control" ng-model="datosEntidadPublica.ciudad" ng-options="ciudad.id as ciudad.nombre for ciudad in ciudadesList | ciudadesFitro:datosEntidadPublica.departamento
-                      "></select>
+                    <div class="col-md-7">
+                      <select class="form-control" ng-model="datosEntidadPublica.ciudad"
+                        ng-options="ciudad.id as ciudad.nombre for ciudad in ciudadesList | ciudadesFitro:datosEntidadPublica.departamento"
+                        name="ciu" required></select>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosEntidadPublicaForm.ciu.$dirty">
+                      <h5 class="text-warning" ng-show="datosEntidadPublicaForm.ciu.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Dependiencia Responsable(*)</label>
-                    <div class="col-md-9">
-                      <input type="text" class="form-control" ng-model="datosEntidadPublica.dependenciaResponsable">
+                    <div class="col-md-7">
+                      <input type="text" class="form-control" ng-model="datosEntidadPublica.dependenciaResponsable" name="dependencia" required>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosEntidadPublicaForm.dependencia.$dirty">
+                      <h5 class="text-warning" ng-show="datosEntidadPublicaForm.dependencia.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Coordinador Responsable(*)</label>
-                    <div class="col-md-9">
-                      <input type="text" class="form-control" ng-model="datosEntidadPublica.coordinadorResponsable">
+                    <div class="col-md-7">
+                      <input type="text" class="form-control" ng-model="datosEntidadPublica.coordinadorResponsable" name="coordinador" required>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosEntidadPublicaForm.coordinador.$dirty">
+                      <h5 class="text-warning" ng-show="datosEntidadPublicaForm.coordinador.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Dirección de contacto(*)</label>
-                    <div class="col-md-9">
-                      <input type="text" class="form-control" ng-model="datosEntidadPublica.direccionContacto">
+                    <div class="col-md-7">
+                      <input type="text" class="form-control" ng-model="datosEntidadPublica.direccionContacto" name="direccion" required>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosEntidadPublicaForm.direccion.$dirty">
+                      <h5 class="text-warning" ng-show="datosEntidadPublicaForm.direccion.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Telefono fijo(*)</label>
-                    <div class="col-md-9">
-                      <input type="number" class="form-control" ng-model="datosEntidadPublica.telefono">
+                    <div class="col-md-7">
+                      <input type="number" class="form-control" ng-model="datosEntidadPublica.telefono" name="telefono" required>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosEntidadPublicaForm.telefono.$dirty">
+                      <h5 class="text-warning" ng-show="datosEntidadPublicaForm.telefono.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Celular(*)</label>
-                    <div class="col-md-9">
-                      <input type="number" class="form-control" ng-model="datosEntidadPublica.celular">
+                    <div class="col-md-7">
+                      <input type="number" class="form-control" ng-model="datosEntidadPublica.celular" name="celular" required>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosEntidadPublicaForm.celular.$dirty">
+                      <h5 class="text-warning" ng-show="datosEntidadPublicaForm.celular.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Correo(*)</label>
-                    <div class="col-md-9">
-                      <input type="email" class="form-control" ng-model="datosEntidadPublica.correo">
+                    <div class="col-md-7">
+                      <input type="email" class="form-control" ng-model="datosEntidadPublica.correo" name="correo" required>
                     </div>
-                    <div class="col-md-1">
-                      <p class="text-danger"><i class="mdi-alert-error"></i></p>
+                    <div class="col-md-3" ng-show="datosEntidadPublicaForm.correo.$dirty && datosEntidadPublicaForm.correo.$invalid">
+                      <h5 class="text-danger" ng-show="datosEntidadPublicaForm.correo.$error.email"><i class="mdi-alert-error"></i> Correo invalido</h5>
+                      <h5 class="text-warning" ng-show="datosEntidadPublicaForm.correo.$error.required"><i class="mdi-alert-warning"></i> Requerido</h5>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <div class="col-md-10 col-md-offset-2">
                         <button class="btn btn-default" ng-click="irDashBoardBeneficiario()">Cancelar</button>
-                        <button type="submit" class="btn btn-primary" ng-click="guardarDatos()">Guardar</button>
+                        <button type="submit" class="btn btn-primary" ng-click="guardarDatos()" ng-disabled="datosEntidadPublicaForm.$invalid">Guardar</button>
                     </div>
                 </div>
             </fieldset>
