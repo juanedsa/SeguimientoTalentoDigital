@@ -872,6 +872,7 @@ controladores.controller("CambiarClaveCtrl", function (
       $location.path('/dashboardBeneficiario');
     };
 
+    /** Funcion encargada de cambiar la clave de un usuario */
     $scope.cambiarClave = function () {
 
       AuthFactory.$changePassword({
