@@ -4,6 +4,10 @@
       "ciudad" : ,
       "convocatoria" : ,
       "correo" : ,
+      "departamento" : ,
+      "nombre" : ,
+      "numeroIdentificacion" : ,
+      "tipoIdentificacion" :,
       "datosEntidadPublica" : {
         "celular" : ,
         "ciudad" : ,
@@ -35,11 +39,7 @@
         "nombrePrograma" : ,
         "semestre" : ,
         "semestreInicioTD" :
-      },
-      "departamento" : ,
-      "nombre" : ,
-      "numeroIdentificacion" : ,
-      "tipoIdentificacion" :
+      }
     },
   },
   "configuracion" : {
