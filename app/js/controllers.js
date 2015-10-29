@@ -817,6 +817,9 @@ controladores.controller("CambiarCorreoCtrl", function (
   AuthFactory) {
 
     $scope.cambiarCorreo = function () {
+
+      $scope.mostrarLoading = true;
+
         AuthFactory.$changeEmail({
           oldEmail: $scope.correoActual,
           newEmail: $scope.correoNuevo,
@@ -829,6 +832,7 @@ controladores.controller("CambiarCorreoCtrl", function (
             mensaje: "Correo cambiado con exito"
           };
           $('#modal-general').modal('show');
+          $scope.mostrarLoading = false;
 
           /** Funcion que se ejecuta cuando se oculta el modal */
           $('#modal-general').on('hidden.bs.modal', function (e) {
@@ -869,6 +873,7 @@ controladores.controller("CambiarCorreoCtrl", function (
               mensaje: errorMensaje
             };
             $('#modal-general').modal('show');
+            $scope.mostrarLoading = false;
         });
     };
 });
@@ -1238,7 +1243,12 @@ controladores.controller("EstadoCtrl", function (
   EstadosFactory,
   DetalleEstadoFactory) {
 
+  $scope.mostrarLoading = true;
+
 	$scope.estadosArray = EstadosFactory;
+  $scope.estadosArray.$loaded().then(function(estados) {
+    $scope.mostrarLoading = false;
+  });
 
 	/** Funcion encargada de enviar a la pagina para crear un nuevo estado */
 	$scope.irNuevoEstado = function(){
@@ -1255,6 +1265,8 @@ controladores.controller("EstadoCtrl", function (
 	/** Funcion encargada de crear un nuevo estado*/
 	$scope.crearEstado = function(){
 
+    $scope.mostrarLoading = true;
+
 		console.log("Creando Estado");
 
 		$scope.estadosArray.$add({
@@ -1267,6 +1279,7 @@ controladores.controller("EstadoCtrl", function (
 
 			/** Se envia al listado de estados */
 		  $location.path('/estados');
+      $scope.mostrarLoading = false;
 
 		});
 	};
@@ -1290,6 +1303,8 @@ controladores.controller("DetalleEstadoCtrl", function (
   $firebaseObject,
   FB) {
 
+  $scope.mostrarLoading = true;
+
 	$scope.estadosArray = EstadosFactory;
 
   /** Se obtiene la referencia al estado */
@@ -1299,9 +1314,14 @@ controladores.controller("DetalleEstadoCtrl", function (
   var syncObject = $firebaseObject(refEstado);
   $scope.detalleEstado = syncObject;
 
+  $scope.detalleEstado.$loaded().then(function(detalleEstado) {
+    $scope.mostrarLoading = false;
+  });
 
   /** Funcion encargada de guardar el estado */
   $scope.guardarEstado = function () {
+
+    $scope.mostrarLoading = true;
 
     $scope.detalleEstado.$save().then(function() {
 
@@ -1310,6 +1330,7 @@ controladores.controller("DetalleEstadoCtrl", function (
         mensaje: "Estado guardado con exito!"
       };
       $('#modal-general').modal('show');
+      $scope.mostrarLoading = false;
 
       /** Funcion que se ejecuta cuando se oculta el modal */
       $('#modal-general').on('hidden.bs.modal', function (e) {
@@ -1322,8 +1343,6 @@ controladores.controller("DetalleEstadoCtrl", function (
      }).catch(function(error) {
        alert('Error!');
      });
-
-
   };
 
   /** Funcion encargada de enviar a la pagina con el listado de estados*/
@@ -1342,7 +1361,12 @@ controladores.controller("ConvocatoriaCtrl", function (
   ConvocatoriasFactory,
   DetalleConvocatoriaFactory) {
 
+  $scope.mostrarLoading = true;
+
 	$scope.convocatoriasArray = ConvocatoriasFactory;
+  $scope.convocatoriasArray.$loaded().then(function (data) {
+    $scope.mostrarLoading = false;
+  })
 
 	/** Funcion encargada de enviar a la pagina para crear un nueva convocatoria */
 	$scope.irNuevaConvocatoria = function(){
@@ -1359,6 +1383,8 @@ controladores.controller("ConvocatoriaCtrl", function (
 	/** Funcion encargada de crear un nueva convocatoria*/
 	$scope.crearConvocatoria = function(){
 
+    $scope.mostrarLoading = true;
+
 		console.log("Creando Convocatoria");
 
 		$scope.convocatoriasArray.$add({
@@ -1371,6 +1397,7 @@ controladores.controller("ConvocatoriaCtrl", function (
 
 			/** Se envia al listado de estados */
 		  $location.path('/convocatorias');
+      $scope.mostrarLoading = false;
 
 		});
 	};
@@ -1394,12 +1421,17 @@ controladores.controller("DetalleConvocatoriaCtrl", function (
   $firebaseObject,
   FB) {
 
+    $scope.mostrarLoading = true;
+
   /** Se obtiene la referencia a la convocatoria */
   var refConvocatoria = new Firebase(FB.CONVOCATORIAS + "/" + DetalleConvocatoriaFactory.get().$id);
 
   /** Se hace una copia local del estado */
   var syncObject = $firebaseObject(refConvocatoria);
   $scope.detalleConvocatoria = syncObject;
+  $scope.detalleConvocatoria.$loaded().then(function(data) {
+    $scope.mostrarLoading = false;
+  });
 
 
   /** Funcion encargada de guardar la convocatoria */
@@ -1407,17 +1439,21 @@ controladores.controller("DetalleConvocatoriaCtrl", function (
 
     $scope.detalleConvocatoria.$save().then(function() {
 
+      $scope.mostrarLoading = true;
+
       $scope.modal = {
         titulo: "Mensaje",
         mensaje: "Convocatoria guardada con exito!"
       };
       $('#modal-general').modal('show');
+      $scope.mostrarLoading = false;
 
       /** Funcion que se ejecuta cuando se oculta el modal */
       $('#modal-general').on('hidden.bs.modal', function (e) {
 
         $rootScope.$apply(function() {
             $location.path('/convocatorias');
+
         });
       });
 
@@ -1445,7 +1481,12 @@ controladores.controller("TipoIdentificacionCtrl", function (
   TiposIdentificacionFactory,
   DetalleTipoIndetificacionFactory) {
 
+    $scope.mostrarLoading = true;
+
 	$scope.tiposIdentificacionArray = TiposIdentificacionFactory;
+  $scope.tiposIdentificacionArray.$loaded().then(function(data) {
+    $scope.mostrarLoading = false;
+  });
 
 	/** Funcion encargada de enviar a la pagina para crear un nuevo Tipo de Indentificación */
 	$scope.irNuevoTipoIdentificacion = function(){
@@ -1471,6 +1512,8 @@ controladores.controller("TipoIdentificacionCtrl", function (
 
 		console.log("Creando Tipo de Identificacion");
 
+    $scope.mostrarLoading = true;
+
 		$scope.tiposIdentificacionArray.$add({
           id:           $scope.tiposIdentificacionArray.length + 1,
         	nombre: 			$scope.tipoIdentificacion.nombre,
@@ -1481,6 +1524,7 @@ controladores.controller("TipoIdentificacionCtrl", function (
 		  $scope.tiposIdentificacionArray.$indexFor(id); // returns location in the array
 
 		  $location.path('/tiposIdentificacion');
+      $scope.mostrarLoading = false;
 
 		});
 	};
@@ -1496,6 +1540,8 @@ controladores.controller("DetalleTipoIdentificacionCtrl", function (
   $firebaseObject,
   FB) {
 
+    $scope.mostrarLoading = true;
+
   /** Se obtiene la referencia al tipo de Identificacion */
   var refTipoIdentificacion = new Firebase(FB.TIPOS_IDENTIFICACION + "/" + DetalleTipoIndetificacionFactory.get().$id);
 
@@ -1503,10 +1549,16 @@ controladores.controller("DetalleTipoIdentificacionCtrl", function (
   var syncObject = $firebaseObject(refTipoIdentificacion);
   $scope.detalleTipoIdentificacion = syncObject;
 
+  $scope.detalleTipoIdentificacion.$loaded().then(function(data) {
+    $scope.mostrarLoading = false;
+  });
+
   /** Funcion encargada de guardar el Tipo de Identificacion */
   $scope.guardarTipoIdentificacion = function () {
 
     console.log("Inicia guardarTipoIdentificacion");
+
+    $scope.mostrarLoading = true;
 
     $scope.detalleTipoIdentificacion.$save().then(function() {
 
@@ -1515,12 +1567,14 @@ controladores.controller("DetalleTipoIdentificacionCtrl", function (
         mensaje: "Tipo de Indentificación guardado con exito!"
       };
       $('#modal-general').modal('show');
+      $scope.mostrarLoading = false;
 
       /** Funcion que se ejecuta cuando se oculta el modal */
       $('#modal-general').on('hidden.bs.modal', function (e) {
 
         $rootScope.$apply(function() {
             $location.path('/tiposIdentificacion');
+
         });
       });
 
