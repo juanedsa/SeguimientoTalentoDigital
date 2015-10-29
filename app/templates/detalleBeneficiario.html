@@ -1,5 +1,7 @@
 <barra-navegacion-funcionario></barra-navegacion-funcionario>
 
+<loading></loading>
+
 <div class="container">
   <div class="page-header">
     <h1>Detalle del Beneficiario</h1>
@@ -26,7 +28,7 @@
               <dt>Ciudad:</dt>
               <dd>{{beneficiario.ciudad.nombre}}</dd>
               <dt>Convocatoria:</dt>
-              <dd>{{beneficiario.convocatoria.nombre}}</dd>
+              <dd>{{convocatoriasArray[beneficiario.convocatoria - 1].nombre}}</dd>
             </dl>
           </div>
       </div>

@@ -39,3 +39,11 @@ directivas.directive('modalConfirmacion', function () {
 		templateUrl: 'templates/modal-confirmacion.html'
 	}
 });
+
+/** Directiva de loading para las pagina */
+directivas.directive('loading', function () {
+	return{
+		restrict: 'E',
+		templateUrl: 'templates/loading.html'
+	}
+});

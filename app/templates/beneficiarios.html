@@ -1,5 +1,7 @@
 <barra-navegacion-funcionario></barra-navegacion-funcionario>
 
+<loading></loading>
+
 <div class="container-fluid">
 
 
@@ -11,37 +13,39 @@
           </div>
       </div>
       <div class="panel-body">
-        <table class="table table-striped table-hoDetalle ">
-            <thead>
-                <tr>
-                    <th>
-                      Nombre
-                      <span style="cursor: pointer" ng-click="ordenarPor('-nombre')"><i class="mdi-hardware-keyboard-arrow-up"></i></span>
-                      <span style="cursor: pointer" ng-click="ordenarPor('nombre')"><i class="mdi-hardware-keyboard-arrow-down"></i></span>
-                    </th>
-                    <th>
-                      Correo
-                      <span style="cursor: pointer" ng-click="ordenarPor('-correo')"><i class="mdi-hardware-keyboard-arrow-up"></i></span>
-                      <span style="cursor: pointer" ng-click="ordenarPor('correo')"><i class="mdi-hardware-keyboard-arrow-down"></i></span>
-                    </th>
-                    <th>
-                      Número Identificación
-                      <span style="cursor: pointer" ng-click="ordenarPor('-numeroIdentificacion')"><i class="mdi-hardware-keyboard-arrow-up"></i></span>
-                      <span style="cursor: pointer" ng-click="ordenarPor('numeroIdentificacion')"><i class="mdi-hardware-keyboard-arrow-down"></i></span>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="beneficiario in beneficiariosArray | orderBy:ordenSeleccionado | filter:buscar">
-                    <td>{{beneficiario.nombre}}</td>
-                    <td>{{beneficiario.correo}}</td>
-                    <td>{{beneficiario.numeroIdentificacion}}</td>
-                    <td>
-                        <a ng-click="irDetalleBeneficiario(beneficiario)" class="btn btn-flat btn-info btn-xs">Detalle</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+          <table class="table table-striped table-hoDetalle">
+              <thead>
+                  <tr>
+                      <th>
+                        Nombre
+                        <span style="cursor: pointer" ng-click="ordenarPor('-nombre')"><i class="mdi-hardware-keyboard-arrow-up"></i></span>
+                        <span style="cursor: pointer" ng-click="ordenarPor('nombre')"><i class="mdi-hardware-keyboard-arrow-down"></i></span>
+                      </th>
+                      <th>
+                        Correo
+                        <span style="cursor: pointer" ng-click="ordenarPor('-correo')"><i class="mdi-hardware-keyboard-arrow-up"></i></span>
+                        <span style="cursor: pointer" ng-click="ordenarPor('correo')"><i class="mdi-hardware-keyboard-arrow-down"></i></span>
+                      </th>
+                      <th>
+                        Número Identificación
+                        <span style="cursor: pointer" ng-click="ordenarPor('-numeroIdentificacion')"><i class="mdi-hardware-keyboard-arrow-up"></i></span>
+                        <span style="cursor: pointer" ng-click="ordenarPor('numeroIdentificacion')"><i class="mdi-hardware-keyboard-arrow-down"></i></span>
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr ng-repeat="beneficiario in beneficiariosArray | orderBy:ordenSeleccionado | filter:buscar">
+                      <td>{{beneficiario.nombre}}</td>
+                      <td>{{beneficiario.correo}}</td>
+                      <td>{{beneficiario.numeroIdentificacion}}</td>
+                      <td>
+                          <a ng-click="irDetalleBeneficiario(beneficiario)" class="btn btn-flat btn-info btn-xs">Detalle</a>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+        </div>
       </div>
   </div>
 </div>

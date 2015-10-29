@@ -48,6 +48,8 @@ controladores.controller("ReportesCtrl", function (
   CONVOCATORIA,
   NIVEL_FORMACION) {
 
+  $scope.mostrarLoading = true;
+
   /** Arreglo con la informacion de los beneficiarios */
   var beneficiarios = BeneficiariosFactory;
 
@@ -262,6 +264,7 @@ controladores.controller("ReportesCtrl", function (
         'title': 'Cantidad de beneficarios por convocatoria'
     };
 
+    $scope.mostrarLoading = false;
 
   });
 });
@@ -308,6 +311,8 @@ controladores.controller("BeneficiarioCtrl", function (
   BeneficiariosFactory,
   DetalleBeneficiarioFactory) {
 
+  $scope.mostrarLoading = true;
+
   /** Se inicializa el material desing */
   angular.element(document).ready(function () {
       $.material.init();
@@ -315,6 +320,10 @@ controladores.controller("BeneficiarioCtrl", function (
 
 	/** Se inicializan los objetos traidos de fabricas */
 	$scope.beneficiariosArray = BeneficiariosFactory;
+
+  $scope.beneficiariosArray.$loaded().then(function(beneficiarios) {
+      $scope.mostrarLoading = false;
+  });
 
   $scope.irDetalleBeneficiario = function (beneficiario) {
     console.log(beneficiario.$id);
@@ -343,6 +352,8 @@ controladores.controller("DetalleBeneficiarioCtrl", function (
   NivelFormacionFactory,
   DetalleBeneficiarioFactory) {
 
+  $scope.mostrarLoading = true;
+
   /** Se inicializa el material desing */
   angular.element(document).ready(function () {
       $.material.init();
@@ -355,6 +366,10 @@ controladores.controller("DetalleBeneficiarioCtrl", function (
   $scope.beneficiario = DetalleBeneficiarioFactory.get();
 
   $scope.tiposIdentificacionArray = TiposIdentificacionFactory;
+  $scope.convocatoriasArray = ConvocatoriasFactory;
+
+  $scope.departamentos = DepartamentosFactory.all();
+  $scope.ciudades = CiudadesFactory.all();
 
   if($scope.beneficiario.departamento != undefined)
     $scope.beneficiario.departamento = DepartamentosFactory.getIndex($scope.beneficiario.departamento);
@@ -362,10 +377,7 @@ controladores.controller("DetalleBeneficiarioCtrl", function (
   if($scope.beneficiario.ciudad != undefined)
     $scope.beneficiario.ciudad = CiudadesFactory.getIndex($scope.beneficiario.ciudad);
 
-  /** Se obtiene la convocatoria */
-  var keyConvocatoria = ConvocatoriasFactory.$keyAt($scope.beneficiario.convocatoria - 1);
-  $scope.beneficiario.convocatoria = ConvocatoriasFactory.$getRecord(keyConvocatoria);
-
+  /** Se valida si el beneficiario tiene datos de la universidad */
   if($scope.beneficiario.datosUniversidad != undefined){
     if($scope.beneficiario.datosUniversidad.departamento != undefined)
       $scope.beneficiario.datosUniversidad.departamento = DepartamentosFactory.getIndex($scope.beneficiario.datosUniversidad.departamento);
@@ -375,12 +387,17 @@ controladores.controller("DetalleBeneficiarioCtrl", function (
       $scope.beneficiario.datosUniversidad.nivelFormacion = NivelFormacionFactory.getIndex($scope.beneficiario.datosUniversidad.nivelFormacion);
   }
 
+  /** Se valida si el beneficiario tiene datos de entidad publica */
   if($scope.beneficiario.datosEntidadPublica != undefined){
     if($scope.beneficiario.datosEntidadPublica.departamento != undefined)
       $scope.beneficiario.datosEntidadPublica.departamento = DepartamentosFactory.getIndex($scope.beneficiario.datosEntidadPublica.departamento);
     if($scope.beneficiario.datosEntidadPublica.ciudad != undefined)
       $scope.beneficiario.datosEntidadPublica.ciudad = CiudadesFactory.getIndex($scope.beneficiario.datosEntidadPublica.ciudad);
   }
+
+  $scope.mostrarLoading = false;
+
+
 });
 
 /** Controlador para los datos personales del Beneficiario */
@@ -668,7 +685,7 @@ controladores.controller("LoginCtrl", function (
 
   /** Para Pruebas */
   $scope.correo = "admin@admin.com";
-  $scope.clave = 'admin';
+  $scope.clave = '123456';
 
 	$scope.rolesUsuarioArray = RolesUsuarioFactory;
   $scope.beneficiariosArray = BeneficiariosFactory;
@@ -685,6 +702,8 @@ controladores.controller("LoginCtrl", function (
 
   /** Funcion encargada de hacer el login */
   $scope.login = function(){
+
+    $scope.mostrarLoading = true;
 
     var refAuth = new Firebase(FB.APP);
 
@@ -714,6 +733,7 @@ controladores.controller("LoginCtrl", function (
             mensaje: ERROR.INICIAR_SESION
           };
           $('#modal-general').modal('show');
+          $scope.mostrarLoading = false;
         });
 
       } else {
@@ -731,6 +751,7 @@ controladores.controller("LoginCtrl", function (
             $rootScope.$apply(function() {
                 $location.path('/usuarios');
                 console.log($location.path());
+                $scope.mostrarLoading = false;
             });
         }else{
 
@@ -753,6 +774,7 @@ controladores.controller("LoginCtrl", function (
                       $rootScope.$apply(function() {
                           $location.path('/beneficiarios');
                           console.log($location.path());
+                          $scope.mostrarLoading = false;
                       });
 
                     }else{
@@ -772,6 +794,7 @@ controladores.controller("LoginCtrl", function (
                               $rootScope.$apply(function() {
                                   $location.path('/dashboardBeneficiario');
                                   console.log($location.path());
+                                  $scope.mostrarLoading = false;
                               });
 
                             }
@@ -875,6 +898,8 @@ controladores.controller("CambiarClaveCtrl", function (
     /** Funcion encargada de cambiar la clave de un usuario */
     $scope.cambiarClave = function () {
 
+      $scope.mostrarLoading = true;
+
       AuthFactory.$changePassword({
         email: $scope.correoActual,
         oldPassword: $scope.claveActual,
@@ -887,6 +912,7 @@ controladores.controller("CambiarClaveCtrl", function (
           mensaje: "Clave cambiada con exito"
         };
         $('#modal-general').modal('show');
+        $scope.mostrarLoading = false;
 
         /** Funcion que se ejecuta cuando se oculta el modal */
         $('#modal-general').on('hidden.bs.modal', function (e) {
@@ -926,6 +952,7 @@ controladores.controller("CambiarClaveCtrl", function (
               mensaje: errorMensaje
             };
             $('#modal-general').modal('show');
+            $scope.mostrarLoading = false;
         });
     };
 });
@@ -1047,22 +1074,28 @@ controladores.controller("UsuarioCtrl", function (
   RolesFactory,
   ROL) {
 
+  $scope.mostrarLoading = true;
+
+  $scope.rolesUsuarioArray = RolesUsuarioFactory;
+  $scope.estadosArray = EstadosFactory;
+
 	/** Se inicializan los objetos traidos de fabricas */
 	$scope.usuariosArray = UsuariosFactory;
-	$scope.estadosArray = EstadosFactory;
-	$scope.rolesUsuarioArray = RolesUsuarioFactory;
-	$scope.rolesArray = RolesFactory.all();
+
+  $scope.usuariosArray.$loaded().then(function (usuarios) {
+    $scope.mostrarLoading = false;
+  });
+
 
 	/** Funcion encargada de enviar a la pagina para crear un nuevo usuarios */
 	$scope.irNuevoUsuario = function(){
 		console.log('irNuevoUsuario');
 		$location.path('/nuevoUsuario');
+    $scope.mostrarLoading = false;
 	};
 
   $scope.irDetalleUsuario = function (usuario) {
-
     DetalleUsuarioFactory.set(usuario);
-
     $location.path('/detalleUsuario');
   };
 
@@ -1092,6 +1125,8 @@ controladores.controller("UsuarioCtrl", function (
   $scope.crearUsuario = function(){
     console.log("Creando Usuario");
 
+    $scope.mostrarLoading = true;
+
 		$scope.usuariosArray.$add({
         	nombre: $scope.usuario.nombre,
         	correo: $scope.usuario.correo,
@@ -1117,6 +1152,7 @@ controladores.controller("UsuarioCtrl", function (
             console.log("Rol agregado a usuario con el id " + id);
 
           $location.path('/usuarios');
+          $scope.mostrarLoading = false;
   			}).catch(function(error) {
           console.log(error);
 
@@ -1137,6 +1173,8 @@ controladores.controller("DetalleUsuarioCtrl", function (
   RolesFactory,
   FB) {
 
+    $scope.mostrarLoading = true;
+
     /** Se inicializan los objetos traidos de fabricas */
     $scope.estadosArray = EstadosFactory;
     $scope.rolesArray = RolesFactory.all();
@@ -1148,7 +1186,12 @@ controladores.controller("DetalleUsuarioCtrl", function (
     var syncObject = $firebaseObject(refUsuario);
     $scope.usuarioActual = syncObject;
 
-    console.log($scope.usuarioActual);
+    $scope.usuarioActual.$loaded().then(function(usuario) {
+
+      $scope.mostrarLoading = false;
+      console.log(usuario);
+
+    });
 
     /** Funcion encargada de enviar a la pagina con el listado de usuarios */
     $scope.irUsuarios = function(){
@@ -1159,6 +1202,8 @@ controladores.controller("DetalleUsuarioCtrl", function (
     /** funcion encargada de guardar los datos del beneficario */
     $scope.actualizarUsuario = function () {
 
+      $scope.mostrarLoading = true;
+
       $scope.usuarioActual.$save().then(function() {
 
         $scope.modal = {
@@ -1166,6 +1211,7 @@ controladores.controller("DetalleUsuarioCtrl", function (
           mensaje: "Datos el usuario guardados con exito!"
         };
         $('#modal-general').modal('show');
+        $scope.mostrarLoading = false;
 
         /** Funcion que se ejecuta cuando se oculta el modal */
         $('#modal-general').on('hidden.bs.modal', function (e) {
