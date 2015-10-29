@@ -20,7 +20,7 @@ directivas.directive('barraNavegacionAdmin', function () {
 directivas.directive('barraNavegacionBeneficiario', function () {
 	return{
 		restrict: 'E',
-		templateUrl: 'templates/barra-navegacion-Beneficiario.html'
+		templateUrl: 'templates/barra-navegacion-beneficiario.html'
 	}
 });
 
