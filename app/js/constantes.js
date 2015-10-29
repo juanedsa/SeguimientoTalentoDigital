@@ -54,5 +54,7 @@ constantes.constant('CONVOCATORIA', {
 	UNO: 			1,
 	DOS: 			2,
 	TRES: 		3,
-	CUATRO: 	4
+	CUATRO: 	4,
+	CINCO: 		5,
+	SEIS: 		6
 });

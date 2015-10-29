@@ -69,6 +69,8 @@ controladores.controller("ReportesCtrl", function (
   var segundaCantidad = 0;
   var terceraCantidad = 0;
   var cuartaCantidad = 0;
+  var quintaCantidad = 0;
+  var sextaCantidad = 0;
 
   /** Se verifica cuando el arreglo este descargado de firebase */
   beneficiarios.$loaded().then(function(beneficiarios) {
@@ -136,6 +138,12 @@ controladores.controller("ReportesCtrl", function (
             break;
           case CONVOCATORIA.CUATRO:
             cuartaCantidad++;
+            break;
+          case CONVOCATORIA.CINCO:
+            quintaCantidad++;
+            break;
+          case CONVOCATORIA.SEIS:
+            sextaCantidad++;
             break;
         }
       }
@@ -248,6 +256,14 @@ controladores.controller("ReportesCtrl", function (
         {v: "2014-1"},
         {v: cuartaCantidad}
     ];
+    $scope.quinta = [
+        {v: "2014-2"},
+        {v: quintaCantidad}
+    ];
+    $scope.sexta = [
+        {v: "2015-1"},
+        {v: sextaCantidad}
+    ];
 
     $scope.reporteCuatro.data = {"cols": [
         {id: "t", label: "Topping", type: "string"},
@@ -256,7 +272,9 @@ controladores.controller("ReportesCtrl", function (
           {c: $scope.primera},
           {c: $scope.segunda},
           {c: $scope.tercera},
-          {c: $scope.cuarta}
+          {c: $scope.cuarta},
+          {c: $scope.quinta},
+          {c: $scope.sexta}
     ]};
     // $routeParams.chartType == BarChart or PieChart or ColumnChart...
     $scope.reporteCuatro.type = 'ColumnChart';
@@ -413,6 +431,8 @@ controladores.controller('DatosPersonalesCtrl', function (
   LOCAL_STOGARE,
   FB) {
 
+  $scope.mostrarLoading = true;
+
   /** Se inicializa el material desing */
   angular.element(document).ready(function () {
       $.material.init();
@@ -441,6 +461,10 @@ controladores.controller('DatosPersonalesCtrl', function (
         /** Se hace una copia local del usuario */
         var syncObject = $firebaseObject(refBen);
         $scope.usuarioActual = syncObject;
+        $scope.usuarioActual.$loaded().then(function(data) {
+          $scope.mostrarLoading = false;
+        });
+
 
       });
     });
@@ -448,6 +472,8 @@ controladores.controller('DatosPersonalesCtrl', function (
 
   /** funcion encargada de guardar los datos del beneficario */
   $scope.guardarDatos = function () {
+
+    $scope.mostrarLoading = true;
 
     $scope.usuarioActual.$save().then(function() {
       $scope.modal = {
@@ -457,6 +483,7 @@ controladores.controller('DatosPersonalesCtrl', function (
 
 
       $('#modal-general').modal('show');
+      $scope.mostrarLoading = false;
      }).catch(function(error) {
        alert('Error!');
      });
@@ -481,6 +508,8 @@ controladores.controller('DatosUniversidadCtrl', function (
   NivelFormacionFactory,
   LOCAL_STOGARE,
   FB) {
+
+    $scope.mostrarLoading = true;
 
   /** Se inicializa el material desing */
   angular.element(document).ready(function () {
@@ -511,7 +540,9 @@ controladores.controller('DatosUniversidadCtrl', function (
         /** Se hace una copia local del usuario */
         var syncObject = $firebaseObject(refBen);
         $scope.datosUniversidad = syncObject;
-
+        $scope.datosUniversidad.$loaded().then(function(data) {
+          $scope.mostrarLoading = false;
+        });
       });
     });
 
@@ -519,8 +550,9 @@ controladores.controller('DatosUniversidadCtrl', function (
   /** funcion encargada de guardar los datos del beneficario */
   $scope.guardarDatos = function () {
 
+    $scope.mostrarLoading = true;
+
     $scope.datosUniversidad.$save().then(function() {
-      //  alert('Profile saved!');
 
       $scope.modal = {
         titulo: "Mensaje",
@@ -528,7 +560,7 @@ controladores.controller('DatosUniversidadCtrl', function (
       };
 
       $('#modal-general').modal('show');
-
+      $scope.mostrarLoading = false;
 
      }).catch(function(error) {
        alert('Error!');
@@ -552,6 +584,8 @@ controladores.controller('DatosEntidadPublicaCtrl', function (
   CiudadesFactory,
   LOCAL_STOGARE,
   FB) {
+
+    $scope.mostrarLoading = true;
 
     /** Se inicializa el material desing */
     angular.element(document).ready(function () {
@@ -579,6 +613,9 @@ controladores.controller('DatosEntidadPublicaCtrl', function (
         /** Se hace una copia local del beneficiario */
         var syncObject = $firebaseObject(refBen);
         $scope.datosEntidadPublica = syncObject;
+        $scope.datosEntidadPublica.$loaded().then(function(data) {
+            $scope.mostrarLoading = false;
+        });
 
       });
     });
@@ -587,6 +624,8 @@ controladores.controller('DatosEntidadPublicaCtrl', function (
   /** funcion encargada de guardar los datos del beneficario */
   $scope.guardarDatos = function () {
 
+      $scope.mostrarLoading = true;
+
     $scope.datosEntidadPublica.$save().then(function() {
 
       $scope.modal = {
@@ -594,6 +633,7 @@ controladores.controller('DatosEntidadPublicaCtrl', function (
         mensaje: "Datos de la entidad publica guardados con exito!"
       };
       $('#modal-general').modal('show');
+        $scope.mostrarLoading = false;
 
      }).catch(function(error) {
        alert('Error!');
@@ -617,6 +657,8 @@ controladores.controller('DatosProyectoCtrl', function (
   LOCAL_STOGARE,
   FB) {
 
+      $scope.mostrarLoading = true;
+
   /** Se inicializa el material desing */
   angular.element(document).ready(function () {
       $.material.init();
@@ -639,6 +681,9 @@ controladores.controller('DatosProyectoCtrl', function (
         /** Se hace una copia local del beneficiario */
         var syncObject = $firebaseObject(refBen);
         $scope.datosProyecto = syncObject;
+        $scope.datosProyecto.$loaded().then(function(data) {
+            $scope.mostrarLoading = false;
+        });
 
       });
     });
@@ -647,6 +692,8 @@ controladores.controller('DatosProyectoCtrl', function (
   /** funcion encargada de guardar los datos del beneficario */
   $scope.guardarDatos = function () {
 
+      $scope.mostrarLoading = true;
+
     $scope.datosProyecto.$save().then(function() {
 
       $scope.modal = {
@@ -654,6 +701,7 @@ controladores.controller('DatosProyectoCtrl', function (
         mensaje: "Datos del proyecto guardados con exito!"
       };
       $('#modal-general').modal('show');
+        $scope.mostrarLoading = false;
 
      }).catch(function(error) {
        alert('Error!');
@@ -983,6 +1031,8 @@ controladores.controller("RegistroBeneficiarioCtrl", function (
 	/** Funcion encargada de registrar un beneficiario */
 	$scope.registrarBeneficiario = function () {
 
+    $scope.mostrarLoading = true;
+
 		console.log("Inicia [LoginBeneficiarioCtrl registrarBeneficiario]");
 
 		$scope.beneficiariosArray.$add({
@@ -1043,6 +1093,7 @@ controladores.controller("RegistroBeneficiarioCtrl", function (
                 $rootScope.$apply(function() {
                     $location.path('/dashboardBeneficiario');
                     console.log($location.path());
+                    $scope.mostrarLoading = false;
                 });
               }
             });
